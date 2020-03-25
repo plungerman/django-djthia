@@ -53,7 +53,7 @@ urlpatterns = [
     # admin honeypot
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     # my app
-    path('gearup/', include('djthia.gearup.urls')),
+    path('gear-up/', include('djthia.gearup.urls')),
     # dashboard
     path('dashboard/', include('djthia.dashboard.urls')),
     # direct to template

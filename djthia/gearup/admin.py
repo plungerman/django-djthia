@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from djthia.gearup.models import MyModel
+from djthia.gearup.models import Questionnaire
 
 
-admin.site.register(MyModel)
+admin.site.register(Questionnaire)

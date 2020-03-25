@@ -2,15 +2,15 @@
 
 from django import forms
 
-from djthia.gearup.models import CheckList
+from djthia.gearup.models import Questionnaire
 
 
-class CheckListForm(forms.ModelForm):
-    """Graduate Gear up form."""
+class QuestionnaireForm(forms.ModelForm):
+    """Graduate gear up questionnaire for graduation."""
 
     class Meta:
         """Information about the form class."""
 
-        model = CheckList
+        model = Questionnaire
         # either fields or exclude is required
         fields = '__all__'

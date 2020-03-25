@@ -11,7 +11,7 @@ from djthia.gearup import views
 urlpatterns = [
     path(
         '<str:pid>/display/',
-        views.myview,
+        views.home,
         name='gearup_display',
     ),
     path(

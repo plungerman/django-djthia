@@ -6,18 +6,18 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from djtools.utils.mail import send_mail
 
-from djthia.gearup.forms import CheckListForm
+from djthia.gearup.forms import QuestionnaireForm
 
 
 def home(request, pid=None):
-    """Home view."""
+    """Home view with form."""
     if settings.DEBUG:
         to_list = [settings.SERVER_EMAIL]
     else:
-        to_list = [settings.MY_APP_EMAIL]
+        to_list = [settings.GEARUP_EMAIL]
 
     if request.method == 'POST':
-        form = CheckListForm(request.POST, request.FILES)
+        form = QuestionnaireForm(request.POST, request.FILES)
         if form.is_valid():
             grad = form.save()
             email = settings.DEFAULT_FROM_EMAIL
@@ -29,7 +29,7 @@ def home(request, pid=None):
             )
             return HttpResponseRedirect(reverse_lazy('gearup_success'))
     else:
-        form = CheckListForm()
+        form = QuestionnaireForm()
     return render(request, 'gearup/form.html', {'form': form})
 
 
