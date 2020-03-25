@@ -1,0 +1,12 @@
+django==2.2.11
+django-admin-honeypot==1.1.0
+django-localflavor==3.0
+django-loginas==0.3.8
+django-informixdb==1.9.0
+django-formtools==2.2
+mysqlclient==1.4.6
+pycryptodome==3.9.4
+pyodbc==4.0.30
+python-memcached==1.59
+python-ldap==3.2.0
+wemake-python-styleguide==0.13.3
