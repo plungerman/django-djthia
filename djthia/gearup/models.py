@@ -3,8 +3,73 @@
 from django.contrib.auth.models import User
 from django.db import models
 from djtools.fields.helpers import upload_to_path
-
+from djtools.fields import BINARY_CHOICES
+from djtools.fields import YEARS4
+from localflavor.us.models import USStateField
 from taggit.managers import TaggableManager
+
+
+YEARS4.insert(0, ('', "Spouse's Class Year"))
+
+STATUS_CHOICES = (
+    (
+        """
+        Have a job or accepted an offer
+        (paid internship, part-time, full-time, own business, etc.)
+        """,
+        """
+        Have a job or accepted an offer
+        (paid internship, part-time, full-time, own business, etc.)
+        """,
+    ),
+    (
+        'Have a job, but am continuing to look for other options',
+        "Have a job, but am continuing to look for other options",
+    ),
+    (
+        """
+        Participating in a volunteer, service program, or unpaid internship
+        (e.g. Peace Corps, City Year, Americorps, etc.)
+        """,
+        """
+        Participating in a volunteer, service program, or unpaid internship
+        (e.g. Peace Corps, City Year, Americorps, etc.)
+        """,
+    ),
+    ('Serving in the military', "Serving in the military"),
+    (
+        'Enrolled in a program of continuing education',
+        "Enrolled in a program of continuing education",
+    ),
+    (
+        'Planning to continue education, but not yet enrolled',
+        "Planning to continue education, but not yet enrolled",
+    ),
+    ('Unemployed and seeking employment', "Unemployed and seeking employment"),
+    (
+        """
+        Pursuing other options (travel, family, not seeking, etc.)
+        """,
+        """
+        Pursuing other options (travel, family, not seeking, etc.)
+        """,
+    ),
+    ('Uncertain what my plans are', "Uncertain what my plans are"),
+)
+DONATION_CHOICES = (
+    (
+        """
+        Yes, I would like to make a gift in support of the Class of 2020
+        Endowed Scholarship.
+        """,
+        "No, I would not like make a gift at this time.",
+    )
+)
+COLOUR_CHOICES = (
+    ("Purple", "Purple"),
+    ("Blue", "Blue"),
+    ("Red", "Red"),
+)
 
 
 class Questionnaire(models.Model):
@@ -32,40 +97,191 @@ class Questionnaire(models.Model):
     created_at = models.DateTimeField("Date Created", auto_now_add=True)
     updated_at = models.DateTimeField("Date Updated", auto_now=True)
     # core
-    name_full
-    name_phonetic
-    major_minor
-    address_mailing
-    address_permanent
-    email
-    phone
-    guardian1
-    guardian2
-    name_spouse
-    year_spouse
-    marriage_anniversary
-    status_postgrad
-    graduate_school_name
-    graduate_school_program
-    graduate_school_address
-    graduate_school_city
-    graduate_school_state
-    graduate_school_country
-    graduate_school_email
-    employer_name
-    employer_address
-    employer_city
-    employer_state
-    employer_country
-    employer_email
-    employer_job_title
-    clubs_orgs
-    gift
-    color
-    speaker
-    # notes are FK from Comments data model
-    counseling
-    cap_gown
+    name_full = models.CharField(
+        "Full Name",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    name_phonetic = models.CharField(
+        "Phonetic Pronunciation of Name",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    major_minor = models.CharField(
+        "Are your majors and minors correct?",
+        max_length=4,
+        choices=BINARY_CHOICES,
+    )
+    address_mailing = models.TextField(
+        "Current Mailing Address", null=True, blank=True,
+    )
+    address_permanent = models.TextField(
+        "Permanent Address",
+        null=True,
+        blank=True,
+        help_text="(if different than mailing address)",
+    )
+    email = models.EmailField(
+        "Email other than carthage.edu", null=True, blank=True,
+    )
+    phone = models.CharField(
+        "Phone Number",
+        max_length=12,
+        help_text="Format: XXX-XXX-XXXX",
+    )
+    guardian1 = models.CharField(
+        "Parent Guardian Name 1",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    guardian2 = models.CharField(
+        "Parent Guardian Name 2",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    name_spouse = models.CharField(
+        "Spouse's Name",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    year_spouse = models.CharField(
+        "Spouse's Class Year",
+        max_length=4,
+        choices=YEARS4,
+        null=True,
+        blank=True,
+        help_text="(Carthage student only)",
+    )
+    marriage_anniversary = models.DateTimeField(
+        "Wedding Anniversary", blank=True, null=True,
+    )
+    status_postgrad = models.CharField(
+        "Which of the following BEST describes your PRIMARY current status?",
+        max_length=64,
+        choices=STATUS_CHOICES,
+        null=True,
+        blank=True,
+    )
+    graduate_school_name = models.CharField(
+        "Graduate School Institution Name",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    graduate_school_program = models.CharField(
+        "Graduate School Program Name",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    graduate_school_address = models.TextField(
+        "Graduate School Address", null=True, Blank=True,
+    )
+    graduate_school_city = models.CharField(
+        "Graduate School City",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    graduate_school_state = USStateField(
+        "Graduate School State/Territory", null=True, blank=True,
+    )
+    graduate_school_postal_code = models.CharField(
+        "Graduate School Postal Code",
+        max_length=10,
+        null=True,
+        blank=True,
+    )
+    graduate_school_country = models.CharField(
+        "Graduate School Country",
+        max_length=10,
+        null=True,
+        blank=True,
+    )
+    graduate_school_email = models.EmailField(
+        "Graduate School email", null=True, blank=True,
+    )
+    employer_name = models.CharField(
+        "Post-Graduation Employer Name",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    employer_address = models.TextField(
+        "Post-Graduation Employer Address",
+        null=True,
+        blank=True,
+    )
+    employer_city = models.CharField(
+        "Post-Graduation Employer City",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    employer_state = USStateField(
+        "Post-Graduation Employer State/Territory", null=True, blank=True,
+    )
+    employer_postal_code = models.CharField(
+        "Post-Graduation Employer Postal Code",
+        max_length=10,
+        null=True,
+        blank=True,
+    )
+    employer_country = models.CharField(
+        "Post-Graduation Employer Country",
+        max_length=10,
+        null=True,
+        blank=True,
+    )
+    employer_email = models.EmailField(
+        "Post-Graduation Employer email", null=True, blank=True,
+    )
+    employer_job_title = models.CharField(
+        "Post-Graduation Employer Job Title",
+        max_length=10,
+        null=True,
+        blank=True,
+    )
+    clubs_orgs = models.CharField(
+        "Post-Graduation Employer Country",
+        max_length=255,
+        null=True,
+        blank=True,
+    )
+    donation = models.CharField(
+        "Class of 2020 Gift",
+        max_length=4,
+        choices=DONATION_CHOICES,
+        help_text="""
+            The recommended gift is $5, and every $5 gift is an entry into
+            a drawing to receive a pair of Apple Airpods!
+        """,
+    )
+    color = models.CharField(
+        "Class of 2020 Color",
+        max_length=32,
+        choices=COLOUR_CHOICES,
+        null=True,
+        blank=True,
+    )
+    speaker = models.CharField(
+        "Class of 2020 Faculty Speaker",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    # thank you notes are FK from Comments data model
+    # counseling file is FK from Documents data model
+    cap_gown = models.CharField(
+        "Cap and Gown",
+        max_length=4,
+        choices=BINARY_CHOICES,
+    )
 
     class Meta:
         """Information about the data model class."""
@@ -155,8 +371,6 @@ class Document(models.Model):
         upload_to=upload_to_path,
         validators=FILE_VALIDATORS,
         max_length=767,
-        null=True,
-        blank=True,
     )
     tags = TaggableManager(blank=True)
 

@@ -2,7 +2,7 @@
 
 from django import forms
 
-from djthia.gearup.models import Questionnaire
+from djthia.gearup.models import Document, Questionnaire
 
 
 class QuestionnaireForm(forms.ModelForm):
@@ -14,3 +14,11 @@ class QuestionnaireForm(forms.ModelForm):
         model = Questionnaire
         # either fields or exclude is required
         fields = '__all__'
+
+
+class DocumentForm(forms.ModelForm):
+
+    class Meta:
+        model = Document
+        fields = ('phile',)
+
