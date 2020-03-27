@@ -28,7 +28,8 @@ SELECT
         WHEN
             ID_Record.addr_line2 not like ' %'
         THEN
-            TRIM(both FROM ID_Record.city) || ', ' || ID_Record.st || '  ' || ID_Record.zip
+            TRIM(both FROM ID_Record.city)
+            || ', ' || ID_Record.st || '  ' || ID_Record.zip
         ELSE
             ''
     END AS city_st_zip,
@@ -107,5 +108,3 @@ AND
     Program_Enrollment_Record.cl NOT IN (
         'AT', 'KU', 'ND', 'NM', 'PA', 'PB', 'PC', 'PG', 'PR', 'UP', 'YO'
     )
-ORDER BY 3,4,2;
-

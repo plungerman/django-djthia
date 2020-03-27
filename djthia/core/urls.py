@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.views.generic import RedirectView
 from django.views.generic import TemplateView
 from djauth.views import loggedout
+from djthia.core import views
 
 
 admin.autodiscover()
@@ -52,12 +53,20 @@ urlpatterns = [
     path('rocinante/', admin.site.urls),
     # admin honeypot
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
-    # my app
+    # clear cache via ajax post
+    path(
+        'cache/<str:ctype>/clear/', views.clear_cache, name='clear_cache',
+    ),
+    # clear cache via GET
+    path(
+        'cache/clear/', views.clear_cache, name='clear_cache_get',
+    ),
+    # gear up forms
     path('gear-up/', include('djthia.gearup.urls')),
     # dashboard
     path('dashboard/', include('djthia.dashboard.urls')),
     # direct to template
     path('success/', TemplateView.as_view(template_name='gearup/success.html')),
-    # redirect
-    path('', RedirectView.as_view(url=reverse_lazy('dashboard_home'))),
+    # default home
+    path('', views.home, name='home'),
 ]

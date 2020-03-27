@@ -13,7 +13,7 @@ $(function() {
 {% block navbar-header %}
 <a href="{% url 'home' %}" class="mr-sm-3 mr-lg-3">
   <i class="fa fa-home fa-2x"></i></a>
-<a class="navbar-brand" href="{{root_url}}">Office of Programs</a>
+<a class="navbar-brand" href="{{root_url}}">Institutional Advancement</a>
 {% endblock %}
 {% block navbar-top-links %}
   <ul class="navbar-nav ml-auto">
@@ -41,19 +41,22 @@ $(function() {
 {% endblock navbar-top-links %}
 {% block navbar-sidenav %}
 <ul class="navbar-nav navbar-sidenav">
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Submit a proposal">
-    <a class="nav-link" href="{% url 'proposal_form' %}" title="Submit a proposal">
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Submit Questionnaire">
+    <a class="nav-link" href="{% url 'questionnaire' %}" title="Submit Questionnaire">
       <i class="fa fa-fw fa fa-wpforms" aria-hidden="true"></i>
-      <span class="nav-link-text">Submit Proposal</span>
+      <span class="nav-link-text">Submit Questionnaire</span>
     </a>
   </li>
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My Propoals">
-    <a class="nav-link" href="{% url 'home' %}" title="Proposals List">
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Submit Thank You Notes">
+    <a class="nav-link" href="{% url 'notes' %}" title="Submit Thank You Notes">
+      <i class="fa fa-fw fa fa-wpforms" aria-hidden="true"></i>
+      <span class="nav-link-text">Submit Thank You Notes</span>
+    </a>
+  </li>
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Home">
+    <a class="nav-link" href="{% url 'home' %}" title="Home">
       <i class="fa fa-fw fa fa-dashboard" aria-hidden="true"></i>
-      <span class="nav-link-text">
-      {% ifusergroup osp_group %}All{% else %}
-      {% if dean_chair %}All{% else %}My{% endif %}
-      {% endifusergroup %}Proposals</span>
+      <span class="nav-link-text">Gear Up Home</span>
     </a>
   </li>
   {% if user.is_superuser or user.profile.css %}
@@ -105,27 +108,7 @@ $(function() {
 <!-- /.row -->
 <div class="row">
   <div class="col-lg-12">
-    <h1>
-      {% if not dean_chair %}
-        {% if not group %}
-          {{user.first_name}}'s
-        {% else %}
-          All
-        {% endif %}
-      {% else %}
-        {% if dc == "dean" %}
-          {{div}}
-        {% else %}
-          {% for k,v in depts.items %}
-            {{v.dept_name}}{% if not forloop.last %},{% endif %}
-          {% endfor %}
-        {% endif %}
-      {% endif %}
-      Proposals
-    </h1>
-    <div class="btn-group fright" style="margin-left:18px;margin-bottom:12px;">
-      <a href="{% url 'proposal_form' %}" class="btn btn-default btn-primary">Submit Proposal</a>
-    </div>
+    <h1>Graduation Gear Up</h1>
     <div class="col-lg-8" style="font-weight:bold;">
       {% get_lw_content as intro blurbs 2433 %}
       <div id="lw_success_2433">{{intro.body|safe}}</div>
@@ -135,7 +118,8 @@ $(function() {
           target="_blank">
           <i class="fa fa-pencil green" aria-hidden="true"
           title="Manage the content above in LiveWhale"></i></a>
-        <a href="#" data-cid="2433" data-target="lw_success_2433" class="clear-cache">
+        <a href="#" data-cid="2433" data-target="lw_success_2433"
+          class="clear-cache">
           <i class="fa fa-refresh green" aria-hidden="true"
           title="Clear the cache for this content"></i></a>
       </p>
@@ -150,7 +134,6 @@ $(function() {
   <div class="col-lg-12">
     <div class="panel panel-default">
       <div class="panel-body" id="proposals-data-panel">
-        {% include "data.inc.html" %}
       </div>
       <!-- /.panel-body -->
     </div>

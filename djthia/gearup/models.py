@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth.models import User
+from django.core.validators import FileExtensionValidator
 from django.db import models
-from djtools.fields.helpers import upload_to_path
 from djtools.fields import BINARY_CHOICES
 from djtools.fields import YEARS4
+from djtools.fields.helpers import upload_to_path
 from localflavor.us.models import USStateField
 from taggit.managers import TaggableManager
 
 
-YEARS4.insert(0, ('', "Spouse's Class Year"))
-
+ALLOWED_EXTENSIONS = ['pdf', 'png', 'jpg', 'jpeg', 'PDF', 'PNG', 'JPG', 'JPEG']
+FILE_VALIDATORS = [
+    FileExtensionValidator(allowed_extensions=ALLOWED_EXTENSIONS),
+]
 STATUS_CHOICES = (
     (
         """
@@ -62,14 +65,22 @@ DONATION_CHOICES = (
         Yes, I would like to make a gift in support of the Class of 2020
         Endowed Scholarship.
         """,
+        """
+        Yes, I would like to make a gift in support of the Class of 2020
+        Endowed Scholarship.
+        """,
+    ),
+    (
         "No, I would not like make a gift at this time.",
-    )
+        "No, I would not like make a gift at this time.",
+    ),
 )
 COLOUR_CHOICES = (
     ("Purple", "Purple"),
     ("Blue", "Blue"),
     ("Red", "Red"),
 )
+YEARS4.insert(0, ('', "Spouse's Class Year"))
 
 
 class Questionnaire(models.Model):
@@ -180,7 +191,9 @@ class Questionnaire(models.Model):
         blank=True,
     )
     graduate_school_address = models.TextField(
-        "Graduate School Address", null=True, Blank=True,
+        "Graduate School Address",
+        null=True,
+        blank=True,
     )
     graduate_school_city = models.CharField(
         "Graduate School City",
@@ -299,34 +312,37 @@ class Questionnaire(models.Model):
 
 
 class Annotation(models.Model):
+    """Notes, comments, etc."""
 
-    alert = models.ForeignKey(
-        Alert, related_name='notes', on_delete=models.CASCADE
+    questionnaire = models.ForeignKey(
+        Questionnaire,
+        related_name='notes',
+        on_delete=models.CASCADE,
     )
     created_by = models.ForeignKey(
-        User, verbose_name="Created by",
+        User,
+        verbose_name="Created by",
         related_name='note_creator',
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
     )
     updated_by = models.ForeignKey(
-        User, verbose_name="Updated by", related_name='note_updated',
-        on_delete=models.CASCADE, null=True, blank=True
+        User,
+        verbose_name="Updated by",
+        related_name='note_updated',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
-    created_at = models.DateTimeField(
-        "Date Created", auto_now_add=True
-    )
-    updated_at = models.DateTimeField(
-        "Date Updated", auto_now=True
-    )
-    recipients = models.ManyToManyField(
-        User, blank=True
-    )
+    created_at = models.DateTimeField("Date Created", auto_now_add=True)
+    updated_at = models.DateTimeField("Date Updated", auto_now=True)
+    recipients = models.ManyToManyField(User, blank=True)
     body = models.TextField()
     status = models.BooleanField(default=True, verbose_name="Active?")
     tags = TaggableManager(blank=True)
 
     class Meta:
         """Information about the data model class."""
+
         ordering = ('-created_at',)
 
     def __str__(self):
@@ -367,7 +383,7 @@ class Document(models.Model):
         blank=True,
     )
     phile = models.FileField(
-        "Supporting files",
+        "Dependent files",
         upload_to=upload_to_path,
         validators=FILE_VALIDATORS,
         max_length=767,

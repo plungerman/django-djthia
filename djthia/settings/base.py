@@ -78,6 +78,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # apps
     'djthia.core',
+    'djthia.gearup',
     # needed for template tags
     'djtools',
     # honeypot for admin attacks
@@ -110,7 +111,6 @@ TEMPLATES = [
             'debug': DEBUG,
             'context_processors': [
                 'djtools.context_processors.sitevars',
-                'djthia.context_processors.sitevars',
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.media',

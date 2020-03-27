@@ -4,13 +4,27 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from djimix.decorators.auth import portal_auth_required
 from djtools.utils.mail import send_mail
 
 from djthia.gearup.forms import QuestionnaireForm
 
 
-def home(request, pid=None):
-    """Home view with form."""
+@portal_auth_required(
+    session_var='DJTHIA_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
+def notes(request, pid=None):
+    """Notes form."""
+    return render(request, 'gearup/notes.html', {})
+
+
+@portal_auth_required(
+    session_var='DJTHIA_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
+def questionnaire(request):
+    """Questionnaire form."""
     if settings.DEBUG:
         to_list = [settings.SERVER_EMAIL]
     else:
@@ -31,8 +45,3 @@ def home(request, pid=None):
     else:
         form = QuestionnaireForm()
     return render(request, 'gearup/form.html', {'form': form})
-
-
-def search(request):
-    """Generic search."""
-    return render(request, 'gearup/search.html', {})
