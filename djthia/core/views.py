@@ -22,9 +22,9 @@ from djthia.core.utils import get_status
 )
 def home(request):
     """Application home."""
-    if not request.session['gearup_status']:
-        status = get_status(request)
-    return render(request, 'index.html', {})
+    if not request.session.get('gearup_status'):
+        get_status(request)
+    return render(request, 'home.html', {})
 
 
 @csrf_exempt

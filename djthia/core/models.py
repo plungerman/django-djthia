@@ -36,3 +36,6 @@ class GenericChoice(models.Model):
     def __str__(self):
         """Default data for display."""
         return self.name
+
+    def tag_list(self):
+        return ', '.join(o.name for o in self.tags.all())

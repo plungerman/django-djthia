@@ -386,7 +386,7 @@ class Document(models.Model):
         "Dependent files",
         upload_to=upload_to_path,
         validators=FILE_VALIDATORS,
-        max_length=767,
+        max_length=768,
     )
     tags = TaggableManager(blank=True)
 
