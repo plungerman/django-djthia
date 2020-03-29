@@ -6,8 +6,10 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from djimix.decorators.auth import portal_auth_required
 from djtools.utils.mail import send_mail
-
 from djthia.gearup.forms import QuestionnaireForm
+
+
+REQ_ATTR = settings.REQUIRED_ATTRIBUTE
 
 
 @portal_auth_required(
@@ -31,7 +33,9 @@ def questionnaire(request):
         to_list = [settings.GEARUP_EMAIL]
 
     if request.method == 'POST':
-        form = QuestionnaireForm(request.POST, request.FILES)
+        form = QuestionnaireForm(
+            request.POST, request.FILES, use_required_attribute=REQ_ATTR,
+        )
         if form.is_valid():
             grad = form.save()
             email = settings.DEFAULT_FROM_EMAIL
@@ -43,5 +47,5 @@ def questionnaire(request):
             )
             return HttpResponseRedirect(reverse_lazy('gearup_success'))
     else:
-        form = QuestionnaireForm()
+        form = QuestionnaireForm(use_required_attribute=REQ_ATTR)
     return render(request, 'gearup/form.html', {'form': form})

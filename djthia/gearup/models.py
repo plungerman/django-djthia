@@ -6,7 +6,6 @@ from django.db import models
 from djtools.fields import BINARY_CHOICES
 from djtools.fields import YEARS4
 from djtools.fields.helpers import upload_to_path
-from localflavor.us.models import USStateField
 from taggit.managers import TaggableManager
 
 
@@ -61,18 +60,15 @@ STATUS_CHOICES = (
 )
 DONATION_CHOICES = (
     (
-        """
-        Yes, I would like to make a gift in support of the Class of 2020
-        Endowed Scholarship.
-        """,
+        'Yes',
         """
         Yes, I would like to make a gift in support of the Class of 2020
         Endowed Scholarship.
         """,
     ),
     (
-        "No, I would not like make a gift at this time.",
-        "No, I would not like make a gift at this time.",
+        'No',
+        "No, I would not like to make a gift at this time.",
     ),
 )
 COLOUR_CHOICES = (
@@ -80,7 +76,7 @@ COLOUR_CHOICES = (
     ("Blue", "Blue"),
     ("Red", "Red"),
 )
-YEARS4.insert(0, ('', "Spouse's Class Year"))
+# YEARS4.insert(0, ('', "Spouse's Class Year"))
 
 
 class Questionnaire(models.Model):
@@ -169,14 +165,15 @@ class Questionnaire(models.Model):
         help_text="(Carthage student only)",
     )
     marriage_anniversary = models.DateTimeField(
-        "Wedding Anniversary", blank=True, null=True,
+        "Wedding Anniversary",
+        help_text="Format: YYYY-MM-DD",
+        blank=True,
+        null=True,
     )
     status_postgrad = models.CharField(
         "Which of the following BEST describes your PRIMARY current status?",
         max_length=64,
         choices=STATUS_CHOICES,
-        null=True,
-        blank=True,
     )
     graduate_school_name = models.CharField(
         "Graduate School Institution Name",
@@ -201,7 +198,7 @@ class Questionnaire(models.Model):
         null=True,
         blank=True,
     )
-    graduate_school_state = USStateField(
+    graduate_school_state = models.CharField(
         "Graduate School State/Territory", null=True, blank=True,
     )
     graduate_school_postal_code = models.CharField(
@@ -236,7 +233,7 @@ class Questionnaire(models.Model):
         null=True,
         blank=True,
     )
-    employer_state = USStateField(
+    employer_state = models.CharField(
         "Post-Graduation Employer State/Territory", null=True, blank=True,
     )
     employer_postal_code = models.CharField(
@@ -279,8 +276,6 @@ class Questionnaire(models.Model):
         "Class of 2020 Color",
         max_length=32,
         choices=COLOUR_CHOICES,
-        null=True,
-        blank=True,
     )
     speaker = models.CharField(
         "Class of 2020 Faculty Speaker",

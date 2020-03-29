@@ -5,7 +5,12 @@
 {{ block.super }}
 <script type="text/javascript">
 $(function() {
+  $('#id_donation').change(function() {
     console.log('boo!');
+    var opval = $(this).val();
+    if(opval=='Yes'){
+      $('#donation-modal').modal('show');
+    }
   });
 });
 </script>
@@ -44,13 +49,13 @@ $(function() {
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Submit Questionnaire">
     <a class="nav-link" href="{% url 'questionnaire' %}" title="Submit Questionnaire">
       <i class="fa fa-fw fa fa-wpforms" aria-hidden="true"></i>
-      <span class="nav-link-text">Submit Questionnaire</span>
+      <span class="nav-link-text">Questionnaire</span>
     </a>
   </li>
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Submit Thank You Notes">
     <a class="nav-link" href="{% url 'notes' %}" title="Submit Thank You Notes">
       <i class="fa fa-fw fa fa-wpforms" aria-hidden="true"></i>
-      <span class="nav-link-text">Submit Thank You Notes</span>
+      <span class="nav-link-text">Thank You Notes</span>
     </a>
   </li>
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Home">
@@ -143,27 +148,23 @@ $(function() {
 </div>
 <!-- /.row -->
 {% endblock content %}
-{% block footer %}
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
+{% block modal %}
+<div class="modal fade" id="donation-modal" tabindex="-1" role="dialog"
   aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="deleteModalLabel">Confirm Delete</h4>
+          <h4 class="modal-title" id="donationModalLabel">Donation Form</h4>
           <button type="button" class="close" data-dismiss="modal"
             aria-hidden="true">&times;</button>
         </div>
       <div class="modal-body">
-        <p>
-          You are about to delete a <strong class="object-title"></strong>.
-        </p>
-        <p>Would you like to proceed?</p>
+        <iframe src="https://hygiea.carthage.edu/forms/giving/donation/class-gift-2020/?modal=true" width="300" height="400" frameborder="0" allowtransparency="true"></iframe>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">
-          Cancel
+          Close
         </button>
-        <a class="btn btn-danger btn-ok text-white">Delete</a>
       </div>
     </div>
   </div>
