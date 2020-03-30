@@ -15,10 +15,12 @@ urlpatterns = [
         TemplateView.as_view(template_name='gearup/success.html'),
         name='gearup_success',
     ),
+    # donation form
+    path('give/', views.donation, name='donation'),
+    # notes form
+    path('notes/', views.notes, name='notes'),
     # questionnaire form
     path('questionnaire/', views.questionnaire, name='questionnaire'),
-    # questionnaire form
-    path('notes/', views.notes, name='notes'),
     # redirect
     path('', RedirectView.as_view(url=reverse_lazy('home'))),
 ]

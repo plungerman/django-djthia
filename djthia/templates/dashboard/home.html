@@ -4,15 +4,8 @@
 {% block extra_javascript %}
 {{ block.super }}
 <script type="text/javascript">
-$(function() {
-  $('#id_donation').change(function() {
-    console.log('boo!');
-    var opval = $(this).val();
-    if(opval=='Yes'){
-      $('#donation-modal').modal('show');
-    }
-  });
-});
+//$(function() {
+//});
 </script>
 {% endblock %}
 {% block navbar-header %}
@@ -46,6 +39,12 @@ $(function() {
 {% endblock navbar-top-links %}
 {% block navbar-sidenav %}
 <ul class="navbar-nav navbar-sidenav">
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Home">
+    <a class="nav-link" href="{% url 'home' %}" title="Home">
+      <i class="fa fa-fw fa fa-dashboard" aria-hidden="true"></i>
+      <span class="nav-link-text">Gear Up Home</span>
+    </a>
+  </li>
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Submit Questionnaire">
     <a class="nav-link" href="{% url 'questionnaire' %}" title="Submit Questionnaire">
       <i class="fa fa-fw fa fa-wpforms" aria-hidden="true"></i>
@@ -54,14 +53,14 @@ $(function() {
   </li>
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Submit Thank You Notes">
     <a class="nav-link" href="{% url 'notes' %}" title="Submit Thank You Notes">
-      <i class="fa fa-fw fa fa-wpforms" aria-hidden="true"></i>
+      <i class="fa fa-fw fa fa-sticky-note-o" aria-hidden="true"></i>
       <span class="nav-link-text">Thank You Notes</span>
     </a>
   </li>
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Home">
-    <a class="nav-link" href="{% url 'home' %}" title="Home">
-      <i class="fa fa-fw fa fa-dashboard" aria-hidden="true"></i>
-      <span class="nav-link-text">Gear Up Home</span>
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Class Gift">
+    <a class="nav-link" href="{% url 'donation' %}" title="Donate to Endowed Scholarship">
+      <i class="fa fa-fw fa fa-gift" aria-hidden="true"></i>
+      <span class="nav-link-text">Class Gift</span>
     </a>
   </li>
   {% if user.is_superuser or user.profile.css %}
@@ -115,21 +114,37 @@ $(function() {
   <div class="col-lg-12">
     <h1>Graduation Gear Up</h1>
     <div class="col-lg-8" style="font-weight:bold;">
-      {% get_lw_content as intro blurbs 2433 %}
-      <div id="lw_success_2433">{{intro.body|safe}}</div>
+      {% if request.session.gearup_status %}
+      {% get_lw_content as eligible blurbs 2921 %}
+      <div id="lw_success_2921">{{eligible.body|safe}}</div>
       {% ifusergroup cia_group %}
       <p>
-        <a href="https://www.carthage.edu/livewhale/?blurbs_edit&tid=285&id=2433"
+        <a href="https://www.carthage.edu/livewhale/?blurbs_edit&tid=356&id=2921"
           target="_blank">
           <i class="fa fa-pencil green" aria-hidden="true"
           title="Manage the content above in LiveWhale"></i></a>
-        <a href="#" data-cid="2433" data-target="lw_success_2433"
+        <a href="#" data-cid="2921" data-target="lw_success_2921"
           class="clear-cache">
           <i class="fa fa-refresh green" aria-hidden="true"
           title="Clear the cache for this content"></i></a>
       </p>
       {% endifusergroup %}
-      <p>NOTE: Hover over icons and links to see more information.</p>
+      {% else %}
+      {% get_lw_content as ineligible blurbs 2922 %}
+      <div id="lw_success_2922">{{ineligible.body|safe}}</div>
+      {% ifusergroup cia_group %}
+      <p>
+        <a href="https://www.carthage.edu/livewhale/?blurbs_edit&tid=356&id=2922"
+          target="_blank">
+          <i class="fa fa-pencil green" aria-hidden="true"
+          title="Manage the content above in LiveWhale"></i></a>
+        <a href="#" data-cid="2922" data-target="lw_success_2922"
+          class="clear-cache">
+          <i class="fa fa-refresh green" aria-hidden="true"
+          title="Clear the cache for this content"></i></a>
+      </p>
+      {% endifusergroup %}
+      {% endif %}
     </div>
   </div>
   <!-- /.col-lg-12 -->
@@ -159,7 +174,7 @@ $(function() {
             aria-hidden="true">&times;</button>
         </div>
       <div class="modal-body">
-        <iframe src="https://hygiea.carthage.edu/forms/giving/donation/class-gift-2020/?modal=true" width="300" height="400" frameborder="0" allowtransparency="true"></iframe>
+        <iframe src="/forms/giving/donation/class-gift-2020/?modal=true" width="100%" height="400" frameborder="0" allowtransparency="true"></iframe>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 import json
 import os
+import requests
 
 from django.conf import settings
 from django.core.cache import cache

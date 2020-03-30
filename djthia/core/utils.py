@@ -22,5 +22,7 @@ def get_status(request):
             row = xsql(sql, connection, key=settings.INFORMIX_DEBUG).fetchone()
             if row:
                 status = request.session['gearup_status'] = True
+            else:
+                status = request.session['gearup_status'] = False
 
     return status

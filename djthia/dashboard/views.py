@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""URLs for all views."""
 
 from django.conf import settings
 from django.shortcuts import render

@@ -16,6 +16,15 @@ REQ_ATTR = settings.REQUIRED_ATTRIBUTE
     session_var='DJTHIA_AUTH',
     redirect_url=reverse_lazy('access_denied'),
 )
+def donation(request, pid=None):
+    """Donation form."""
+    return render(request, 'gearup/donation.html', {})
+
+
+@portal_auth_required(
+    session_var='DJTHIA_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
 def notes(request, pid=None):
     """Notes form."""
     return render(request, 'gearup/notes.html', {})

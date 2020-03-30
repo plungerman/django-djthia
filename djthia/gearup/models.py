@@ -199,7 +199,10 @@ class Questionnaire(models.Model):
         blank=True,
     )
     graduate_school_state = models.CharField(
-        "Graduate School State/Territory", null=True, blank=True,
+        "Graduate School State/Territory",
+        max_length=128,
+        null=True,
+        blank=True,
     )
     graduate_school_postal_code = models.CharField(
         "Graduate School Postal Code",
@@ -234,7 +237,10 @@ class Questionnaire(models.Model):
         blank=True,
     )
     employer_state = models.CharField(
-        "Post-Graduation Employer State/Territory", null=True, blank=True,
+        "Post-Graduation Employer State/Territory",
+        max_length=128,
+        null=True,
+        blank=True,
     )
     employer_postal_code = models.CharField(
         "Post-Graduation Employer Postal Code",

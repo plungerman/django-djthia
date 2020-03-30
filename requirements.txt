@@ -10,4 +10,5 @@ pycryptodome==3.9.4
 pyodbc==4.0.30
 python-memcached==1.59
 python-ldap==3.2.0
+requests==2.23.0
 wemake-python-styleguide==0.13.3
