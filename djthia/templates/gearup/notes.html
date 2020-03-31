@@ -1,37 +1,31 @@
 {% extends "dashboard/home.html" %}
 {% block title %}
-    Thank You Notes &mdash;
-    Graduation Gear Up &mdash;
-    Carthage College
+  Thank You Notes &mdash;
+  Graduation Gear Up &mdash;
+  Carthage College
 {% endblock %}
 {% block content %}
 <div class="forms-container col-lg-8 col-md-8 col-sm-12 col-xs-12">
-    <h3 id="page_title">
-        Thank You Notes
-    </h3>
-    {% include "includes/required_text.html" %}
-    {% include "includes/errors_text.html" %}
-    <form method="post" action="." class="form" id="profile">
-        {% csrf_token %}
-        {% for field in form.hidden_fields %}
-            {% include "form_field.inc.html" %}
+  <h3 id="page_title">Thank You Notes</h3>
+  {% include "includes/errors_text.html" %}
+  <form method="post" action="." class="form" id="profile">
+    {% csrf_token %}
+    <fieldset class="blockLabels">
+      <ol>
+        {% for field in form.visible_fields %}
+          {% include "form_field.inc.html" %}
         {% endfor %}
-        <fieldset class="blockLabels">
-            <ol>
-                {% for field in form.visible_fields %}
-                    {% include "form_field.inc.html" %}
-                {% endfor %}
-            </ol>
-        </fieldset>
-        {% include "form_submit.inc.html" %}
-    </form>
-    <h4>Your Notes</h4>
-    {% for note in user.questionnaire.notes.all %}
-    <div class="p-3 {% cycle 'blue-box' 'lightgrey-box'%}">
-        {{note.body|safe}}
-    </div>
-    {% endfor %}
-    <p>&nbsp;</p>
+      </ol>
+    </fieldset>
+    {% include "form_submit.inc.html" %}
+  </form>
+  <h4>Your Notes</h4>
+  {% for note in user.questionnaire.notes.all %}
+  <div class="p-3 {% cycle 'blue-box' 'lightgrey-box'%}">
+    {{note.body|safe}}
+  </div>
+  {% endfor %}
+  <p>&nbsp;</p>
 </div>
 <div class="col-lg-4 col-md-4 col-sm-12">
     {% include "gearup/help_text.html" %}

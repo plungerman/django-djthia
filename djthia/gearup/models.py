@@ -320,7 +320,7 @@ class Annotation(models.Model):
     created_at = models.DateTimeField("Date Created", auto_now_add=True)
     updated_at = models.DateTimeField("Date Updated", auto_now=True)
     recipients = models.ManyToManyField(User, blank=True)
-    body = models.TextField()
+    body = models.TextField(verbose_name="Content")
     status = models.BooleanField(default=True, verbose_name="Active?")
     tags = TaggableManager(blank=True)
 
