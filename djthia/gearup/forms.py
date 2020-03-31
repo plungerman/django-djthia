@@ -2,13 +2,14 @@
 
 from django import forms
 
-from djthia.gearup.models import Document, Questionnaire
+from djthia.gearup.models import Annotation
+from djthia.gearup.models import Document
+from djthia.gearup.models import Questionnaire
 from djtools.fields import BINARY_CHOICES
 
 
 class QuestionnaireForm(forms.ModelForm):
     """Graduate gear up questionnaire for graduation."""
-
 
     '''
     major_minor = forms.TypedChoiceField(
@@ -31,9 +32,15 @@ class QuestionnaireForm(forms.ModelForm):
         fields = '__all__'
 
 
+class AnnotationForm(forms.ModelForm):
+
+    class Meta:
+        model = Annotation
+        fields = ('body',)
+
+
 class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = Document
         fields = ('phile',)
-

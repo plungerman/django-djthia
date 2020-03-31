@@ -4,13 +4,11 @@
     Graduation Gear Up &mdash;
     Carthage College
 {% endblock %}
-{% block content_head %}
-    <h1 id="page_title">
-        Thank You Notes
-    <h1>
-{% endblock %}
 {% block content %}
 <div class="forms-container col-lg-8 col-md-8 col-sm-12 col-xs-12">
+    <h3 id="page_title">
+        Thank You Notes
+    </h3>
     {% include "includes/required_text.html" %}
     {% include "includes/errors_text.html" %}
     <form method="post" action="." class="form" id="profile">
@@ -27,6 +25,12 @@
         </fieldset>
         {% include "form_submit.inc.html" %}
     </form>
+    <h4>Your Notes</h4>
+    {% for note in user.questionnaire.notes.all %}
+    <div class="p-3 {% cycle 'blue-box' 'lightgrey-box'%}">
+        {{note.body|safe}}
+    </div>
+    {% endfor %}
     <p>&nbsp;</p>
 </div>
 <div class="col-lg-4 col-md-4 col-sm-12">

@@ -15,28 +15,16 @@ FILE_VALIDATORS = [
 ]
 STATUS_CHOICES = (
     (
-        """
-        Have a job or accepted an offer
-        (paid internship, part-time, full-time, own business, etc.)
-        """,
-        """
-        Have a job or accepted an offer
-        (paid internship, part-time, full-time, own business, etc.)
-        """,
+        "Have a job or accepted an offer (paid internship, part-time, full-time, own business, etc.)",
+        "Have a job or accepted an offer (paid internship, part-time, full-time, own business, etc.)",
     ),
     (
         'Have a job, but am continuing to look for other options',
         "Have a job, but am continuing to look for other options",
     ),
     (
-        """
-        Participating in a volunteer, service program, or unpaid internship
-        (e.g. Peace Corps, City Year, Americorps, etc.)
-        """,
-        """
-        Participating in a volunteer, service program, or unpaid internship
-        (e.g. Peace Corps, City Year, Americorps, etc.)
-        """,
+        "Participating in a volunteer, service program, or unpaid internship (e.g. Peace Corps, City Year, Americorps, etc.)",
+        "Participating in a volunteer, service program, or unpaid internship (e.g. Peace Corps, City Year, Americorps, etc.)",
     ),
     ('Serving in the military', "Serving in the military"),
     (
@@ -49,12 +37,8 @@ STATUS_CHOICES = (
     ),
     ('Unemployed and seeking employment', "Unemployed and seeking employment"),
     (
-        """
-        Pursuing other options (travel, family, not seeking, etc.)
-        """,
-        """
-        Pursuing other options (travel, family, not seeking, etc.)
-        """,
+        "Pursuing other options (travel, family, not seeking, etc.)",
+        "Pursuing other options (travel, family, not seeking, etc.)",
     ),
     ('Uncertain what my plans are', "Uncertain what my plans are"),
 )
@@ -76,17 +60,16 @@ COLOUR_CHOICES = (
     ("Blue", "Blue"),
     ("Red", "Red"),
 )
-# YEARS4.insert(0, ('', "Spouse's Class Year"))
 
 
 class Questionnaire(models.Model):
     """Graduate gear up questionnaire for graduation."""
 
     # meta
-    created_by = models.ForeignKey(
+    created_by = models.OneToOneField(
         User,
         verbose_name="Created by",
-        related_name='created_by',
+        related_name='questionnaire',
         editable=False,
         null=True,
         blank=True,
@@ -159,7 +142,7 @@ class Questionnaire(models.Model):
     year_spouse = models.CharField(
         "Spouse's Class Year",
         max_length=4,
-        choices=YEARS4,
+        # choices=YEARS4,
         null=True,
         blank=True,
         help_text="(Carthage student only)",
@@ -172,7 +155,7 @@ class Questionnaire(models.Model):
     )
     status_postgrad = models.CharField(
         "Which of the following BEST describes your PRIMARY current status?",
-        max_length=64,
+        max_length=128,
         choices=STATUS_CHOICES,
     )
     graduate_school_name = models.CharField(
@@ -212,7 +195,7 @@ class Questionnaire(models.Model):
     )
     graduate_school_country = models.CharField(
         "Graduate School Country",
-        max_length=10,
+        max_length=128,
         null=True,
         blank=True,
     )
@@ -250,7 +233,7 @@ class Questionnaire(models.Model):
     )
     employer_country = models.CharField(
         "Post-Graduation Employer Country",
-        max_length=10,
+        max_length=128,
         null=True,
         blank=True,
     )
@@ -259,12 +242,12 @@ class Questionnaire(models.Model):
     )
     employer_job_title = models.CharField(
         "Post-Graduation Employer Job Title",
-        max_length=10,
+        max_length=128,
         null=True,
         blank=True,
     )
     clubs_orgs = models.CharField(
-        "Post-Graduation Employer Country",
+        "Clubs and Orgs",
         max_length=255,
         null=True,
         blank=True,

@@ -1,34 +1,43 @@
 {% extends "dashboard/home.html" %}
 {% block title %}
-    Graduation Gear Up &mdash;
-    Carthage College
-{% endblock %}
-{% block content_head %}
-    <h1 id="page_title">
-        Graduation Gear Up
-    </h1>
+  Graduation Gear Up &mdash;
+  Carthage College
 {% endblock %}
 {% block content %}
 <div class="forms-container col-lg-8 col-md-8 col-sm-12 col-xs-12">
-    {% include "includes/required_text.html" %}
-    {% include "includes/errors_text.html" %}
-    <form method="post" action="." class="form" id="profile">
-        {% csrf_token %}
-        {% for field in form.hidden_fields %}
-            {% include "form_field.inc.html" %}
+  <h3>Graduation Gear Up</h3>
+  {% include "includes/required_text.html" %}
+  {% include "includes/errors_text.html" %}
+  <form method="post" action="." class="form" id="profile">
+    {% csrf_token %}
+    {% for field in form.hidden_fields %}
+      {% include "form_field.inc.html" %}
+    {% endfor %}
+    <fieldset class="blockLabels">
+      <ol>
+        {% for field in form.visible_fields %}
+          {% if field.name == "major_minor" %}
+          <li class="form-group ctrlHolder" style="font-size:.9em;">
+            Majors:
+            {% if student.major1 %}{{student.major1}},{% endif %}
+            {% if student.major2 %}{{student.major2}},{% endif %}
+            {% if student.major3 %}{{student.major3}}{% endif %}
+            <br>
+            Minors:
+            {% if student.minor1 %}{{student.minor1}},{% endif %}
+            {% if student.minor2 %}{{student.minor2}},{% endif %}
+            {% if student.minor3 %}{{student.minor3}}{% endif %}
+          </li>
+          {% endif %}
+          {% include "form_field.inc.html" %}
         {% endfor %}
-        <fieldset class="blockLabels">
-            <ol>
-                {% for field in form.visible_fields %}
-                    {% include "form_field.inc.html" %}
-                {% endfor %}
-            </ol>
-        </fieldset>
-        {% include "form_submit.inc.html" %}
-    </form>
-    <p>&nbsp;</p>
+      </ol>
+    </fieldset>
+    {% include "form_submit.inc.html" %}
+  </form>
+  <p>&nbsp;</p>
 </div>
 <div class="col-lg-4 col-md-4 col-sm-12">
-    {% include "gearup/help_text.html" %}
+  {% include "gearup/help_text.html" %}
 </div>
 {% endblock %}

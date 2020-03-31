@@ -97,8 +97,9 @@
   </li>
 </ul>
 {% endblock navbar-sidenav %}
-{% block content %}
+{% block breadcrumb %}
 <div class="row">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
   {% if messages %}
     {% for message in messages %}
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
@@ -108,13 +109,15 @@
     </div>
     {% endfor %}
   {% endif %}
+  </div>
 </div>
 <!-- /.row -->
+{% endblock %}
+{% block content %}
 <div class="row">
   <div class="col-lg-12">
     <h1>Graduation Gear Up</h1>
     <div class="col-lg-8" style="font-weight:bold;">
-      {% if request.session.gearup_status %}
       {% get_lw_content as eligible blurbs 2921 %}
       <div id="lw_success_2921">{{eligible.body|safe}}</div>
       {% ifusergroup cia_group %}
@@ -129,22 +132,45 @@
           title="Clear the cache for this content"></i></a>
       </p>
       {% endifusergroup %}
-      {% else %}
-      {% get_lw_content as ineligible blurbs 2922 %}
-      <div id="lw_success_2922">{{ineligible.body|safe}}</div>
-      {% ifusergroup cia_group %}
-      <p>
-        <a href="https://www.carthage.edu/livewhale/?blurbs_edit&tid=356&id=2922"
-          target="_blank">
-          <i class="fa fa-pencil green" aria-hidden="true"
-          title="Manage the content above in LiveWhale"></i></a>
-        <a href="#" data-cid="2922" data-target="lw_success_2922"
-          class="clear-cache">
-          <i class="fa fa-refresh green" aria-hidden="true"
-          title="Clear the cache for this content"></i></a>
-      </p>
-      {% endifusergroup %}
-      {% endif %}
+      <ul class="list-unstyled">
+        <li class="nav-item" title="Submit Questionnaire">
+          {% if user.questionnaire %}
+            <i class="fa fa-check green" title="Questionnaire"></i>
+          {% else %}
+            <i class="fa fa-times red" title="Questionnaire" style="margin-right:3px;"></i>
+          {% endif %}
+          <a href="{% url 'questionnaire' %}" title="Submit Questionnaire">
+          <i class="fa fa-fw fa fa-wpforms" aria-hidden="true"></i>
+          <span class="nav-link-text">Questionnaire</span>
+          </a>
+        </li>
+        <li class="nav-item" title="Submit Thank You Notes">
+          {% if user.questionnaire.notes.all %}
+            <i class="fa fa-check green" title="Thank You Notes"></i>
+          {% else %}
+            <i class="fa fa-times red" title="Thank You Notes" style="margin-right:3px;"></i>
+          {% endif %}
+          <a href="{% url 'notes' %}" title="Submit Thank You Notes">
+          <i class="fa fa-fw fa fa-sticky-note-o" aria-hidden="true"></i>
+          <span class="nav-link-text">Thank You Notes</span>
+          </a>
+        </li>
+        <li class="nav-item" title="Class Gift">
+          {% if user.questionnaire %}
+            {% if user.questionnaire.donation == 'Yes' %}
+              <i class="fa fa-check green" title="Class Gift"></i>
+            {% else %}
+              <i class="fa fa-check yellow" title="Class Gift"></i>
+            {% endif %}
+          {% else %}
+            <i class="fa fa-times red" title="Class Gift"></i>
+          {% endif %}
+          <a href="{% url 'donation' %}" title="Donate to Endowed Scholarship">
+          <i class="fa fa-fw fa fa-gift" aria-hidden="true"></i>
+          <span class="nav-link-text">Class Gift</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
   <!-- /.col-lg-12 -->

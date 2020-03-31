@@ -15,17 +15,16 @@ from django.views.decorators.csrf import csrf_exempt
 from djimix.core.utils import get_connection
 from djimix.core.utils import xsql
 from djimix.decorators.auth import portal_auth_required
-from djthia.core.utils import get_status
+from djthia.core.decorators import eligibility
 
 
 @portal_auth_required(
     session_var='DJTHIA_AUTH',
     redirect_url=reverse_lazy('access_denied'),
 )
+@eligibility
 def home(request):
     """Application home."""
-    if not request.session.get('gearup_status'):
-        get_status(request)
     return render(request, 'home.html', {})
 
 
