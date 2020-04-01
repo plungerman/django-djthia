@@ -22,10 +22,9 @@ def get_status(cid):
         connection = get_connection()
         with connection:
             row = xsql(sql, connection, key=settings.INFORMIX_DEBUG).fetchone()
+            status = False
             if row:
                 status = True
-            else:
-                status = False
             cache.set(key, status)
 
     return status
@@ -40,6 +39,8 @@ def get_student(cid):
             cursor = connection.cursor().execute(VITALS(cid=cid))
             # obtain the column names
             columns = [column[0] for column in cursor.description]
-            student = dict(zip(columns, cursor.fetchone()))
-            cache.set(key, student)
+            row = cursor.fetchone()
+            if row:
+                student = dict(zip(columns, row))
+                cache.set(key, student)
     return student
