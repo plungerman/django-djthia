@@ -1,0 +1,40 @@
+{% extends "dashboard/home.html" %}
+{% load ifusergroup %}
+{% load livewhale_api %}
+{% block title %}
+  Exit Couseling File Upload &mdash;
+  Graduation Gear Up &mdash;
+  Carthage College
+{% endblock %}
+{% block content %}
+<div class="forms-container col-lg-8 col-md-8 col-sm-12 col-xs-12">
+  <h3 id="page_title">Exit Counseling</h3>
+  {% get_lw_content as counseling blurbs 2929 %}
+  <div id="lw_success_2929">{{counseling.body|safe}}</div>
+  {% ifusergroup cia_group %}
+  <p>
+    <a href="https://www.carthage.edu/livewhale/?blurbs_edit&tid=356&id=2929"
+      target="_blank">
+      <i class="fa fa-pencil green" aria-hidden="true"
+      title="Manage the content above in LiveWhale"></i></a>
+    <a href="#" data-cid="2929" data-target="lw_success_2929"
+      class="clear-cache">
+      <i class="fa fa-refresh green" aria-hidden="true"
+      title="Clear the cache for this content"></i></a>
+  </p>
+  {% endifusergroup %}
+  {% include "includes/errors_text.html" %}
+  <form method="post" action="." class="form" id="profile">
+    {% csrf_token %}
+    <fieldset class="blockLabels">
+      <ol>
+        {% for field in form.visible_fields %}
+          {% include "form_field.inc.html" %}
+        {% endfor %}
+      </ol>
+    </fieldset>
+    {% include "form_submit.inc.html" %}
+  </form>
+  <p>&nbsp;</p>
+</div>
+{% endblock %}
