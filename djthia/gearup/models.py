@@ -355,7 +355,7 @@ class Document(models.Model):
     )
     created_at = models.DateTimeField("Date Created", auto_now_add=True)
     updated_at = models.DateTimeField("Date Updated", auto_now=True)
-    questionnaire = models.ForeignKey(
+    questionnaire = models.OneToOneField(
         Questionnaire,
         related_name='files',
         on_delete=models.CASCADE,
@@ -386,4 +386,4 @@ class Document(models.Model):
 
     def __str__(self):
         """Default data for display."""
-        return str(self.alert)
+        return str(self.questionnaire)
