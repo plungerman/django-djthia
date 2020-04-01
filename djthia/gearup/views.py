@@ -41,7 +41,7 @@ def counseling(request, pid=None):
         questionnaire = None
     if questionnaire:
         if request.method == 'POST':
-            form = DocumentForm(request.POST, use_required_attribute=REQ_ATTR)
+            form = DocumentForm(request.POST, request.FILES, use_required_attribute=REQ_ATTR)
             if form.is_valid():
                 doc = form.save(commit=False)
                 doc.questionnaire = user.questionnaire

@@ -24,7 +24,7 @@
   </p>
   {% endifusergroup %}
   {% include "includes/errors_text.html" %}
-  <form method="post" action="." class="form" id="profile">
+  <form method="post" action="." class="form" enctype="multipart/form-data" id="profile">
     {% csrf_token %}
     <fieldset class="blockLabels">
       <ol>
