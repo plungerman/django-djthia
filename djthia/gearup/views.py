@@ -6,12 +6,12 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from djimix.decorators.auth import portal_auth_required
-from djtools.utils.mail import send_mail
-from djthia.gearup.forms import AnnotationForm
-from djthia.gearup.forms import QuestionnaireForm
-from djthia.gearup.models import Questionnaire
-from djthia.core.utils import get_student
 from djthia.core.decorators import eligibility
+from djthia.core.utils import get_student
+from djthia.gearup.forms import AnnotationForm
+from djthia.gearup.forms import DocumentForm
+from djthia.gearup.forms import QuestionnaireForm
+from djtools.utils.mail import send_mail
 
 
 REQ_ATTR = settings.REQUIRED_ATTRIBUTE
@@ -32,12 +32,55 @@ def donation(request, pid=None):
     redirect_url=reverse_lazy('access_denied'),
 )
 @eligibility
+def counseling(request, pid=None):
+    """Exit counseling document upload form."""
+    user = request.user
+    try:
+        questionnaire = user.questionnaire
+    except Exception:
+        questionnaire = None
+    if questionnaire:
+        if request.method == 'POST':
+            form = DocumentForm(request.POST, use_required_attribute=REQ_ATTR)
+            if form.is_valid():
+                doc = form.save(commit=False)
+                doc.questionnaire = user.questionnaire
+                doc.created_by = user
+                doc.updated_by = user
+                doc.save()
+                messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    "Document saved",
+                    extra_tags='alert-success',
+                )
+                return HttpResponseRedirect(reverse_lazy('home'))
+        else:
+            form = DocumentForm(use_required_attribute=REQ_ATTR)
+    else:
+        messages.add_message(
+            request,
+            messages.WARNING,
+            "Please submit the Gear Up questionnaire",
+            extra_tags='alert-warning',
+        )
+        return HttpResponseRedirect(reverse_lazy('home'))
+    return render(
+        request, 'gearup/counseling.html', {'form': form},
+    )
+
+
+@portal_auth_required(
+    session_var='DJTHIA_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
+@eligibility
 def notes(request, pid=None):
     """Notes form."""
     user = request.user
     try:
         questionnaire = user.questionnaire
-    except:
+    except Exception:
         questionnaire = None
     if questionnaire:
         if request.method == 'POST':
@@ -80,7 +123,7 @@ def questionnaire(request):
     user = request.user
     try:
         questionnaire = user.questionnaire
-    except:
+    except Exception:
         questionnaire = None
     if questionnaire:
         messages.add_message(
@@ -91,10 +134,7 @@ def questionnaire(request):
         )
         return HttpResponseRedirect(reverse_lazy('home'))
     else:
-        if settings.DEBUG:
-            to_list = [settings.SERVER_EMAIL]
-        else:
-            to_list = [settings.GEARUP_EMAIL]
+        to_list = [settings.GEARUP_EMAIL]
         # fetch student data
         student = get_student(user.id)
         if request.method == 'POST':

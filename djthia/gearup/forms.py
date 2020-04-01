@@ -1,28 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-
 from djthia.gearup.models import Annotation
 from djthia.gearup.models import Document
 from djthia.gearup.models import Questionnaire
-from djtools.fields import BINARY_CHOICES
 
 
 class QuestionnaireForm(forms.ModelForm):
     """Graduate gear up questionnaire for graduation."""
-
-    '''
-    major_minor = forms.TypedChoiceField(
-        label="Are your majors and minors correct?",
-        choices=BINARY_CHOICES,
-        widget=forms.RadioSelect(),
-    )
-    cap_gown = forms.TypedChoiceField(
-        label="Have you order your cap and gown`?",
-        choices=BINARY_CHOICES,
-        widget=forms.RadioSelect(),
-    )
-    '''
 
     class Meta:
         """Information about the form class."""
@@ -33,14 +18,20 @@ class QuestionnaireForm(forms.ModelForm):
 
 
 class AnnotationForm(forms.ModelForm):
+    """Thank you notes form."""
 
     class Meta:
+        """Information about the form class."""
+
         model = Annotation
         fields = ('body',)
 
 
 class DocumentForm(forms.ModelForm):
+    """Document upload form."""
 
     class Meta:
+        """Information about the form class."""
+
         model = Document
         fields = ('phile',)

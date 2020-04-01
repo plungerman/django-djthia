@@ -15,6 +15,8 @@ urlpatterns = [
         TemplateView.as_view(template_name='gearup/success.html'),
         name='gearup_success',
     ),
+    # financial aid form
+    path('counseling/', views.counseling, name='counseling'),
     # donation form
     path('give/', views.donation, name='donation'),
     # notes form

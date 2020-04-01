@@ -8,6 +8,8 @@ def eligibility(view_func):
     def wrap(request, *args, **kwargs):
         if request.user.id and get_status(request.user.id):
             return view_func(request, *args, **kwargs)
+        elif request.user.is_staff:
+            return view_func(request, *args, **kwargs)
         else:
             return render(request, 'denied.html')
     return wrap

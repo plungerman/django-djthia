@@ -51,6 +51,12 @@
       <span class="nav-link-text">Questionnaire</span>
     </a>
   </li>
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Exit Counseling">
+    <a class="nav-link" href="{% url 'counseling' %}" title="Exit Counseling">
+      <i class="fa fa-fw fa fa-university" aria-hidden="true"></i>
+      <span class="nav-link-text">Exit Counseling</span>
+    </a>
+  </li>
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Submit Thank You Notes">
     <a class="nav-link" href="{% url 'notes' %}" title="Submit Thank You Notes">
       <i class="fa fa-fw fa fa-sticky-note-o" aria-hidden="true"></i>
@@ -142,6 +148,13 @@
           <a href="{% url 'questionnaire' %}" title="Submit Questionnaire">
           <i class="fa fa-fw fa fa-wpforms" aria-hidden="true"></i>
           <span class="nav-link-text">Questionnaire</span>
+          </a>
+        </li>
+        <li class="nav-item" title="Exit Counseling">
+          <i class="fa fa-times red" title="Exit Counseling" style="margin-right:3px;"></i>
+          <a href="{% url 'counseling' %}" title="Exit Counseling">
+          <i class="fa fa-fw fa fa-university" aria-hidden="true"></i>
+          <span class="nav-link-text">Exit Counseling</span>
           </a>
         </li>
         <li class="nav-item" title="Submit Thank You Notes">
