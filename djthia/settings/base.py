@@ -272,3 +272,4 @@ LOGGING = {
 }
 # apps
 CIA_GROUP = 'InstitutionalAdvancement'
+GEARUP_EMAIL = ''

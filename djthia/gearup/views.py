@@ -35,7 +35,11 @@ def donation(request, pid=None):
 def notes(request, pid=None):
     """Notes form."""
     user = request.user
-    if user.questionnaire:
+    try:
+        questionnaire = user.questionnaire
+    except:
+        questionnaire = None
+    if questionnaire:
         if request.method == 'POST':
             form = AnnotationForm(request.POST, use_required_attribute=REQ_ATTR)
             if form.is_valid():
@@ -74,7 +78,11 @@ def notes(request, pid=None):
 def questionnaire(request):
     """Questionnaire form."""
     user = request.user
-    if user.questionnaire:
+    try:
+        questionnaire = user.questionnaire
+    except:
+        questionnaire = None
+    if questionnaire:
         messages.add_message(
             request,
             messages.WARNING,
