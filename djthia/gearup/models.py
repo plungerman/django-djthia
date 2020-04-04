@@ -60,6 +60,11 @@ COLOUR_CHOICES = (
     ("Blue", "Blue"),
     ("Red", "Red"),
 )
+CAP_GOWN_SHIPPING = (
+    ("address_mailing", "Mailing Address"),
+    ("address_permanent", "Permanent Address"),
+    ("address_cap_gown", "Cap and Gown Address"),
+)
 
 
 class Questionnaire(models.Model):
@@ -278,6 +283,18 @@ class Questionnaire(models.Model):
         "Cap and Gown",
         max_length=4,
         choices=BINARY_CHOICES,
+        null=True,
+        blank=True,
+    )
+    cap_gown_shipping = models.CharField(
+        "Cap and Gown Shipping",
+        max_length=32,
+        choices=CAP_GOWN_SHIPPING,
+        null=True,
+        blank=True,
+    )
+    address_cap_gown = models.TextField(
+        "Cap and Gown Shipping Address", null=True, blank=True,
     )
 
     class Meta:

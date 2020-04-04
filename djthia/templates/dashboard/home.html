@@ -62,6 +62,12 @@
       <span class="nav-link-text">Exit Counseling</span></a>
     {% endif %}
   </li>
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Cap and Gown">
+    <a class="nav-link" href="{% url 'capgown' %}" title="Cap and Gown">
+      <i class="fa fa-fw fa fa-graduation-cap" aria-hidden="true"></i>
+      <span class="nav-link-text">Cap and Gown</span>
+    </a>
+  </li>
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Submit Thank You Notes">
     <a class="nav-link" href="{% url 'notes' %}" title="Submit Thank You Notes">
       <i class="fa fa-fw fa fa-sticky-note-o" aria-hidden="true"></i>
@@ -165,6 +171,16 @@
           <i class="fa fa-fw fa fa-university" aria-hidden="true"></i>
           <span class="nav-link-text">Exit Counseling</span></a>
           {% endif %}
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Cap and Gown">
+          {% if user.questionnaire.cap_gown %}
+            <i class="fa fa-check green" title=""></i>
+          {% else %}
+            <i class="fa fa-times red" title="Cap and Gown" style="margin-right:3px;"></i>
+          {% endif %}
+          <a href="{% url 'capgown' %}" title="Cap and Gown">
+            <i class="fa fa-fw fa fa-graduation-cap" aria-hidden="true"></i>
+            <span class="nav-link-text">Cap and Gown</span></a>
         </li>
         <li class="nav-item" title="Submit Thank You Notes">
           {% if user.questionnaire.notes.all %}

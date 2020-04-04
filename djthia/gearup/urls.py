@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 from djthia.gearup import views
 
 
-urlpatterns = [
+urlpatterns = (
     path(
         'success/',
         TemplateView.as_view(template_name='gearup/success.html'),
@@ -17,6 +17,8 @@ urlpatterns = [
     ),
     # financial aid form
     path('counseling/', views.counseling, name='counseling'),
+    # cap and gown
+    path('cap-gown/', views.capgown, name='capgown'),
     # donation form
     path('give/', views.donation, name='donation'),
     # notes form
@@ -25,4 +27,4 @@ urlpatterns = [
     path('questionnaire/', views.questionnaire, name='questionnaire'),
     # redirect
     path('', RedirectView.as_view(url=reverse_lazy('home'))),
-]
+)
