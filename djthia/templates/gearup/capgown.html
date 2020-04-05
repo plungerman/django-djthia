@@ -2,16 +2,16 @@
 {% load ifusergroup %}
 {% load livewhale_api %}
 {% block title %}
-  Thank You Notes &mdash;
+  Cap and Gown &mdash;
   Graduation Gear Up &mdash;
   Carthage College
 {% endblock %}
 {% block content %}
 <div class="forms-container col-lg-8 col-md-8 col-sm-12 col-xs-12 mb-5">
-  <h3 id="page_title">Thank You Notes</h3>
+  <h3 id="page_title">Cap and Gown</h3>
   <div class="col-md-12">
-  {% get_lw_content as notes blurbs 2930 %}
-  <div id="lw_success">{{notes.body|safe}}</div>
+  {% get_lw_content as cappgown blurbs 2930 %}
+  <div id="lw_success">{{capgown.body|safe}}</div>
   {% ifusergroup cia_group %}
   <p>
   <a href="https://www.carthage.edu/livewhale/?blurbs_edit&tid=356&id=2930"
@@ -36,12 +36,6 @@
     </fieldset>
     {% include "form_submit.inc.html" %}
   </form>
-  <h4>Your Notes</h4>
-  {% for note in user.questionnaire.notes.all %}
-  <div class="p-3 {% cycle 'blue-box' 'lightgrey-box'%}">
-    {{note.body|safe}}
-  </div>
-  {% endfor %}
   <p>&nbsp;</p>
 </div>
 {% endblock %}

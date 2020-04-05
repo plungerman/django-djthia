@@ -280,7 +280,7 @@ class Questionnaire(models.Model):
     # thank you notes are FK from Comments data model
     # counseling file is FK from Documents data model
     cap_gown = models.CharField(
-        "Cap and Gown",
+        "Have you ordered your Cap and Gown?",
         max_length=4,
         choices=BINARY_CHOICES,
         null=True,

@@ -57,6 +57,20 @@ def counseling(request):
                     "Document saved",
                     extra_tags='alert-success',
                 )
+                frum = user.email
+                if doc.questionnaire.email:
+                    frum = doc.questionnaire.email
+                subject = "[Exit Counseling Form] {0} {1}".format(
+                    user.first_name, user.last_name,
+                )
+                send_mail(
+                    request,
+                    [settings.GEARUP_EMAIL],
+                    subject,
+                    frum,
+                    'gearup/email_counseling.html',
+                    doc,
+                )
                 return HttpResponseRedirect(reverse_lazy('home'))
         else:
             form = DocumentForm(use_required_attribute=REQ_ATTR)
@@ -166,10 +180,10 @@ def questionnaire(request):
     """Questionnaire form."""
     user = request.user
     try:
-        questionnaire = user.questionnaire
+        gearup = user.questionnaire
     except Exception:
-        questionnaire = None
-    if questionnaire:
+        gearup = None
+    if gearup:
         messages.add_message(
             request,
             messages.WARNING,
@@ -178,7 +192,6 @@ def questionnaire(request):
         )
         return HttpResponseRedirect(reverse_lazy('home'))
     else:
-        to_list = [settings.GEARUP_EMAIL]
         # fetch student data
         student = get_student(user.id)
         if request.method == 'POST':
@@ -190,15 +203,6 @@ def questionnaire(request):
                 grad.created_by = user
                 grad.updated_by = user
                 grad.save()
-                email = settings.DEFAULT_FROM_EMAIL
-                if grad.email:
-                    email = grad.email
-                subject = "[Submit] {0} {1}".format(
-                    user.first_name, user.last_name,
-                )
-                send_mail(
-                    request, to_list, subject, email, 'gearup/email.html', grad,
-                )
                 return HttpResponseRedirect(reverse_lazy('gearup_success'))
         else:
             form = QuestionnaireForm(use_required_attribute=REQ_ATTR)

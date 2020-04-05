@@ -6,18 +6,18 @@
 import os
 
 # sqlserver connection string
+from djimix.settings.local import DBSERVERNAME
+from djimix.settings.local import INFORMIX_ODBC
+from djimix.settings.local import INFORMIX_ODBC_TRAIN
+from djimix.settings.local import INFORMIXDIR
+from djimix.settings.local import INFORMIXSERVER
+from djimix.settings.local import INFORMIXSQLHOSTS
+from djimix.settings.local import LD_LIBRARY_PATH
+from djimix.settings.local import LD_RUN_PATH
 from djimix.settings.local import MSSQL_EARL
-from djimix.settings.local import INFORMIX_ODBC, INFORMIX_ODBC_TRAIN
-from djimix.settings.local import (
-    INFORMIXSERVER,
-    DBSERVERNAME,
-    INFORMIXDIR,
-    ODBCINI,
-    ONCONFIG,
-    INFORMIXSQLHOSTS,
-    LD_LIBRARY_PATH,
-    LD_RUN_PATH,
-)
+from djimix.settings.local import ODBCINI
+from djimix.settings.local import ONCONFIG
+
 
 # Debug
 DEBUG = True
@@ -42,7 +42,9 @@ LIVEWHALE_API_URL = 'https://{0}'.format(SERVER_URL)
 ROOT_URL = '/apps/djthia/'
 ROOT_URLCONF = 'djthia.core.urls'
 WSGI_APPLICATION = 'djthia.wsgi.application'
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__)),
+)
 ROOT_DIR = BASE_DIR
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 MEDIA_ROOT = '{0}/assets/'.format(ROOT_DIR)
@@ -51,7 +53,7 @@ STATIC_URL = '/static/djthia/'
 MEDIA_URL = '/media/djthia/'
 UPLOADS_DIR = '{0}files/'.format(MEDIA_ROOT)
 UPLOADS_URL = '{0}files/'.format(MEDIA_URL)
-FILE_UPLOAD_PERMISSIONS=0o644
+FILE_UPLOAD_PERMISSIONS = 0o644
 STATICFILES_DIRS = ()
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -123,6 +125,15 @@ TEMPLATES = [
         },
     },
 ]
+# caching
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+        'TIMEOUT': 60 * 60 * 24,
+        'KEY_PREFIX': 'djthia_',
+    },
+}
 # LDAP Constants
 LDAP_SERVER = ''
 LDAP_PORT = ''
@@ -166,7 +177,9 @@ SERVER_EMAIL = ''
 SERVER_MAIL = ''
 # app specific settings
 # logging
-LOG_FILEPATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/')
+LOG_FILEPATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/',
+)
 LOG_FILENAME = '{0}{1}'.format(LOG_FILEPATH, 'debug.log')
 DEBUG_LOG_FILENAME = '{0}{1}'.format(LOG_FILEPATH, 'debug.log')
 INFO_LOG_FILENAME = '{0}{1}'.format(LOG_FILEPATH, 'info.log')
@@ -219,15 +232,15 @@ LOGGING = {
     },
     'loggers': {
         'custom_logfile': {
-            'level':'ERROR',
+            'level': 'ERROR',
             'filters': ['require_debug_true'],
             'class': 'logging.FileHandler',
             'filename': CUSTOM_LOG_FILENAME,
             'formatter': 'custom',
         },
         'info_logfile': {
-            'level':'INFO',
-            'class':'logging.handlers.RotatingFileHandler',
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
             'backupCount': 10,
             'maxBytes': 50000,
             'filters': ['require_debug_false'],
@@ -273,3 +286,4 @@ LOGGING = {
 # apps
 CIA_GROUP = 'InstitutionalAdvancement'
 GEARUP_EMAIL = ''
+EXIT_COUNSELING_EMAIL = ''
