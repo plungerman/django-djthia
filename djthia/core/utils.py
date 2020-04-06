@@ -9,6 +9,21 @@ from djimix.core.utils import xsql
 from djimix.sql.students import VITALS
 
 
+def get_finaid(cid):
+    """Determine if the student must complete the Exit Counseling Form."""
+    phile = os.path.join(settings.BASE_DIR, 'sql/finaid.sql')
+    with open(phile) as incantation:
+        sql = '{0} AND id={1}'.format(incantation.read(), cid)
+    connection = get_connection()
+    with connection:
+        row = xsql(sql, connection, key=settings.INFORMIX_DEBUG).fetchone()
+        status = False
+        if row:
+            status = True
+
+    return status
+
+
 def get_status(cid):
     """Determine if the student is eligible to participate."""
     key = 'gearup_status_{0}'.format(cid)

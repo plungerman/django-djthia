@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""Django settings for project."""
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
 # sqlserver connection string
@@ -98,7 +95,6 @@ MIDDLEWARE = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'djthia.core.middleware.StudentEligibilityMiddleware',
 )
 # template stuff
 TEMPLATES = [
@@ -115,6 +111,7 @@ TEMPLATES = [
             'context_processors': [
                 'djtools.context_processors.sitevars',
                 'djthia.context_processors.sitevars',
+                'djthia.context_processors.finaid',
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.media',

@@ -65,10 +65,10 @@ def counseling(request):
                 )
                 send_mail(
                     request,
-                    [settings.GEARUP_EMAIL],
+                    [settings.EXIT_COUNSELING_EMAIL],
                     subject,
                     frum,
-                    'gearup/email_counseling.html',
+                    'gearup/counseling_email.html',
                     doc,
                 )
                 return HttpResponseRedirect(reverse_lazy('home'))
@@ -216,5 +216,5 @@ def questionnaire(request):
         else:
             form = QuestionnaireForm(use_required_attribute=REQ_ATTR)
         return render(
-            request, 'gearup/form.html', {'form': form, 'student': student},
+            request, 'gearup/questionnaire.html', {'form': form, 'student': student},
         )
