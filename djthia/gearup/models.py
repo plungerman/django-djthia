@@ -3,6 +3,7 @@
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.utils.safestring import mark_safe
 from djtools.fields import BINARY_CHOICES
 from djtools.fields import YEARS4
 from djtools.fields.helpers import upload_to_path
@@ -108,9 +109,13 @@ class Questionnaire(models.Model):
         "Are your majors and minors correct?",
         max_length=4,
         choices=BINARY_CHOICES,
+        help_text=mark_safe("""
+        If your majors and/or minors are incorrect, please contact
+        <a href="mailto:registrar@carthage.edu">the registrar.</a>.
+        """),
     )
     address_mailing = models.TextField(
-        "Current Mailing Address", null=True, blank=True,
+        "Current Mailing Address",
     )
     address_permanent = models.TextField(
         "Permanent Address",

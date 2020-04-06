@@ -18,12 +18,12 @@
         {% for field in form.visible_fields %}
           {% if field.name == "major_minor" %}
           <li class="form-group ctrlHolder" style="font-size:.9em;">
-            Majors:
+            <strong style="color:green;">Majors:</strong>
             {% if student.major1 %}{{student.major1}},{% endif %}
             {% if student.major2 %}{{student.major2}},{% endif %}
             {% if student.major3 %}{{student.major3}}{% endif %}
             <br>
-            Minors:
+            <strong style="color:green;">Minors:</strong>
             {% if student.minor1 %}{{student.minor1}},{% endif %}
             {% if student.minor2 %}{{student.minor2}},{% endif %}
             {% if student.minor3 %}{{student.minor3}}{% endif %}

@@ -101,7 +101,11 @@ def capgown(request):
         questionnaire = None
     if questionnaire:
         if request.method == 'POST':
-            form = CapGownForm(request.POST, use_required_attribute=REQ_ATTR)
+            form = CapGownForm(
+                request.POST,
+                instance=questionnaire,
+                use_required_attribute=REQ_ATTR,
+            )
             if form.is_valid():
                 cap = form.save(commit=False)
                 cap.updated_by = user
@@ -114,7 +118,10 @@ def capgown(request):
                 )
                 return HttpResponseRedirect(reverse_lazy('home'))
         else:
-            form = CapGownForm(use_required_attribute=REQ_ATTR)
+            form = CapGownForm(
+                use_required_attribute=REQ_ATTR,
+                instance=questionnaire,
+            )
     else:
         messages.add_message(
             request,
@@ -124,7 +131,9 @@ def capgown(request):
         )
         return HttpResponseRedirect(reverse_lazy('home'))
     return render(
-        request, 'gearup/capgown.html', {'form': form},
+        request, 'gearup/capgown.html', {
+            'form': form, 'questionnaire': questionnaire,
+        },
     )
 
 

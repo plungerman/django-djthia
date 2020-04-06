@@ -7,10 +7,12 @@
   Carthage College
 {% endblock %}
 {% block content %}
-<div class="forms-container col-lg-8 col-md-8 col-sm-12 col-xs-12 mb-5">
-  <h3 id="page_title">Cap and Gown</h3>
-  <div class="col-md-12">
-  {% get_lw_content as cappgown blurbs 2930 %}
+<div class="bg-info col-lg-8 col-md-8 col-sm-12 col-xs-12">
+  <h3 class="text-center text-white">Cap and Gown</h3>
+</div>
+<div class="forms-container card bg-light col-lg-8 col-md-8 col-sm-12 col-xs-12 mb-4">
+  <div class="card-body bg-light">
+  {% get_lw_content as cappgown blurbs 2941 %}
   <div id="lw_success">{{capgown.body|safe}}</div>
   {% ifusergroup cia_group %}
   <p>
@@ -23,19 +25,104 @@
       title="Clear the cache for this content"></i></a>
   </p>
   {% endifusergroup %}
-  </div>
   {% include "includes/errors_text.html" %}
   <form method="post" action="." class="form" id="profile">
     {% csrf_token %}
-    <fieldset class="blockLabels">
-      <ol>
-        {% for field in form.visible_fields %}
-          {% include "form_field.inc.html" %}
-        {% endfor %}
-      </ol>
-    </fieldset>
+    <div class="form-row">
+      <div class="pb-3">
+        <div class="container-fluid">
+          <label for="id_{{form.cap_gown.name}}_0"
+            {% if form.cap_gown.errors %}class="text-danger"{% endif %}>
+            <h5>{{form.cap_gown.label}}</h5>
+          </label>
+          <div class="form-group small">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" value="Yes" type="radio"
+                name="{{form.cap_gown.name}}" id="id_{{form.cap_gown.name}}_0"
+                {% if form.cap_gown.value == 'Yes' %}checked{% endif %}>
+              <label for="id_{{form.cap_gown.name}}_0" class="form-check-label">
+                &nbsp;Yes
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" value="No" type="radio"
+                name="{{form.cap_gown.name}}" id="id_{{form.cap_gown.name}}_1"
+                {% if form.cap_gown.value == 'No' %}checked{% endif %}>
+              <label for="id_{{form.cap_gown.name}}_1" class="form-check-label">
+                &nbsp;No
+              </label>
+            </div>
+            <p>
+              <small class="text-danger">
+              {{form.cap_gown.errors|join:", "}}
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="pb-3" id="capGownShipping">
+        <div class="container-fluid">
+          <label for="id_{{form.cap_gown_shipping.name}}_0"
+            {% if form.cap_gown_shipping.errors %}class="text-danger"{% endif %}>
+            <h5>{{form.cap_gown_shipping.label}}</h5>
+          </label>
+          <div class="form-group small">
+            <div class="card">
+              <div class="card-header">Mailing Address</div>
+              <div class="card-body form-check form-check-inline">
+              <input class="form-check-input" value="address_mailing"
+                type="radio" name="{{form.cap_gown_shipping.name}}" id="id_{{form.cap_gown_shipping.name}}_0"
+                {% if form.cap_gown_shipping.value == 'address_mailing' %}checked{% endif %}>
+              <label for="id_{{form.cap_gown_shipping.name}}_0" class="form-check-label w-100 ml-2">
+                <pre>{{questionnaire.address_mailing}}</pre>
+              </label>
+              </div>
+            </div>
+            {% if questionnaire.address_permanent %}
+            <div class="card">
+              <div class="card-header">Permanent Address</div>
+              <div class="card-body form-check form-check-inline">
+              <input class="form-check-input" value="address_permanent"
+                type="radio" name="{{form.cap_gown_shipping.name}}" id="id_{{form.cap_gown_shipping.name}}_1"
+                {% if form.cap_gown_shipping.value == 'address_permanent' %}checked{% endif %}>
+              <label for="id_{{form.cap_gown_shipping.name}}_1" class="form-check-label w-100 ml-2">
+                <pre>{{questionnaire.address_permanent}}</pre>
+              </label>
+              </div>
+            </div>
+            {% endif %}
+            <div class="card">
+              <div class="card-header">Cap and Gown Address</div>
+              <div class="card-body form-check form-check-inline">
+              <input class="form-check-input" value="address_cap_gown"
+                type="radio" name="{{form.cap_gown_shipping.name}}" id="id_{{form.cap_gown_shipping.name}}_2"
+                {% if form.cap_gown_shipping.value == 'address_cap_gown' %}checked{% endif %}>
+              <label for="id_{{form.cap_gown_shipping.name}}_2" class="form-check-label w-100 ml-2">
+                <div class="container-fluid">
+                  <div class="form-group">
+                    <textarea rows="2" placeholder="{{form.address_cap_gown.help_text}}"
+                    class="form-control{% if form.address_cap_gown.errors %} is-invalid{% endif %}"
+                    id="{{form.address_cap_gown.id_for_label}}" name="{{form.address_cap_gown.name}}">{{form.address_cap_gown.value|default_if_none:''}}</textarea>
+                    <small class="text-danger">
+                    {{form.address_cap_gown.errors|join:", "}}
+                    </small>
+                  </div>
+                </div>
+              </label>
+              </div>
+            </div>
+            <p>
+              <small class="text-danger">
+              {{form.cap_gown_shipping.errors|join:", "}}
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div> <!-- /.form-row -->
     {% include "form_submit.inc.html" %}
   </form>
-  <p>&nbsp;</p>
-</div>
+  </div> <!-- /.card-body -->
+</div> <!-- /.forms-container -->
+<div class="mb-4">&nbsp;</div>
 {% endblock %}
