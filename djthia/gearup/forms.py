@@ -77,6 +77,15 @@ class DocumentForm(forms.ModelForm):
         fields = ('phile',)
 
 
+class PhoneticForm(DocumentForm):
+    """Phonetic pronunciation audio file upload form."""
+
+    phile = forms.FileField(
+        label="Upload an mp3 file with the pronunciation",
+        required=False,
+    )
+
+
 class QuestionnaireForm(forms.ModelForm):
     """Graduate gear up questionnaire for graduation."""
 

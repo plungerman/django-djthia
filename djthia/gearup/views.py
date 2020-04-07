@@ -13,6 +13,7 @@ from djthia.core.utils import get_student
 from djthia.gearup.forms import AnnotationForm
 from djthia.gearup.forms import CapGownForm
 from djthia.gearup.forms import DocumentForm
+from djthia.gearup.forms import PhoneticForm
 from djthia.gearup.forms import QuestionnaireForm
 from djtools.utils.mail import send_mail
 
@@ -53,6 +54,7 @@ def counseling(request):
                 doc.created_by = user
                 doc.updated_by = user
                 doc.save()
+                doc.tags.add('Finaid')
                 messages.add_message(
                     request,
                     messages.SUCCESS,
@@ -218,18 +220,29 @@ def questionnaire(request):
         student = get_student(user.id)
         if request.method == 'POST':
             form = QuestionnaireForm(
+                request.POST, use_required_attribute=REQ_ATTR,
+            )
+            pho_form = PhoneticForm(
                 request.POST, request.FILES, use_required_attribute=REQ_ATTR,
             )
-            if form.is_valid():
+            if form.is_valid() and pho_form.is_valid():
                 grad = form.save(commit=False)
                 grad.created_by = user
                 grad.updated_by = user
                 grad.save()
+                # audio file
+                doc = pho_form.save(commit=False)
+                doc.questionnaire = grad
+                doc.created_by = user
+                doc.updated_by = user
+                doc.save()
+                doc.tags.add('Phonetics')
                 return HttpResponseRedirect(reverse_lazy('gearup_success'))
         else:
             form = QuestionnaireForm(use_required_attribute=REQ_ATTR)
+            pho_form = PhoneticForm(use_required_attribute=REQ_ATTR)
         return render(
             request,
             'gearup/questionnaire.html',
-            {'form': form, 'student': student},
+            {'form': form, 'pho_form': pho_form, 'student': student},
         )

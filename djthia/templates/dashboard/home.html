@@ -53,8 +53,8 @@
   </li>
   {% if finaid %}
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Exit Counseling">
-    {% if user.questionnaire.files.phile.name %}
-    <a class="nav-link" href="https://{{server_url}}{{media_url}}/{{user.questionnaire.files.phile.name}}" target="_blank" title="Exit Counseling">
+    {% if user.questionnaire.exit_counseling %}
+    <a class="nav-link" href="https://{{server_url}}{{media_url}}/{{user.questionnaire.exit_counseling}}" target="_blank" title="Exit Counseling">
       <i class="fa fa-fw fa fa-university" aria-hidden="true"></i>
       <span class="nav-link-text">Exit Counseling</span></a>
     {% else %}
@@ -163,9 +163,9 @@
         </li>
         {% if finaid %}
         <li class="nav-item" title="Exit Counseling">
-          {% if user.questionnaire.files.phile.name %}
+          {% if user.questionnaire.exit_counseling %}
             <i class="fa fa-check green" title="Exit Counseling"></i>
-            <a href="https://{{server_url}}{{media_url}}/{{ user.questionnaire.files.phile.name}}" target="_blank" title="Exit Counseling">
+            <a href="https://{{server_url}}{{media_url}}/{{ user.questionnaire.exit_counseling}}" target="_blank" title="Exit Counseling">
             <i class="fa fa-fw fa fa-university" aria-hidden="true"></i>
             <span class="nav-link-text">Exit Counseling</span></a>
           {% else %}

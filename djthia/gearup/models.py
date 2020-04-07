@@ -5,12 +5,24 @@ from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils.safestring import mark_safe
 from djtools.fields import BINARY_CHOICES
-from djtools.fields import YEARS4
 from djtools.fields.helpers import upload_to_path
 from taggit.managers import TaggableManager
 
 
-ALLOWED_EXTENSIONS = ['pdf', 'png', 'jpg', 'jpeg', 'PDF', 'PNG', 'JPG', 'JPEG']
+ALLOWED_EXTENSIONS = (
+    'jpg',
+    'JPG',
+    'jpeg',
+    'JPEG',
+    'mp3',
+    'MP3',
+    'pdf',
+    'PDF',
+    'png',
+    'PNG',
+    'wav',
+    'WAV',
+)
 FILE_VALIDATORS = [
     FileExtensionValidator(allowed_extensions=ALLOWED_EXTENSIONS),
 ]
@@ -57,9 +69,20 @@ DONATION_CHOICES = (
     ),
 )
 COLOUR_CHOICES = (
-    ("Purple", "Purple"),
-    ("Blue", "Blue"),
-    ("Red", "Red"),
+    ('Black', 'Black'),
+    ('Blue', 'Blue'),
+    ('Gold', 'Gold'),
+    ('Gray', 'Gray'),
+    ('Green', 'Green'),
+    ('Orange', 'Orange'),
+    ('Pink', 'Pink'),
+    ('Purple', 'Purple'),
+    ('Red', 'Red'),
+    ('Silver', 'Silver'),
+    ('Tan/Beige', 'Tan/Beige'),
+    ('Teal/Turquoise', 'Teal/Turquoise'),
+    ('White', 'White'),
+    ('Yellow', 'Yellow'),
 )
 CAP_GOWN_SHIPPING = (
     ("address_mailing", "Mailing Address"),
@@ -127,7 +150,7 @@ class Questionnaire(models.Model):
         "Email other than carthage.edu", null=True, blank=True,
     )
     phone = models.CharField(
-        "Phone Number",
+        "Your Phone Number",
         max_length=12,
         help_text="Format: XXX-XXX-XXXX",
     )
@@ -152,7 +175,6 @@ class Questionnaire(models.Model):
     year_spouse = models.CharField(
         "Spouse's Class Year",
         max_length=4,
-        # choices=YEARS4,
         null=True,
         blank=True,
         help_text="(Carthage student only)",
@@ -213,7 +235,7 @@ class Questionnaire(models.Model):
         "Graduate School email", null=True, blank=True,
     )
     employer_name = models.CharField(
-        "Post-Graduation Employer Name",
+        "Business email (post graduation employer)",
         max_length=128,
         null=True,
         blank=True,
@@ -272,12 +294,18 @@ class Questionnaire(models.Model):
         """,
     )
     color = models.CharField(
-        "Class of 2020 Color",
+        verbose_name="""
+            Cast your vote for the Ribbon Color to represent 2020
+            on the Key of Knowledge
+        """,
         max_length=32,
         choices=COLOUR_CHOICES,
     )
     speaker = models.CharField(
-        "Class of 2020 Faculty Speaker",
+        verbose_name="""
+            Cast your vote for the faculty member you would like to speak
+            as part of your celebration
+        """,
         max_length=128,
         null=True,
         blank=True,
@@ -311,6 +339,16 @@ class Questionnaire(models.Model):
     def __unicode__(self):
         """Default data for display."""
         return self.created_by.username
+
+    def exit_counseling(self):
+        """Check if the exit counseling form has been uploaded."""
+        status = False
+        for phile in self.files.all():
+            for tag in phile.tags.all():
+                if tag.name == 'Finaid':
+                    status = phile.phile.name
+                    break
+        return status
 
     def get_absolute_url(self):
         """Absoluate URL for UI level."""
@@ -377,7 +415,7 @@ class Document(models.Model):
     )
     created_at = models.DateTimeField("Date Created", auto_now_add=True)
     updated_at = models.DateTimeField("Date Updated", auto_now=True)
-    questionnaire = models.OneToOneField(
+    questionnaire = models.ForeignKey(
         Questionnaire,
         related_name='files',
         on_delete=models.CASCADE,
