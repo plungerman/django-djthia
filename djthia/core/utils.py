@@ -6,7 +6,23 @@ from django.conf import settings
 from django.core.cache import cache
 from djimix.core.utils import get_connection
 from djimix.core.utils import xsql
+from djimix.people.utils import get_peeps
 from djimix.sql.students import VITALS
+
+
+def get_facstaff():
+    """Öbtain faculty and staff and build a choices list for form field."""
+    peeps = get_peeps('facstaff')
+    facstaff = [('', '----select----')]
+    for peep in peeps:
+        facstaff.append(
+            (
+                peep['cid'], '{0}, {1}'.format(
+                    peep['lastname'], peep['firstname'],
+                ),
+            ),
+        )
+    return facstaff
 
 
 def get_finaid(cid):

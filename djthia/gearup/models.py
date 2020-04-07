@@ -335,7 +335,7 @@ class Annotation(models.Model):
         User,
         verbose_name="Updated by",
         related_name='note_updated',
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         null=True,
         blank=True,
     )

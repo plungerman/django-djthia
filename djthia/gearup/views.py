@@ -2,9 +2,11 @@
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from djauth.LDAPManager import LDAPManager
 from djimix.decorators.auth import portal_auth_required
 from djthia.core.decorators import eligibility
 from djthia.core.utils import get_student
@@ -153,11 +155,21 @@ def notes(request):
         if request.method == 'POST':
             form = AnnotationForm(request.POST, use_required_attribute=REQ_ATTR)
             if form.is_valid():
+                form_data = form.cleaned_data
                 note = form.save(commit=False)
                 note.questionnaire = user.questionnaire
                 note.created_by = user
                 note.updated_by = user
                 note.save()
+                cid = form_data['recipients']
+                try:
+                    recipient = User.objects.get(pk=cid)
+                except Exception:
+                    lman = LDAPManager()
+                    luser = lman.search(cid)
+                    recipient = lman.dj_create(luser)
+                note.recipients.add(recipient)
+
                 messages.add_message(
                     request,
                     messages.SUCCESS,
@@ -175,6 +187,7 @@ def notes(request):
             extra_tags='alert-warning',
         )
         return HttpResponseRedirect(reverse_lazy('home'))
+
     return render(
         request, 'gearup/notes.html', {'form': form, 'notes': notes},
     )
@@ -216,5 +229,7 @@ def questionnaire(request):
         else:
             form = QuestionnaireForm(use_required_attribute=REQ_ATTR)
         return render(
-            request, 'gearup/questionnaire.html', {'form': form, 'student': student},
+            request,
+            'gearup/questionnaire.html',
+            {'form': form, 'student': student},
         )

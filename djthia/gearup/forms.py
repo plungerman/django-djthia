@@ -2,6 +2,7 @@
 
 from django import forms
 from django.utils.safestring import mark_safe
+from djthia.core.utils import get_facstaff
 from djthia.gearup.models import CAP_GOWN_SHIPPING
 from djthia.gearup.models import Annotation
 from djthia.gearup.models import Document
@@ -53,11 +54,17 @@ class CapGownForm(forms.ModelForm):
 class AnnotationForm(forms.ModelForm):
     """Thank you notes form."""
 
+    recipients = forms.CharField(
+        label="Recipient",
+        widget=forms.Select(choices=get_facstaff()),
+        required=True,
+    )
+
     class Meta:
         """Information about the form class."""
 
         model = Annotation
-        fields = ('body',)
+        fields = ('recipients', 'body')
 
 
 class DocumentForm(forms.ModelForm):
