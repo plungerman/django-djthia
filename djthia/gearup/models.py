@@ -16,6 +16,8 @@ ALLOWED_EXTENSIONS = (
     'JPEG',
     'mp3',
     'MP3',
+    'mov',
+    'MOV',
     'pdf',
     'PDF',
     'png',
@@ -117,7 +119,7 @@ class Questionnaire(models.Model):
     updated_at = models.DateTimeField("Date Updated", auto_now=True)
     # core
     name_full = models.CharField(
-        "Full Name",
+        "Full Name (first middle last) for diploma",
         max_length=128,
         null=True,
         blank=True,
@@ -281,8 +283,10 @@ class Questionnaire(models.Model):
     clubs_orgs = models.CharField(
         "Clubs and Orgs",
         max_length=255,
-        null=True,
-        blank=True,
+        help_text="""
+            Please list all clubs, organizations, greek life, honor societies,
+            and athletics you have been involved with during your time at Carthage
+        """,
     )
     donation = models.CharField(
         "Class of 2020 Gift",
@@ -316,6 +320,10 @@ class Questionnaire(models.Model):
         "Have you ordered your Cap and Gown?",
         max_length=4,
         choices=BINARY_CHOICES,
+        help_text=mark_safe("""
+            If 'No', you can do so
+            <a href='http://colleges.herffjones.com/college/carthage/' target='_blank'>here</a>.
+        """),
         null=True,
         blank=True,
     )

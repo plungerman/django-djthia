@@ -17,6 +17,10 @@ class CapGownForm(forms.ModelForm):
         label="Have you ordered your Cap and Gown?",
         widget=forms.RadioSelect,
         choices=BINARY_CHOICES,
+        help_text=mark_safe("""
+            If 'No', you can do so
+            <a href='http://colleges.herffjones.com/college/carthage/' target='_blank'>here</a>.
+        """),
         required=True,
     )
     cap_gown_shipping = forms.ChoiceField(
@@ -81,7 +85,7 @@ class PhoneticForm(DocumentForm):
     """Phonetic pronunciation audio file upload form."""
 
     phile = forms.FileField(
-        label="Upload an mp3 file with the pronunciation",
+        label="Upload an mp3 or video with the pronunciation",
         required=False,
     )
 
