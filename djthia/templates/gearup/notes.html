@@ -8,8 +8,8 @@
 {% endblock %}
 {% block content %}
 <div class="forms-container col-lg-8 col-md-8 col-sm-12 col-xs-12 mb-5">
-  <h3 id="page_title">Thank You Notes</h3>
   <div class="col-md-12">
+  <h3>Thank You Notes</h3>
   {% get_lw_content as notes blurbs 2930 %}
   <div id="lw_success">{{notes.body|safe}}</div>
   {% ifusergroup cia_group %}

@@ -364,7 +364,7 @@ class Questionnaire(models.Model):
         for phile in self.files.all():
             for tag in phile.tags.all():
                 if tag.name == 'Commencement Photos':
-                    fotos.append(phile.phile.name)
+                    fotos.append(phile)
                     break
         return fotos
 
@@ -449,6 +449,8 @@ class Document(models.Model):
         upload_to=upload_to_path,
         validators=FILE_VALIDATORS,
         max_length=768,
+        null=True,
+        blank=True,
     )
     tags = TaggableManager(blank=True)
 

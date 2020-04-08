@@ -45,17 +45,23 @@ def photos(request):
     except Exception:
         questionnaire = None
     if questionnaire:
+
+        instance1 = (questionnaire.photos()[0:1] or (None,))[0]
+        instance2 = (questionnaire.photos()[1:2] or (None,))[0]
+
         if request.method == 'POST':
             form1 = PhotoForm(
                 request.POST,
                 request.FILES,
                 prefix='f1',
+                instance=instance1,
                 use_required_attribute=REQ_ATTR,
             )
             form2 = PhotoForm(
                 request.POST,
                 request.FILES,
                 prefix='f2',
+                instance=instance2,
                 use_required_attribute=REQ_ATTR,
             )
             if form1.is_valid() and form2.is_valid():
@@ -79,8 +85,16 @@ def photos(request):
                 )
                 return HttpResponseRedirect(reverse_lazy('home'))
         else:
-            form1 = PhotoForm(prefix='f1', use_required_attribute=REQ_ATTR)
-            form2 = PhotoForm(prefix='f2', use_required_attribute=REQ_ATTR)
+            form1 = PhotoForm(
+                prefix='f1',
+                instance=instance1,
+                use_required_attribute=REQ_ATTR,
+            )
+            form2 = PhotoForm(
+                prefix='f2',
+                instance=instance2,
+                use_required_attribute=REQ_ATTR,
+            )
     else:
         messages.add_message(
             request,
