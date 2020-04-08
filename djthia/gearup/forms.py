@@ -7,6 +7,7 @@ from djthia.gearup.models import CAP_GOWN_SHIPPING
 from djthia.gearup.models import Annotation
 from djthia.gearup.models import Document
 from djthia.gearup.models import Questionnaire
+from djthia.gearup.models import STATUS_CHOICES
 from djtools.fields import BINARY_CHOICES
 
 
@@ -19,7 +20,8 @@ class CapGownForm(forms.ModelForm):
         choices=BINARY_CHOICES,
         help_text=mark_safe("""
             If 'No', you can do so
-            <a href='http://colleges.herffjones.com/college/carthage/' target='_blank'>here</a>.
+            <a href='http://colleges.herffjones.com/college/carthage/'
+              target='_blank'>here</a>.
         """),
         required=True,
     )
@@ -90,9 +92,27 @@ class PhoneticForm(DocumentForm):
     )
 
 
+class PhotoForm(DocumentForm):
+    """Commencement photos upload form."""
+
+    phile = forms.FileField(
+        label="Photo file",
+        required=False,
+        help_text="jpg format",
+    )
+
+
 class QuestionnaireForm(forms.ModelForm):
     """Graduate gear up questionnaire for graduation."""
 
+    status_postgrad = forms.ChoiceField(
+        label="""
+            Which of the following BEST describes your PRIMARY current status?
+        """,
+        widget=forms.RadioSelect,
+        choices=STATUS_CHOICES,
+        required=True,
+    )
     major_minor = forms.ChoiceField(
         label="Are your majors and minors correct?",
         widget=forms.RadioSelect,

@@ -14,6 +14,7 @@ from djthia.gearup.forms import AnnotationForm
 from djthia.gearup.forms import CapGownForm
 from djthia.gearup.forms import DocumentForm
 from djthia.gearup.forms import PhoneticForm
+from djthia.gearup.forms import PhotoForm
 from djthia.gearup.forms import QuestionnaireForm
 from djtools.utils.mail import send_mail
 
@@ -29,6 +30,68 @@ REQ_ATTR = settings.REQUIRED_ATTRIBUTE
 def donation(request):
     """Donation form."""
     return render(request, 'gearup/donation.html', {})
+
+
+@portal_auth_required(
+    session_var='DJTHIA_AUTH',
+    redirect_url=reverse_lazy('access_denied'),
+)
+@eligibility
+def photos(request):
+    """Commencement fotos."""
+    user = request.user
+    try:
+        questionnaire = user.questionnaire
+    except Exception:
+        questionnaire = None
+    if questionnaire:
+        if request.method == 'POST':
+            form1 = PhotoForm(
+                request.POST,
+                request.FILES,
+                prefix='f1',
+                use_required_attribute=REQ_ATTR,
+            )
+            form2 = PhotoForm(
+                request.POST,
+                request.FILES,
+                prefix='f2',
+                use_required_attribute=REQ_ATTR,
+            )
+            if form1.is_valid() and form2.is_valid():
+                doc1 = form1.save(commit=False)
+                doc1.questionnaire = user.questionnaire
+                doc1.created_by = user
+                doc1.updated_by = user
+                doc1.save()
+                doc1.tags.add('Commencement Photos')
+                doc2 = form2.save(commit=False)
+                doc2.questionnaire = user.questionnaire
+                doc2.created_by = user
+                doc2.updated_by = user
+                doc2.save()
+                doc2.tags.add('Commencement Photos')
+                messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    "Photos saved",
+                    extra_tags='alert-success',
+                )
+                return HttpResponseRedirect(reverse_lazy('home'))
+        else:
+            form1 = PhotoForm(prefix='f1', use_required_attribute=REQ_ATTR)
+            form2 = PhotoForm(prefix='f2', use_required_attribute=REQ_ATTR)
+    else:
+        messages.add_message(
+            request,
+            messages.WARNING,
+            "Please submit the Gear Up questionnaire",
+            extra_tags='alert-warning',
+        )
+        return HttpResponseRedirect(reverse_lazy('home'))
+    return render(
+        request, 'gearup/photos.html', {'form1': form1, 'form2': form2},
+    )
 
 
 @portal_auth_required(

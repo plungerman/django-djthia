@@ -23,6 +23,8 @@ urlpatterns = (
     path('give/', views.donation, name='donation'),
     # notes form
     path('notes/', views.notes, name='notes'),
+    # photos
+    path('photos/', views.photos, name='photos'),
     # questionnaire form
     path('questionnaire/', views.questionnaire, name='questionnaire'),
     # redirect

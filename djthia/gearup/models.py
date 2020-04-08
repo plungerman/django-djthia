@@ -358,6 +358,16 @@ class Questionnaire(models.Model):
                     break
         return status
 
+    def photos(self):
+        """Check if they have uploaded commencement photos."""
+        fotos = []
+        for phile in self.files.all():
+            for tag in phile.tags.all():
+                if tag.name == 'Commencement Photos':
+                    fotos.append(phile.phile.name)
+                    break
+        return fotos
+
     def get_absolute_url(self):
         """Absoluate URL for UI level."""
         return ('gearup_detail', [str(self.id)])

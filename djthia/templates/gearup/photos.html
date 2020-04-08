@@ -1,0 +1,66 @@
+{% extends "dashboard/home.html" %}
+{% load ifusergroup %}
+{% load livewhale_api %}
+{% block title %}
+  Photo Submission &mdash;
+  Graduation Gear Up &mdash;
+  Carthage College
+{% endblock %}
+{% block content %}
+<div class="forms-container col-lg-8 col-md-8 col-sm-12 col-xs-12">
+  <h3 id="page_title">Photo Submission</h3>
+  {% get_lw_content as counseling blurbs 2944 %}
+  <div id="lw_success_2944">{{counseling.body|safe}}</div>
+  {% ifusergroup cia_group %}
+  <p>
+    <a href="https://www.carthage.edu/livewhale/?blurbs_edit&tid=356&id=2944"
+      target="_blank">
+      <i class="fa fa-pencil green" aria-hidden="true"
+      title="Manage the content above in LiveWhale"></i></a>
+    <a href="#" data-cid="2944" data-target="lw_success_2944"
+      class="clear-cache">
+      <i class="fa fa-refresh green" aria-hidden="true"
+      title="Clear the cache for this content"></i></a>
+  </p>
+  {% endifusergroup %}
+  {% include "includes/errors_text.html" %}
+  <form method="post" action="." class="form" enctype="multipart/form-data" id="profile">
+    {% csrf_token %}
+    <fieldset class="blockLabels">
+      <ol>
+        {% for field in form1.visible_fields %}
+          {% include "form_field.inc.html" %}
+        {% endfor %}
+        {% for field in form2.visible_fields %}
+          {% include "form_field.inc.html" %}
+        {% endfor %}
+      </ol>
+    </fieldset>
+    {% include "form_submit.inc.html" %}
+  </form>
+  <p>&nbsp;</p>
+</div>
+{% endblock %}
+{% block modal %}
+<div class="modal fade" id="rights-responsibilities" tabindex="-1" role="dialog"
+  aria-labelledby="rightsResponsibilitiesLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="rightsResponsibilitiesLabel">Donation Form</h4>
+          <button type="button" class="close" data-dismiss="modal"
+            aria-hidden="true">&times;</button>
+        </div>
+      <div class="modal-body">
+        {% get_lw_content as rights blurbs 2940 %}
+        {{rights.body|safe}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
