@@ -121,14 +121,10 @@ class Questionnaire(models.Model):
     name_full = models.CharField(
         "Full Name (first middle last) for diploma",
         max_length=128,
-        null=True,
-        blank=True,
     )
     name_phonetic = models.CharField(
         "Phonetic Pronunciation of Name",
         max_length=128,
-        null=True,
-        blank=True,
     )
     major_minor = models.CharField(
         "Are your majors and minors correct?",
@@ -237,7 +233,7 @@ class Questionnaire(models.Model):
         "Graduate School email", null=True, blank=True,
     )
     employer_name = models.CharField(
-        "Business email (post graduation employer)",
+        "Post-Graduation Employer Name",
         max_length=128,
         null=True,
         blank=True,
@@ -323,6 +319,10 @@ class Questionnaire(models.Model):
         help_text=mark_safe("""
             If 'No', you can do so
             <a href='http://colleges.herffjones.com/college/carthage/' target='_blank'>here</a>.
+            All orders will be shipped beginning May 4.
+            Make sure to wear your regalia during the virtual ceremony,
+            as graduates will perform the symbolic tradition of moving your
+            tassels signaling you've obtained your degree.
         """),
         null=True,
         blank=True,

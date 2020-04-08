@@ -20,8 +20,11 @@ class CapGownForm(forms.ModelForm):
         choices=BINARY_CHOICES,
         help_text=mark_safe("""
             If 'No', you can do so
-            <a href='http://colleges.herffjones.com/college/carthage/'
-              target='_blank'>here</a>.
+            <a href='http://colleges.herffjones.com/college/carthage/' target='_blank'>here</a>.
+            All orders will be shipped beginning May 4.
+            Make sure to wear your regalia during the virtual ceremony,
+            as graduates will perform the symbolic tradition of moving your
+            tassels signaling you've obtained your degree.
         """),
         required=True,
     )
@@ -88,7 +91,6 @@ class PhoneticForm(DocumentForm):
 
     phile = forms.FileField(
         label="Upload an mp3 or video with the pronunciation",
-        required=False,
     )
 
 

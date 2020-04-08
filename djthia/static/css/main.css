@@ -1,10 +1,13 @@
 #descriptionField .trumbowyg-box {
     z-index:1;
 }
-.form .blockLabels label {
+.form .blockLabels h3 label {
   font-size: 1.2em;
 }
 .form-group h3, .form-group .help {margin-bottom:0;}
+#id_status_postgrad li {
+    display: block;
+}
 .table thead {
   background-color: #efefef;
   color: #000;

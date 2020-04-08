@@ -4,7 +4,7 @@
   Carthage College
 {% endblock %}
 {% block content %}
-<div class="forms-container col-lg-8 col-md-8 col-sm-12 col-xs-12">
+<div class="forms-container col-lg-10 col-md-10 col-sm-12 col-xs-12">
   <h3>Graduation Gear Up</h3>
   {% include "includes/required_text.html" %}
   {% include "includes/errors_text.html" %}
@@ -34,6 +34,19 @@
             {% for field in pho_form.visible_fields %}
               {% include "form_field.inc.html" %}
             {% endfor %}
+          {% endif %}
+          {% if field.name == "status_postgrad" %}
+          </fieldset>
+          <fieldset class="blockLabels">
+            <legend>
+              Please complete employer / graduate school details as applicable.
+            </legend>
+            <ol style="padding:0 0 0 4px;">
+          {% endif %}
+          {% if field.name == "employer_job_title" %}
+          </fieldset>
+          <fieldset class="blockLabels">
+            <ol style="padding:0 0 0 4px;">
           {% endif %}
         {% endfor %}
       </ol>
