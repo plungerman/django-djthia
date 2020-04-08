@@ -150,53 +150,64 @@
           title="Clear the cache for this content"></i></a>
       </p>
       {% endifusergroup %}
-      <ul class="list-unstyled">
-        <li class="nav-item" title="Submit Questionnaire">
+      <ul class="list-group w-75">
+        <li class="list-group-item p-2" title="Submit Questionnaire">
+          <span class="float-right">
           {% if user.questionnaire %}
             <i class="fa fa-check green" title="Questionnaire"></i>
           {% else %}
             <i class="fa fa-times red" title="Questionnaire" style="margin-right:3px;"></i>
           {% endif %}
+          </span>
           <a href="{% url 'questionnaire' %}" title="Submit Questionnaire">
           <i class="fa fa-fw fa fa-wpforms" aria-hidden="true"></i>
           <span class="nav-link-text">Questionnaire</span></a>
         </li>
         {% if finaid %}
-        <li class="nav-item" title="Exit Counseling">
+        <li class="list-group-item p-2" title="Exit Counseling">
           {% if user.questionnaire.exit_counseling %}
+            <span class="float-right">
             <i class="fa fa-check green" title="Exit Counseling"></i>
+            </span>
             <a href="https://{{server_url}}{{media_url}}/{{ user.questionnaire.exit_counseling}}" target="_blank" title="Exit Counseling">
             <i class="fa fa-fw fa fa-university" aria-hidden="true"></i>
             <span class="nav-link-text">Exit Counseling</span></a>
           {% else %}
-          <i class="fa fa-times red" title="Exit Counseling" style="margin-right:3px;"></i>
-          <a href="{% url 'counseling' %}" title="Exit Counseling">
-          <i class="fa fa-fw fa fa-university" aria-hidden="true"></i>
-          <span class="nav-link-text">Exit Counseling</span></a>
+            <span class="float-right">
+            <i class="fa fa-times red" title="Exit Counseling" style="margin-right:3px;"></i>
+            </span>
+            <a href="{% url 'counseling' %}" title="Exit Counseling">
+            <i class="fa fa-fw fa fa-university" aria-hidden="true"></i>
+            <span class="nav-link-text">Exit Counseling</span></a>
           {% endif %}
         </li>
         {% endif %}
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Cap and Gown">
+        <li class="list-group-item p-2" data-toggle="tooltip" data-placement="right" title="Cap and Gown">
+          <span class="float-right">
           {% if user.questionnaire.cap_gown %}
             <i class="fa fa-check green" title=""></i>
           {% else %}
             <i class="fa fa-times red" title="Cap and Gown" style="margin-right:3px;"></i>
           {% endif %}
+          </span>
           <a href="{% url 'capgown' %}" title="Cap and Gown">
             <i class="fa fa-fw fa fa-graduation-cap" aria-hidden="true"></i>
             <span class="nav-link-text">Cap and Gown</span></a>
         </li>
-        <li class="nav-item" title="Submit Thank You Notes">
+        <li class="list-group-item p-2" title="Submit Thank You Notes">
+          <span class="float-right">
           {% if user.questionnaire.notes.all %}
             <i class="fa fa-check green" title="Thank You Notes"></i>
           {% else %}
             <i class="fa fa-times red" title="Thank You Notes" style="margin-right:3px;"></i>
           {% endif %}
+          </span>
           <a href="{% url 'notes' %}" title="Submit Thank You Notes">
           <i class="fa fa-fw fa fa-sticky-note-o" aria-hidden="true"></i>
           <span class="nav-link-text">Thank You Notes</span></a>
         </li>
-        <li class="nav-item" title="Class Gift">
+        <li class="list-group-item p-2" title="Class Gift">
+          <span class="float-right">
           {% if user.questionnaire %}
             {% if user.questionnaire.donation == 'Yes' %}
               <i class="fa fa-check green" title="Class Gift"></i>
@@ -206,6 +217,7 @@
           {% else %}
             <i class="fa fa-times red" title="Class Gift" style="margin-right:3px;"></i>
           {% endif %}
+          </span>
           <a href="{% url 'donation' %}" title="Donate to Endowed Scholarship">
           <i class="fa fa-fw fa fa-gift" aria-hidden="true"></i>
           <span class="nav-link-text">Class Gift</span></a>
