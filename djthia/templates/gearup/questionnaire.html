@@ -14,7 +14,7 @@
       {% include "form_field.inc.html" %}
     {% endfor %}
     <fieldset class="blockLabels">
-      <ol>
+      <ol style="padding:0 0 0 4px;">
         {% for field in form.visible_fields %}
           {% if field.name == "major_minor" %}
           <li class="form-group ctrlHolder" style="font-size:.9em;">
