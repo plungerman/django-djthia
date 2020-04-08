@@ -11,7 +11,7 @@ from djimix.sql.students import VITALS
 
 
 def get_facstaff():
-    """Öbtain faculty and staff and build a choices list for form field."""
+    """Obtain faculty and staff and build a choices list for form field."""
     peeps = get_peeps('facstaff')
     facstaff = [('', '----select----')]
     for peep in peeps:
@@ -38,6 +38,21 @@ def get_finaid(cid):
             status = True
 
     return status
+
+
+def get_orgs(cid):
+    """Fetch the clubs and orgs from informix."""
+    orgs = []
+    phile = os.path.join(settings.BASE_DIR, 'sql/clubsorgs_student.sql')
+    with open(phile) as incantation:
+        sql = '{0} {1}'.format(incantation.read(), cid)
+    connection = get_connection()
+    with connection:
+        rows = xsql(sql, connection, key=settings.INFORMIX_DEBUG).fetchall()
+        for row in rows:
+            if row.name not in orgs:
+                orgs.append(row.name)
+    return orgs
 
 
 def get_status(cid):
