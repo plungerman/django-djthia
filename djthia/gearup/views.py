@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from djauth.LDAPManager import LDAPManager
 from djimix.decorators.auth import portal_auth_required
 from djthia.core.decorators import eligibility
+from djthia.core.utils import get_orgs
 from djthia.core.utils import get_student
 from djthia.gearup.forms import AnnotationForm
 from djthia.gearup.forms import CapGownForm
@@ -281,10 +282,10 @@ def questionnaire(request):
     """Questionnaire form."""
     user = request.user
     try:
-        gearup = user.questionnaire
+        quest = user.questionnaire
     except Exception:
-        gearup = None
-    if gearup:
+        quest = None
+    if quest:
         messages.add_message(
             request,
             messages.WARNING,
@@ -295,6 +296,7 @@ def questionnaire(request):
     else:
         # fetch student data
         student = get_student(user.id)
+        orgs = get_orgs(user.id)
         if request.method == 'POST':
             form = QuestionnaireForm(
                 request.POST, use_required_attribute=REQ_ATTR,
@@ -321,5 +323,10 @@ def questionnaire(request):
         return render(
             request,
             'gearup/questionnaire.html',
-            {'form': form, 'pho_form': pho_form, 'student': student},
+            {
+                'form': form,
+                'pho_form': pho_form,
+                'orgs': orgs,
+                'student': student,
+            },
         )
