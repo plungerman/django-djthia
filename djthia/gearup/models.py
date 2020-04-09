@@ -271,7 +271,7 @@ class Questionnaire(models.Model):
         "Post-Graduation Employer email", null=True, blank=True,
     )
     employer_job_title = models.CharField(
-        "Post-Graduation Employer Job Title",
+        "Post-Graduation Job Title",
         max_length=128,
         null=True,
         blank=True,
