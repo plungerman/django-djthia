@@ -13,7 +13,7 @@ from djthia.core.decorators import eligibility
 from djthia.core.utils import get_student
 from djthia.gearup.forms import AnnotationForm
 from djthia.gearup.forms import CapGownForm
-from djthia.gearup.forms import DocumentForm
+from djthia.gearup.forms import CounselingForm
 from djthia.gearup.forms import PhoneticForm
 from djthia.gearup.forms import PhotoForm
 from djthia.gearup.forms import QuestionnaireForm
@@ -123,7 +123,7 @@ def counseling(request):
         questionnaire = None
     if questionnaire:
         if request.method == 'POST':
-            form = DocumentForm(
+            form = CounselingForm(
                 request.POST, request.FILES, use_required_attribute=REQ_ATTR,
             )
             if form.is_valid():
@@ -155,7 +155,7 @@ def counseling(request):
                 )
                 return HttpResponseRedirect(reverse_lazy('home'))
         else:
-            form = DocumentForm(use_required_attribute=REQ_ATTR)
+            form = CounselingForm(use_required_attribute=REQ_ATTR)
     else:
         messages.add_message(
             request,

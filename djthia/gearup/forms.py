@@ -91,6 +91,7 @@ class PhoneticForm(DocumentForm):
 
     phile = forms.FileField(
         label="Upload an mp3 or video with the pronunciation",
+        required=False,
     )
 
 
@@ -101,6 +102,15 @@ class PhotoForm(DocumentForm):
         label="Photo file",
         required=False,
         help_text="jpg format",
+    )
+
+
+class CounselingForm(DocumentForm):
+    """Exit Counseling upload form."""
+
+    phile = forms.FileField(
+        label="Upload the signed exit counseling form here",
+        required=True,
     )
 
 

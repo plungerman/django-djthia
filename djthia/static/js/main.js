@@ -88,6 +88,8 @@ $(function() {
       $('#donation-modal').modal('show');
     }
   });
+  /* stupid chrome */
+  $('#id_name_phonetic').attr("autocomplete", "none");
   /* override the submit event for the alert form to handle some things */
   $('form#profile').submit(function(){
     /* check textarea for just br tag */

@@ -445,7 +445,7 @@ class Document(models.Model):
         blank=True,
     )
     phile = models.FileField(
-        "Dependent files",
+        verbose_name="File",
         upload_to=upload_to_path,
         validators=FILE_VALIDATORS,
         max_length=768,
