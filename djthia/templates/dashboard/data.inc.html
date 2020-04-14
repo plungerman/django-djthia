@@ -67,11 +67,11 @@
               <i class="fa fa-check green" title="Exit Counseling"></i>
               <span class="d-none">&#10003;</span>
             {% else %}
-            <i class="fa fa-times red" title="Exit Counseling"></i>
+            <i class="fa fa-times red" title="Missing Exit Counseling"></i>
             <span class="d-none">&#9747;</span>
             {% endif %}
           {% else %}
-          <i class="fa fa-ban red" title="Exit Counseling"></i>
+          <i class="fa fa-ban red" title="Does not need Exit Counseling"></i>
           <span class="d-none">&#8800;</span>
           {% endif %}
         </td>
@@ -79,7 +79,7 @@
           <i class="fa {% if q.notes.all %}fa-commenting yellow{% else %} fa-commenting-o green{% endif %}" data-html="true" data-toggle="popover" data-placement="right" data-content="{% for note in q.notes.all %}<div class='p-3 {% cycle 'blue-box' 'lightgrey-box' %}'><strong>To:&nbsp;</strong>{% for to in note.recipients.all %}{{to.last_name}}, {{to.first_name}}&nbsp;{% endfor %} {{note.body|escape}}</div>{% endfor %}"></i>
         </td>
         <td nowrap>
-          <a href="{# url 'detail' q.id #}"
+          <a href="mailto:{{q.created_by.email}}"
             title="View Submission Details: {{q.user.id}}">
               {{q.created_by.last_name}}, {{q.created_by.first_name}}</a>
         </td>
@@ -102,39 +102,39 @@
             {{q.student.major_minor}}
             {% endif %}
         </td>
-        <td nowrap>{{q.address_mailing}}</td>
-        <td nowrap>{{q.address_permanent}}</td>
-        <td nowrap>{{q.email}}</td>
-        <td nowrap>{{q.phone}}</td>
-        <td nowrap>{{q.guardian1}}</td>
-        <td nowrap>{{q.guardian2}}</td>
-        <td nowrap>{{q.name_spouse}}</td>
-        <td nowrap>{{q.year_spouse}}</td>
-        <td nowrap>{{q.marriage_anniversary}}</td>
-        <td nowrap>{{q.status_postgrad}}</td>
-        <td nowrap>{{q.graduate_school_name}}</td>
-        <td nowrap>{{q.graduate_school_program}}</td>
-        <td nowrap>{{q.graduate_school_address}}</td>
-        <td nowrap>{{q.graduate_school_city}}</td>
-        <td nowrap>{{q.graduate_school_state}}</td>
-        <td nowrap>{{q.graduate_school_postal_code}}</td>
-        <td nowrap>{{q.graduate_school_country}}</td>
-        <td nowrap>{{q.graduate_school_email}}</td>
-        <td nowrap>{{q.employer_name}}</td>
-        <td nowrap>{{q.employer_address}}</td>
-        <td nowrap>{{q.employer_city}}</td>
-        <td nowrap>{{q.employer_state}}</td>
-        <td nowrap>{{q.employer_postal_code}}</td>
-        <td nowrap>{{q.employer_country}}</td>
-        <td nowrap>{{q.employer_email}}</td>
-        <td nowrap>{{q.employer_job_title}}</td>
-        <td nowrap>{{q.clubs_orgs}}</td>
-        <td nowrap>{{q.donation}}</td>
-        <td nowrap>{{q.color}}</td>
-        <td nowrap>{{q.speaker}}</td>
-        <td nowrap>{{q.cap_gown}}</td>
-        <td nowrap>{{q.cap_gown_shipping}}</td>
-        <td nowrap>{{q.address_cap_gown}}</td>
+        <td nowrap>{{q.address_mailing|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.address_permanent|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.email|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.phone|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.guardian1|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.guardian2|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.name_spouse|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.year_spouse|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.marriage_anniversary|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.status_postgrad|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.graduate_school_name|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.graduate_school_program|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.graduate_school_address|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.graduate_school_city|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.graduate_school_state|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.graduate_school_postal_code|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.graduate_school_country|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.graduate_school_email|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.employer_name|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.employer_address|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.employer_city|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.employer_state|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.employer_postal_code|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.employer_country|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.employer_email|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.employer_job_title|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.clubs_orgs|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.donation|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.color|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.speaker|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.cap_gown|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.cap_gown_shipping|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.address_cap_gown|default:"&nbsp;"}}</td>
         <td class="text-center">
           {% if q.exit_counseling %}
           <a href="https://{{server_url}}{{media_url}}{{ q.exit_counseling}}" target="_blank" title="Exit Counseling">
