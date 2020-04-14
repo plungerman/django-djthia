@@ -1,141 +1,30 @@
-{% extends "base.html" %}
+{% extends "home.html" %}
 {% load ifusergroup %}
 {% load livewhale_api %}
+{% block extra_style %}
+{{block.super}}
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"
+  rel="stylesheet" type="text/css">
+<link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css"
+  rel="stylesheet" type="text/css">
+{% endblock %}
 {% block extra_javascript %}
 {{ block.super }}
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"
+  type="text/javascript" charset="utf-8" language="javascript"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"
+  type="text/javascript" charset="utf-8" language="javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"
+  type="text/javascript" charset="utf-8" language="javascript"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"
+  type="text/javascript" charset="utf-8" language="javascript"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"
+  type="text/javascript" charset="utf-8" language="javascript"></script>
 <script type="text/javascript">
-//$(function() {
-//});
+$(function() {
+  $("body").toggleClass("sidenav-toggled");
+});
 </script>
-{% endblock %}
-{% block navbar-header %}
-<a href="{% url 'home' %}" class="mr-sm-3 mr-lg-3">
-  <i class="fa fa-home fa-2x"></i></a>
-<a class="navbar-brand" href="{{root_url}}">Welcome 2020 Graduates</a>
-{% endblock %}
-{% block navbar-top-links %}
-  <ul class="navbar-nav ml-auto">
-    <li class="dropdown user-dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <i class="fa fa-user"></i> {{user.first_name|default:"Dashboard"}}
-        <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu">
-        <li class="divider"></li>
-        <li>
-          {% if user.is_anonymous %}
-          <a href="{% url 'auth_login' %}">
-            <i class="fa fa-sign-in"></i> Sign In
-          </a>
-          {% else %}
-          <a href="{% url 'auth_logout' %}">
-            <i class="fa fa-sign-out"></i> Sign Out
-          </a>
-          {% endif %}
-        </li>
-      </ul>
-    </li>
-  </ul>
-{% endblock navbar-top-links %}
-{% block navbar-sidenav %}
-<ul class="navbar-nav navbar-sidenav">
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Home">
-    <a class="nav-link" href="{% url 'home' %}" title="Home">
-      <i class="fa fa-fw fa fa-dashboard" aria-hidden="true"></i>
-      <span class="nav-link-text">Gear Up Home</span>
-    </a>
-  </li>
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Submit Questionnaire">
-    <a class="nav-link" href="{% url 'questionnaire' %}" title="Submit Questionnaire">
-      <i class="fa fa-fw fa fa-wpforms" aria-hidden="true"></i>
-      <span class="nav-link-text">Questionnaire</span>
-    </a>
-  </li>
-  {% if finaid %}
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Exit Counseling">
-    {% if user.questionnaire.exit_counseling %}
-    <a class="nav-link" href="https://{{server_url}}{{media_url}}/{{user.questionnaire.exit_counseling}}" target="_blank" title="Exit Counseling">
-      <i class="fa fa-fw fa fa-university" aria-hidden="true"></i>
-      <span class="nav-link-text">Exit Counseling</span></a>
-    {% else %}
-    <a class="nav-link" href="{% url 'counseling' %}" title="Exit Counseling">
-      <i class="fa fa-fw fa fa-university" aria-hidden="true"></i>
-      <span class="nav-link-text">Exit Counseling</span></a>
-    {% endif %}
-  </li>
-  {% endif %}
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Photo Submission">
-    <a class="nav-link" href="{% url 'photos' %}" title="Photo Submission">
-      <i class="fa fa-fw fa fa-camera-retro" aria-hidden="true"></i>
-      <span class="nav-link-text">Photos</span>
-    </a>
-  </li>
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Cap and Gown">
-    <a class="nav-link" href="{% url 'capgown' %}" title="Cap and Gown">
-      <i class="fa fa-fw fa fa-graduation-cap" aria-hidden="true"></i>
-      <span class="nav-link-text">Cap and Gown</span>
-    </a>
-  </li>
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Submit Thank You Notes">
-    <a class="nav-link" href="{% url 'notes' %}" title="Submit Thank You Notes">
-      <i class="fa fa-fw fa fa-sticky-note-o" aria-hidden="true"></i>
-      <span class="nav-link-text">Thank You Notes</span>
-    </a>
-  </li>
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Class Gift">
-    <a class="nav-link" href="{% url 'donation' %}" title="Donate to Endowed Scholarship">
-      <i class="fa fa-fw fa fa-gift" aria-hidden="true"></i>
-      <span class="nav-link-text">Class Gift</span>
-    </a>
-  </li>
-  {% if user.is_superuser or user.profile.css %}
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Administration">
-    <a class="nav-link" href="{% url 'admin:index' %}">
-      <i class="fa fa-fw fa fa-cog" aria-hidden="true"></i>
-      <span class="nav-link-text">Administration</span>
-    </a>
-  </li>
-  {% endif %}
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Carthage Home">
-    <a class="nav-link" href="https://www.carthage.edu/">
-      <i class="fa fa-fw fa fa-home" aria-hidden="true"></i>
-      <span class="nav-link-text">Carthage Home</span></a>
-  </li>
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My.Carthage">
-    <a class="nav-link" href="https://my.carthage.edu/">
-      <i class="fa fa-fw fa fa-lemon-o" aria-hidden="true"></i>
-      <span class="nav-link-text">My.Carthage</span>
-    </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link text-center" data-toggle="tooltip" data-placement="right" title="Expand Menu" id="sidenavToggler">
-      <i class="fa fa-fw fa-angle-double-left" aria-hidden="true"></i>
-    </a>
-  </li>
-</ul>
-<ul class="navbar-nav sidenav-toggler">
-  <li class="nav-item">
-    <a class="nav-link text-center">
-      <i class="fa fa-fw"></i>
-    </a>
-  </li>
-</ul>
-{% endblock navbar-sidenav %}
-{% block breadcrumb %}
-<div class="row">
-  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-  {% if messages %}
-    {% for message in messages %}
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-      <div class=" alert {{message.tags}}">
-        <strong>{{ message }}</strong>
-      </div>
-    </div>
-    {% endfor %}
-  {% endif %}
-  </div>
-</div>
-<!-- /.row -->
 {% endblock %}
 {% block content %}
 <div class="row">
@@ -144,6 +33,8 @@
       <h1>Graduation Gear Up</h1>
       {% get_lw_content as eligible blurbs 2921 %}
       <div id="lw_success_2921">{{eligible.body|safe}}</div>
+    </div>
+    <div class="col-lg-12">
       {% ifusergroup cia_group %}
       <p>
         <a href="https://www.carthage.edu/livewhale/?blurbs_edit&tid=356&id=2921"
@@ -155,7 +46,24 @@
           <i class="fa fa-refresh green" aria-hidden="true"
           title="Clear the cache for this content"></i></a>
       </p>
-      {% endifusergroup %}
+      <div class="panel panel-default">
+        <div class="panel-body" id="gearup-data-panel">
+          {% if quests %}
+          {% include "dashboard/data.inc.html" %}
+          {% else %}
+            <ul class="list-group w-75">
+              <li class="list-group-item p-2" title="Questionnaires">
+                <a href="{% url 'dashboard_home' %}" title="Questionnaire Data">
+                  <i class="fa fa-fw fa fa-wpforms" aria-hidden="true"></i>
+                    <span class="nav-link-text">Questionnaire Data</span></a>
+              </li>
+            </ul>
+          {% endif %}
+        </div>
+        <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+      {% else %}
       <ul class="list-group w-75">
         <li class="list-group-item p-2" title="Submit Questionnaire">
           <span class="float-right">
@@ -241,43 +149,12 @@
           <span class="nav-link-text">Class Gift</span></a>
         </li>
       </ul>
+      {% endifusergroup %}
     </div>
-  </div>
-  <!-- /.col-lg-12 -->
-</div>
-<!-- /.row -->
-<div class="row">
-  <div class="col-lg-12">
-    <div class="panel panel-default">
-      <div class="panel-body" id="proposals-data-panel">
-      </div>
-      <!-- /.panel-body -->
-    </div>
-    <!-- /.panel -->
+    <!-- /.col-lg-12 -->
   </div>
   <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
 {% endblock content %}
-{% block modal %}
-<div class="modal fade" id="donation-modal" tabindex="-1" role="dialog"
-  aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="donationModalLabel">Donation Form</h4>
-          <button type="button" class="close" data-dismiss="modal"
-            aria-hidden="true">&times;</button>
-        </div>
-      <div class="modal-body">
-        <iframe src="/forms/giving/donation/class-gift-2020/?modal=true" width="100%" height="400" frameborder="0" allowtransparency="true"></iframe>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-{% endblock %}
+{% block modal %}{% endblock %}

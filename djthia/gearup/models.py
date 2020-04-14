@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils.safestring import mark_safe
+from djthia.core.utils import get_finaid
+from djthia.core.utils import get_student
 from djtools.fields import BINARY_CHOICES
 from djtools.fields.helpers import upload_to_path
 from taggit.managers import TaggableManager
@@ -11,19 +13,13 @@ from taggit.managers import TaggableManager
 
 ALLOWED_EXTENSIONS = (
     'jpg',
-    'JPG',
     'jpeg',
-    'JPEG',
     'mp3',
-    'MP3',
+    'mp4',
     'mov',
-    'MOV',
     'pdf',
-    'PDF',
     'png',
-    'PNG',
     'wav',
-    'WAV',
 )
 FILE_VALIDATORS = [
     FileExtensionValidator(allowed_extensions=ALLOWED_EXTENSIONS),
@@ -358,6 +354,16 @@ class Questionnaire(models.Model):
                     break
         return status
 
+    def phonetics(self):
+        """Check if they have uploaded a phonetics file."""
+        status = False
+        for phile in self.files.all():
+            for tag in phile.tags.all():
+                if tag.name == 'Phonetics':
+                    status = phile.phile.name
+                    break
+        return status
+
     def photos(self):
         """Check if they have uploaded commencement photos."""
         fotos = []
@@ -367,6 +373,14 @@ class Questionnaire(models.Model):
                     fotos.append(phile)
                     break
         return fotos
+
+    def finaid(self):
+        """Determine if student must complete the exit counseling form."""
+        return get_finaid(self.created_by.id)
+
+    def student(self):
+        """Provide student data."""
+        return get_student(self.created_by.id)
 
     def get_absolute_url(self):
         """Absoluate URL for UI level."""

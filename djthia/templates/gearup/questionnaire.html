@@ -1,4 +1,4 @@
-{% extends "dashboard/home.html" %}
+{% extends "home.html" %}
 {% block title %}
   Graduation Gear Up &mdash;
   Carthage College
@@ -34,7 +34,7 @@
           </li>
           {% endif %}
           {% include "form_field.inc.html" %}
-          {% if field.name == "name_fohnetic" %}
+          {% if field.name == "name_phonetic" %}
             {% for field in pho_form.visible_fields %}
               {% include "form_field.inc.html" %}
             {% endfor %}

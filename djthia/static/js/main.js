@@ -77,9 +77,7 @@ $(function() {
       [25, 50, 100, 250, 500, 1000, 2000, 'All']
     ],
     dom: 'lfrBtip',
-    buttons: [
-      'csv', 'excel'
-    ]
+    buttons: ['excel']
   });
   /* modal for donations */
   $('#id_donation').change(function() {

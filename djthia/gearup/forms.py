@@ -1,14 +1,26 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
+from django.core.validators import FileExtensionValidator
 from django.utils.safestring import mark_safe
 from djthia.core.utils import get_facstaff
 from djthia.gearup.models import CAP_GOWN_SHIPPING
+from djthia.gearup.models import STATUS_CHOICES
 from djthia.gearup.models import Annotation
 from djthia.gearup.models import Document
 from djthia.gearup.models import Questionnaire
-from djthia.gearup.models import STATUS_CHOICES
 from djtools.fields import BINARY_CHOICES
+
+
+ALLOWED_EXTENSIONS = (
+    'mp3',
+    'mp4',
+    'mov',
+    'wav',
+)
+FILE_VALIDATORS = [
+    FileExtensionValidator(allowed_extensions=ALLOWED_EXTENSIONS),
+]
 
 
 class CapGownForm(forms.ModelForm):
@@ -90,8 +102,10 @@ class PhoneticForm(DocumentForm):
     """Phonetic pronunciation audio file upload form."""
 
     phile = forms.FileField(
-        label="Upload an mp3 or video with the pronunciation",
+        label="Upload an audio or video file with the pronunciation",
+        validators=FILE_VALIDATORS,
         required=False,
+        help_text="Allowed Formats: mp3, mp4, wav",
     )
 
 
@@ -126,7 +140,7 @@ class QuestionnaireForm(forms.ModelForm):
         required=True,
     )
     major_minor = forms.ChoiceField(
-        label="Are your majors and minors correct?",
+        label="Are your majors and minors above correct?",
         widget=forms.RadioSelect,
         choices=BINARY_CHOICES,
         required=True,
