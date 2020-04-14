@@ -2,9 +2,13 @@
   <table class="table table-striped table-bordered table-hover display" id="data-table">
     <thead>
       <tr>
-        <th>
+        <th class="no-sort">
           <span class="d-none">Finaid</span>
           <i class="fa fa-fw fa fa-university" aria-hidden="true" title="Financial Aid"></i>
+        </th>
+        <th class="no-sort">
+          <span class="d-none">Notes</span>
+          <i class="fa fa-fw fa fa-sticky-note-o" aria-hidden="true" title="Thank You Notes"></i>
         </th>
         <th>
           Student
@@ -57,19 +61,22 @@
     <tbody>
     {% for q in quests %}
       <tr>
-        <td nowrap>
-            {% if q.finaid %}
-              {% if q.exit_counseling %}
-                <i class="fa fa-check green" title="Exit Counseling"></i>
-                <span class="d-none">&#10003;</span>
-              {% else %}
-              <i class="fa fa-times red" title="Exit Counseling"></i>
-              <span class="d-none">&#9747;</span>
-              {% endif %}
+        <td class="text-center" nowrap>
+          {% if q.finaid %}
+            {% if q.exit_counseling %}
+              <i class="fa fa-check green" title="Exit Counseling"></i>
+              <span class="d-none">&#10003;</span>
             {% else %}
-            <i class="fa fa-ban red" title="Exit Counseling"></i>
-            <span class="d-none">&#8800;</span>
+            <i class="fa fa-times red" title="Exit Counseling"></i>
+            <span class="d-none">&#9747;</span>
             {% endif %}
+          {% else %}
+          <i class="fa fa-ban red" title="Exit Counseling"></i>
+          <span class="d-none">&#8800;</span>
+          {% endif %}
+        </td>
+        <td class="text-center" nowrap>
+          <i class="fa {% if q.notes.all %}fa-commenting yellow{% else %} fa-commenting-o green{% endif %}" data-html="true" data-toggle="popover" data-placement="right" data-content="{% for note in q.notes.all %}<div class='p-3 {% cycle 'blue-box' 'lightgrey-box' %}'><strong>To:&nbsp;</strong>{% for to in note.recipients.all %}{{to.last_name}}, {{to.first_name}}&nbsp;{% endfor %} {{note.body|escape}}</div>{% endfor %}"></i>
         </td>
         <td nowrap>
           <a href="{# url 'detail' q.id #}"
@@ -90,8 +97,10 @@
           {% else %}&nbsp;{% endif %}
         </td>
         <td class="text-center">
-            {{q.major_minor}}:
+            {{q.major_minor}}
+            {% if q.student.major_minor %}
             {{q.student.major_minor}}
+            {% endif %}
         </td>
         <td nowrap>{{q.address_mailing}}</td>
         <td nowrap>{{q.address_permanent}}</td>
@@ -126,32 +135,45 @@
         <td nowrap>{{q.cap_gown}}</td>
         <td nowrap>{{q.cap_gown_shipping}}</td>
         <td nowrap>{{q.address_cap_gown}}</td>
-        <td nowrap>
+        <td class="text-center">
           {% if q.exit_counseling %}
           <a href="https://{{server_url}}{{media_url}}{{ q.exit_counseling}}" target="_blank" title="Exit Counseling">
-            https://{{server_url}}{{media_url}}{{q.exit_counseling}}</a>
+            <i class="fa fa-fw fa fa-graduation-cap" aria-hidden="true"></i></a>
+          <span class="d-none">
+            https://{{server_url}}{{media_url}}{{q.exit_counseling}}
+          </span>
           {% else %}&nbsp;{% endif %}
         </td>
-        <td nowrap>
-            {% if q.photos.0.phile.name %}
-            <a href="https://{{server_url}}{{media_url}}{{q.photos.0.phile.name}}" target="_blank">
-             https://{{server_url}}{{media_url}}{{q.photos.0.phile.name}}</a>
-            {% endif %}
+        <td class="text-center">
+          {% if q.photos.0.phile.name %}
+          <a href="https://{{server_url}}{{media_url}}{{q.photos.0.phile.name}}" target="_blank">
+            <i class="fa fa-picture-o" aria-hidden="true"></i></a>
+          <span class="d-none">
+          https://{{server_url}}{{media_url}}{{q.photos.0.phile.name}}</a>
+          </span>
+          {% endif %}
         </td>
-        <td nowrap>
-            {% if q.photos.1.phile.name %}
-            <a href="https://{{server_url}}{{media_url}}{{q.photos.1.phile.name}}" target="_blank">
-             https://{{server_url}}{{media_url}}{{q.photos.1.phile.name}}</a>
-            {% endif %}
+        <td class="text-center">
+          {% if q.photos.1.phile.name %}
+          <a href="https://{{server_url}}{{media_url}}{{q.photos.1.phile.name}}" target="_blank">
+            <i class="fa fa-picture-o" aria-hidden="true"></i></a>
+          <span class="d-none">
+          https://{{server_url}}{{media_url}}{{q.photos.1.phile.name}}</a>
+          </span>
+          {% endif %}
         </td>
       </tr>
     {% endfor %}
     </tbody>
     <tfoot>
       <tr>
-        <th>
+        <th class="no-sort">
           <span class="d-none">Finaid</span>
           <i class="fa fa-fw fa fa-university" aria-hidden="true" title="Financial Aid"></i>
+        </th>
+        <th class="no-sort">
+          <span class="d-none">Notes</span>
+          <i class="fa fa-fw fa fa-sticky-note-o" aria-hidden="true" title="Thank You Notes"></i>
         </th>
         <th>
           Student

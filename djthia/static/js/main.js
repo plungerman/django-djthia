@@ -76,8 +76,19 @@ $(function() {
       [25, 50, 100, 250, 500, 1000, 2000, -1],
       [25, 50, 100, 250, 500, 1000, 2000, 'All']
     ],
+    'columnDefs': [
+      { targets: 'no-sort', orderable: false }
+    ],
+    order: [[2, "asc"]],
     dom: 'lfrBtip',
-    buttons: ['excel']
+    buttons: [
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            }
+    ]
   });
   /* modal for donations */
   $('#id_donation').change(function() {
@@ -85,6 +96,13 @@ $(function() {
     if(opval=='Yes'){
       $('#donation-modal').modal('show');
     }
+  });
+  /* modal for notes */
+  $('.fa-commenting').on('click',function(){
+    //var $dis = $(this);
+    var content = $(this).data('content');
+    $('.modal-body').html(content);
+    $('#notes-modal').modal({show:true});
   });
   /* stupid chrome */
   $('#id_name_phonetic').attr("autocomplete", "none");

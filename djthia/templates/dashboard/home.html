@@ -2,11 +2,11 @@
 {% load ifusergroup %}
 {% load livewhale_api %}
 {% block extra_style %}
-{{block.super}}
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"
   rel="stylesheet" type="text/css">
 <link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css"
   rel="stylesheet" type="text/css">
+{{block.super}}
 {% endblock %}
 {% block extra_javascript %}
 {{ block.super }}
@@ -157,4 +157,23 @@ $(function() {
 </div>
 <!-- /.row -->
 {% endblock content %}
-{% block modal %}{% endblock %}
+{% block modal %}
+<div class="modal fade" id="notes-modal" tabindex="-1" role="dialog"
+  aria-labelledby="notesModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="notesModalLabel">Thank You Notes</h4>
+        <button type="button" class="close" data-dismiss="modal"
+          aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
