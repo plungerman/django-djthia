@@ -7,13 +7,49 @@ SELECT
     Program_Enrollment_Record.prog,
     Program_Enrollment_Record.deg_app_date,
     Program_Enrollment_Record.subprog,
-    Program_Enrollment_Record.acst,
-    Program_Enrollment_Record.major1,
-    Program_Enrollment_Record.major2,
-    Program_Enrollment_Record.major3,
-    Program_Enrollment_Record.minor1,
-    Program_Enrollment_Record.minor2,
-    Program_Enrollment_Record.minor3,
+    Program_Enrollment_Record.acst,    
+    TRIM(
+        CASE
+            WHEN TRIM(Program_Enrollment_Record.deg) IN ("BA","BS")
+            THEN major1.txt
+            ELSE conc1.txt
+        END
+    ) AS major1,
+    TRIM(
+        CASE
+            WHEN TRIM(Program_Enrollment_Record.deg) IN ("BA","BS")
+            THEN major2.txt
+            ELSE conc2.txt
+        END
+    ) AS major2,
+    TRIM(
+        CASE
+            WHEN TRIM(Program_Enrollment_Record.deg) IN ("BA","BS")
+            THEN major3.txt
+            ELSE ""
+        END
+    ) AS major3,
+    TRIM(
+        CASE
+            WHEN TRIM(Program_Enrollment_Record.deg) IN ("BA","BS")
+            THEN minor1.txt
+            ELSE conc1.txt
+        END
+    ) AS minor1,
+    TRIM(
+        CASE
+            WHEN TRIM(Program_Enrollment_Record.deg) IN ("BA","BS")
+            THEN minor2.txt
+            ELSE conc2.txt
+        END
+    ) AS minor2,
+    TRIM(
+        CASE
+            WHEN TRIM(Program_Enrollment_Record.deg) IN ("BA","BS")
+            THEN minor3.txt
+            ELSE ""
+        END
+    ) AS minor3,
     Program_Enrollment_Record.conc1,
     T9.txt,
     Program_Enrollment_Record.conc2,
@@ -77,6 +113,24 @@ FROM (
     ON
         Program_Enrollment_Record.conc1 = T9.conc
 )
+LEFT JOIN
+    major_table major1  ON  Program_Enrollment_Record.major1 = major1.major
+LEFT JOIN
+    major_table major2  ON  Program_Enrollment_Record.major2 = major2.major
+LEFT JOIN
+    major_table major3  ON  Program_Enrollment_Record.major3 = major3.major
+LEFT JOIN
+    minor_table minor1  ON  Program_Enrollment_Record.minor1 = minor1.minor
+LEFT JOIN
+    minor_table minor2  ON  Program_Enrollment_Record.minor2 = minor2.minor
+LEFT JOIN
+    minor_table minor3  ON  Program_Enrollment_Record.minor3 = minor3.minor
+LEFT JOIN
+    conc_table conc1    ON  Program_Enrollment_Record.conc1  = conc1.conc
+LEFT JOIN
+    conc_table conc2    ON  Program_Enrollment_Record.conc2  = conc2.conc
+LEFT JOIN
+    conc_table conc3    ON  Program_Enrollment_Record.conc3  = conc3.conc
 LEFT OUTER JOIN
     conc_table T10
 ON
