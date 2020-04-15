@@ -64,11 +64,12 @@ def get_student(cid):
             sql = '{0} AND Program_Enrollment_Record.id={1}'.format(
                 incantation.read(), cid,
             )
-        connection = get_connection()
-        with connection:
-            row = xsql(sql, connection, key=settings.INFORMIX_DEBUG).fetchone()
+        with get_connection() as connection:
+            cursor = connection.cursor().execute(sql)
+            columns = [column[0] for column in cursor.description]
+            row = cursor.fetchone()
             if row:
-                student = row
+                student = dict(zip(columns, row))
                 cache.set(key, student)
 
     return student
