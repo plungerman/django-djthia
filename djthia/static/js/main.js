@@ -76,18 +76,24 @@ $(function() {
       [25, 50, 100, 250, 500, 1000, 2000, -1],
       [25, 50, 100, 250, 500, 1000, 2000, 'All']
     ],
+    drawCallback: function() {
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover',
+            'placement': 'right'
+        });
+    },
     'columnDefs': [
       { targets: 'no-sort', orderable: false }
     ],
     order: [[1, "asc"]],
     dom: 'lfrBtip',
     buttons: [
-            {
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: ':visible'
-                }
-            }
+      {
+        extend: 'excelHtml5',
+        exportOptions: {
+          columns: ':visible'
+        }
+      }
     ]
   });
   /* modal for donations */
