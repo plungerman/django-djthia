@@ -7,7 +7,6 @@ from django.core.cache import cache
 from djimix.core.utils import get_connection
 from djimix.core.utils import xsql
 from djimix.people.utils import get_peeps
-from djimix.sql.students import VITALS
 
 
 def get_facstaff():
