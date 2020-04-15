@@ -168,7 +168,7 @@
         <li class="list-group-item p-2" title="Submit Questionnaire">
           <span class="float-right">
           {% if user.questionnaire %}
-            <i class="fa fa-check green" title="Questionnaire"></i>
+            <i class="fa fa-check green" title="Questionnaire: {{user.questionnaire.id}}"></i>
           {% else %}
             <i class="fa fa-times red" title="Questionnaire" style="margin-right:3px;"></i>
           {% endif %}
