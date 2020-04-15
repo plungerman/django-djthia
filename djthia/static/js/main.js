@@ -79,7 +79,7 @@ $(function() {
     'columnDefs': [
       { targets: 'no-sort', orderable: false }
     ],
-    order: [[2, "asc"]],
+    order: [[1, "asc"]],
     dom: 'lfrBtip',
     buttons: [
             {
@@ -98,11 +98,16 @@ $(function() {
     }
   });
   /* modal for notes */
-  $('.fa-commenting').on('click',function(){
+  $(document).on('click','.fa-commenting', function (e) {
     //var $dis = $(this);
     var content = $(this).data('content');
     $('.modal-body').html(content);
     $('#notes-modal').modal({show:true});
+  });
+  /* popovers */
+  $('[data-toggle="popover"]').popover({
+    trigger: 'hover',
+    'placement': 'top'
   });
   /* stupid chrome */
   $('#id_name_phonetic').attr("autocomplete", "none");

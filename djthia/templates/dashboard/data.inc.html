@@ -3,10 +3,6 @@
     <thead>
       <tr>
         <th class="no-sort">
-          <span class="d-none">Finaid</span>
-          <i class="fa fa-fw fa fa-university" aria-hidden="true" title="Financial Aid"></i>
-        </th>
-        <th class="no-sort">
           <span class="d-none">Notes</span>
           <i class="fa fa-fw fa fa-sticky-note-o" aria-hidden="true" title="Thank You Notes"></i>
         </th>
@@ -57,20 +53,6 @@
     {% for q in quests %}
       <tr>
         <td class="text-center" nowrap>
-          {% if q.finaid %}
-            {% if q.exit_counseling %}
-              <i class="fa fa-check green" title="Exit Counseling"></i>
-              <span class="d-none">&#10003;</span>
-            {% else %}
-            <i class="fa fa-times red" title="Missing Exit Counseling"></i>
-            <span class="d-none">&#9747;</span>
-            {% endif %}
-          {% else %}
-          <i class="fa fa-ban red" title="Does not need Exit Counseling"></i>
-          <span class="d-none">&#8800;</span>
-          {% endif %}
-        </td>
-        <td class="text-center" nowrap>
           <i class="fa {% if q.notes.all %}fa-commenting yellow{% else %} fa-commenting-o green{% endif %}" data-html="true" data-toggle="popover" data-placement="right" data-content="{% for note in q.notes.all %}<div class='p-3 {% cycle 'blue-box' 'lightgrey-box' %}'><strong>To:&nbsp;</strong>{% for to in note.recipients.all %}{{to.last_name}}, {{to.first_name}}&nbsp;{% endfor %} {{note.body|escape}}</div>{% endfor %}"></i>
         </td>
         <td nowrap>
@@ -91,7 +73,7 @@
           {% if q.phonetics %}https://{{server_url}}{{media_url}}/{{q.phonetics}}
           {% else %}&nbsp;{% endif %}
         </td>
-        <td class="text-center" title="Majors: {% if q.student.major1 %}{{q.student.major1}},{% endif %}{% if q.student.major2 %}{{q.student.major2}},{% endif %}{% if q.student.major3 %}{{q.student.major3}}{% endif %} Minors: {% if q.student.minor1 %}{{q.student.minor1}},{% endif %}{% if q.student.minor2 %}{{q.student.minor2}},{% endif %}{% if q.student.minor3 %}{{q.student.minor3}}{% endif %}">
+        <td class="text-center" data-toggle="popover" data-placement="top" data-content="Majors: {% if q.student.major1 %}{{q.student.major1}},{% endif %}{% if q.student.major2 %}{{q.student.major2}},{% endif %}{% if q.student.major3 %}{{q.student.major3}}{% endif %} Minors: {% if q.student.minor1 %}{{q.student.minor1}},{% endif %}{% if q.student.minor2 %}{{q.student.minor2}},{% endif %}{% if q.student.minor3 %}{{q.student.minor3}}{% endif %}">
             {{q.major_minor}}
         </td>
         <td nowrap>{{q.address_mailing|default:"&nbsp;"}}</td>
@@ -159,10 +141,6 @@
     </tbody>
     <tfoot>
       <tr>
-        <th class="no-sort">
-          <span class="d-none">Finaid</span>
-          <i class="fa fa-fw fa fa-university" aria-hidden="true" title="Financial Aid"></i>
-        </th>
         <th class="no-sort">
           <span class="d-none">Notes</span>
           <i class="fa fa-fw fa fa-sticky-note-o" aria-hidden="true" title="Thank You Notes"></i>
