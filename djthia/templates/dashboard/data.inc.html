@@ -10,12 +10,7 @@
           <span class="d-none">Notes</span>
           <i class="fa fa-fw fa fa-sticky-note-o" aria-hidden="true" title="Thank You Notes"></i>
         </th>
-        <th>
-          Student
-          <i class="fa fa-eye green blue-tooltip" data-toggle="tooltip"
-            data-placement="top" aria-hidden="true"
-            title="View Questionnare"></i>
-        </th>
+        <th>Student</th>
         <th>Diploma Name</th>
         <th>Phonetics</th>
         <th class="d-none">Phonetics File</th>
@@ -80,7 +75,7 @@
         </td>
         <td nowrap>
           <a href="mailto:{{q.created_by.email}}"
-            title="View Submission Details: {{q.user.id}}">
+            title="Email student: {{q.created_by.id}}">
               {{q.created_by.last_name}}, {{q.created_by.first_name}}</a>
         </td>
         <td nowrap>{{q.name_full}}</td>
@@ -96,11 +91,8 @@
           {% if q.phonetics %}https://{{server_url}}{{media_url}}/{{q.phonetics}}
           {% else %}&nbsp;{% endif %}
         </td>
-        <td class="text-center">
+        <td class="text-center" title="Majors: {% if q.student.major1 %}{{q.student.major1}},{% endif %}{% if q.student.major2 %}{{q.student.major2}},{% endif %}{% if q.student.major3 %}{{q.student.major3}}{% endif %} Minors: {% if q.student.minor1 %}{{q.student.minor1}},{% endif %}{% if q.student.minor2 %}{{q.student.minor2}},{% endif %}{% if q.student.minor3 %}{{q.student.minor3}}{% endif %}">
             {{q.major_minor}}
-            {% if q.student.major_minor %}
-            {{q.student.major_minor}}
-            {% endif %}
         </td>
         <td nowrap>{{q.address_mailing|default:"&nbsp;"}}</td>
         <td nowrap>{{q.address_permanent|default:"&nbsp;"}}</td>
