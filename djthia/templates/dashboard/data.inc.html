@@ -53,7 +53,7 @@
     {% for q in quests %}
       <tr>
         <td class="text-center" nowrap>
-          <i class="fa {% if q.notes.all %}fa-commenting yellow{% else %} fa-commenting-o green{% endif %}" data-html="true" data-toggle="popover" data-placement="right" data-content="{% for note in q.notes.all %}<div class='p-3 {% cycle 'blue-box' 'lightgrey-box' %}'><strong>To:&nbsp;</strong>{% for to in note.recipients.all %}{{to.last_name}}, {{to.first_name}}&nbsp;{% endfor %} {{note.body|escape}}</div>{% endfor %}"></i>
+          <i class="fa {% if q.notes.all %}fa-commenting yellow{% else %} fa-commenting-o green{% endif %}" data-html="true" data-content="{% for note in q.notes.all %}<div class='p-3 {% cycle 'blue-box' 'lightgrey-box' %}'><strong>To:&nbsp;</strong>{% for to in note.recipients.all %}{{to.last_name}}, {{to.first_name}}&nbsp;{% endfor %} {{note.body|escape}}</div>{% endfor %}"></i>
         </td>
         <td nowrap>
           <a href="mailto:{{q.created_by.email}}"
