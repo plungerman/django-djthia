@@ -140,9 +140,7 @@ class Questionnaire(models.Model):
         blank=True,
         help_text="(if different than mailing address)",
     )
-    email = models.EmailField(
-        "Email other than carthage.edu", null=True, blank=True,
-    )
+    email = models.EmailField("Email other than carthage.edu")
     phone = models.CharField(
         "Your Phone Number",
         max_length=12,
@@ -343,6 +341,15 @@ class Questionnaire(models.Model):
     def __unicode__(self):
         """Default data for display."""
         return self.created_by.username
+
+    def first_name(self):
+        return self.created_by.first_name
+
+    def last_name(self):
+        return self.created_by.last_name
+
+    def email(self):
+        return self.created_by.email
 
     def exit_counseling(self):
         """Check if the exit counseling form has been uploaded."""
