@@ -13,7 +13,8 @@
         <th>Major/Minor</th>
         <th>Mailing Addr</th>
         <th>Permanent Addr</th>
-        <th>email</th>
+        <th>Carthage Email</th>
+        <th>Email</th>
         <th>Phone</th>
         <th>Guardian 1</th>
         <th>Guardian 2</th>
@@ -78,6 +79,7 @@
         </td>
         <td nowrap>{{q.address_mailing|default:"&nbsp;"}}</td>
         <td nowrap>{{q.address_permanent|default:"&nbsp;"}}</td>
+        <td nowrap>{{q.created_by.email}}</td>
         <td nowrap>{{q.email|default:"&nbsp;"}}</td>
         <td nowrap>{{q.phone|default:"&nbsp;"}}</td>
         <td nowrap>{{q.guardian1|default:"&nbsp;"}}</td>
@@ -157,7 +159,8 @@
         <th>Major/Minor</th>
         <th>Mailing Address</th>
         <th>Permanent Address</th>
-        <th>email</th>
+        <th>Carthage Email</th>
+        <th>Email</th>
         <th>Phone</th>
         <th>Guardian 1</th>
         <th>Guardian 2</th>
