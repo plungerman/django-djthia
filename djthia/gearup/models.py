@@ -383,6 +383,8 @@ class Questionnaire(models.Model):
 
     def finaid(self):
         """Determine if student must complete the exit counseling form."""
+        # this one is not cached and causes severe load on the server.
+        # we should find out how often the data is updated and cache accordingly.
         return get_finaid(self.created_by.id)
 
     def student(self):
