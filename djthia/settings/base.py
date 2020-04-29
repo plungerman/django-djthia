@@ -284,3 +284,4 @@ LOGGING = {
 CIA_GROUP = 'InstitutionalAdvancement'
 GEARUP_EMAIL = ''
 EXIT_COUNSELING_EMAIL = ''
+ACADEMIC_YEAR_LIMBO = False

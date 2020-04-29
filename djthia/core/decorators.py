@@ -13,7 +13,9 @@ def eligibility(view_func):
     def _wrap(request, *args, **kwargs):
         """Wrapper for the decorator."""
         cia = in_group(request.user, settings.CIA_GROUP)
-        if request.user.id and get_student(request.user.id):
+        if settings.ACADEMIC_YEAR_LIMBO and not cia:
+            return render(request, 'limbo.html')
+        elif request.user.id and get_student(request.user.id):
             return view_func(request, *args, **kwargs)
         elif settings.DEBUG:
             return view_func(request, *args, **kwargs)
