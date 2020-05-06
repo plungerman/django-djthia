@@ -15,13 +15,13 @@ class QuestionnaireAdmin(admin.ModelAdmin):
         'last_name',
         'first_name',
         'email',
+        'username',
         'created_at',
     )
     ordering = (
         '-created_at',
         'created_by__last_name',
         'created_by__first_name',
-        'created_by__email',
     )
     search_fields = (
         'created_by__last_name',

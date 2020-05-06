@@ -348,8 +348,8 @@ class Questionnaire(models.Model):
     def last_name(self):
         return self.created_by.last_name
 
-    def email(self):
-        return self.created_by.email
+    def username(self):
+        return self.created_by.username
 
     def exit_counseling(self):
         """Check if the exit counseling form has been uploaded."""

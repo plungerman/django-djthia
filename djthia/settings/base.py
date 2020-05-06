@@ -96,6 +96,7 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+CSRF_COOKIE_SECURE=True
 # template stuff
 TEMPLATES = [
     {
