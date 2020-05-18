@@ -343,12 +343,15 @@ class Questionnaire(models.Model):
         return self.created_by.username
 
     def first_name(self):
+        """Return the user's first name."""
         return self.created_by.first_name
 
     def last_name(self):
+        """Return the user's last name."""
         return self.created_by.last_name
 
     def username(self):
+        """Return the user's username."""
         return self.created_by.username
 
     def exit_counseling(self):
@@ -435,6 +438,18 @@ class Annotation(models.Model):
         return "{0}, {1}".format(
             self.created_by.last_name, self.created_by.first_name,
         )
+
+    def first_name(self):
+        """Return the user's first name."""
+        return self.created_by.first_name
+
+    def last_name(self):
+        """Return the user's last name."""
+        return self.created_by.last_name
+
+    def username(self):
+        """Return the user's username."""
+        return self.created_by.username
 
 
 class Document(models.Model):
