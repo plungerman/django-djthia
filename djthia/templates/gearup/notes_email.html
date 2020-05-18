@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<style>
+@media only screen and (max-width: 400px) {.body {width:100%;}}
+@media only screen and (min-width: 600px) {.body {width:50%;}}
+</style>
+</head>
+<body style="line-height:1.5em;font-family:ScalaSans,sans-serif;">
+<img src="https://www.carthage.edu/live/image/gid/35/width/450/height/200/27968_21060_14_HCSunset_JH_20.JPG">
+<h1>Thank You</h1>
+<dl style="margin-bottom:5px;">
+  <dt style="background:#efefef; color:#000; float:left; font-weight:bold; margin-right:10px; padding:5px; width:100px;">
+    To:
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">
+    {{data.recipients.all.0.first_name}} {{data.recipients.all.0.last_name}}
+  </dd>
+  <dt style="background:#efefef; color:#000; float:left; font-weight:bold; margin-right:10px; padding:5px; width:100px;">
+    From:
+  </dt>
+  <dd style="margin:2px 0; padding:5px 0;">
+    {{data.created_by.first_name}} {{data.created_by.last_name}}
+  </dd>
+</dl>
+<div class="body">{{data.body|safe}}</div>
+
+<h4>Testing</h4>
+To: {{data.to}}<br>
+From: {{data.frum}}
+</body>
+</html>

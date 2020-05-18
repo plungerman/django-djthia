@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 import json
-import os
-import requests
+from datetime import datetime
 
 from django.conf import settings
 from django.core.cache import cache
@@ -12,9 +10,9 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
-from djimix.core.utils import get_connection
-from djimix.core.utils import xsql
 from djimix.decorators.auth import portal_auth_required
+
+import requests
 from djthia.core.decorators import eligibility
 
 
