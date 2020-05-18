@@ -7,6 +7,8 @@ from djthia.gearup.models import Questionnaire
 
 
 class QuestionnaireAdmin(admin.ModelAdmin):
+    """Django admin class for Questionnaire model."""
+
     model = Questionnaire
     raw_id_fields = ('created_by', 'updated_by')
     list_max_show_all = 500
@@ -29,6 +31,30 @@ class QuestionnaireAdmin(admin.ModelAdmin):
     )
 
 
-admin.site.register(Annotation)
+class AnnotationAdmin(admin.ModelAdmin):
+    """Django admin class for Annotation model."""
+
+    model = Annotation
+    raw_id_fields = ('created_by', 'updated_by')
+    list_max_show_all = 500
+    list_per_page = 500
+    list_display = (
+        'last_name',
+        'first_name',
+        'username',
+        'created_at',
+    )
+    ordering = (
+        '-created_at',
+        'created_by__last_name',
+        'created_by__first_name',
+    )
+    search_fields = (
+        'created_by__last_name',
+        'created_by__username',
+    )
+
+
+admin.site.register(Annotation, AnnotationAdmin)
 admin.site.register(Document)
 admin.site.register(Questionnaire, QuestionnaireAdmin)
