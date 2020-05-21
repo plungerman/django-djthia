@@ -24,24 +24,22 @@ def main():
     for note in notes:
         if note.status:
             to = [note.recipients.all()[0].email]
-            if note.email:
-                frum = note.email
-            else:
+            frum = note.questionnaire.email
+            if not frum:
                 frum = note.created_by.email
             if DEBUG:
                 note.to = to
                 note.frum = frum
                 to = [settings.MANAGERS[0][1]]
-                print(note.created_by, note.status)
-            print(to)
             subject = "A Thank You Note from {0} {1}".format(
                 note.created_by.first_name, note.created_by.last_name,
             )
+            print(to, frum, subject)
             send_mail(None, to, subject, frum, 'gearup/notes_email.html', note)
             note.status = False
             note.save()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
 
     sys.exit(main())
