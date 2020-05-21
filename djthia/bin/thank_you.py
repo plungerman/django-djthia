@@ -20,17 +20,20 @@ DEBUG = settings.DEBUG
 
 def main():
     """Send emails to recipients of thank you notes."""
-    notes = Annotation.objects.all()[:3]
+    notes = Annotation.objects.all()
     for note in notes:
         if note.status:
             to = [note.recipients.all()[0].email]
-            frum = note.created_by.email
+            if note.email:
+                frum = note.email
+            else:
+                frum = note.created_by.email
             if DEBUG:
                 note.to = to
                 note.frum = frum
                 to = [settings.MANAGERS[0][1]]
-                print(to)
                 print(note.created_by, note.status)
+            print(to)
             subject = "A Thank You Note from {0} {1}".format(
                 note.created_by.first_name, note.created_by.last_name,
             )
