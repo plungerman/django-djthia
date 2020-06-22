@@ -6,7 +6,13 @@
           <span class="d-none">Notes</span>
           <i class="fa fa-fw fa fa-sticky-note-o" aria-hidden="true" title="Thank You Notes"></i>
         </th>
-        <th>Student</th>
+        <th>
+          Student
+          <i class="fa fa-eye green blue-tooltip" data-toggle="tooltip"
+            data-placement="top" aria-hidden="true"
+            title="View Questionnare"></i>
+        </th>
+        <th>CID</th>
         <th>Diploma Name</th>
         <th>Phonetics</th>
         <th class="d-none">Phonetics File</th>
@@ -64,6 +70,7 @@
             title="Email student: {{q.created_by.id}}">
               {{q.created_by.last_name}}, {{q.created_by.first_name}}</a>
         </td>
+        <td nowrap>{{q.created_by.id}}</td>
         <td nowrap>{{q.name_full}}</td>
         <td nowrap>
             {% if q.phonetics %}
@@ -165,6 +172,7 @@
             data-placement="top" aria-hidden="true"
             title="View Questionnare"></i>
         </th>
+        <th>CID</th>
         <th>Diploma Name</th>
         <th>Phonetics</th>
         <th class="d-none">Phonetics File</th>
