@@ -7,6 +7,7 @@ django-formtools==2.2
 django-taggit==1.2.0
 mysqlclient==1.4.6
 pycryptodome==3.9.4
+cryptography==3.0
 pyodbc==4.0.30
 python-memcached==1.59
 python-ldap==3.2.0
