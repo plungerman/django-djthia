@@ -7,7 +7,7 @@ SELECT
     Program_Enrollment_Record.prog,
     Program_Enrollment_Record.deg_app_date,
     Program_Enrollment_Record.subprog,
-    Program_Enrollment_Record.acst,    
+    Program_Enrollment_Record.acst,
     TRIM(
         CASE
             WHEN TRIM(Program_Enrollment_Record.deg) IN ("BA","BS")
@@ -137,13 +137,13 @@ ON
     Program_Enrollment_Record.conc2=T10.conc
 WHERE (
     (
-        Program_Enrollment_Record.plan_grad_yr = '2019'
+        Program_Enrollment_Record.plan_grad_yr = '2020'
     AND
         Program_Enrollment_Record.plan_grad_sess IN ('RA ', 'GA ', 'AA ', 'AB')
     )
     OR
     (
-        Program_Enrollment_Record.plan_grad_yr = '2020'
+        Program_Enrollment_Record.plan_grad_yr = '2021'
     AND
         Program_Enrollment_Record.plan_grad_sess IN (
             'RB ', 'RC ', 'RE ', 'GB', 'GC ', 'GE ', 'AK ', 'AM ', 'AG ', 'AS ', 'AT'
@@ -151,7 +151,7 @@ WHERE (
     )
     OR
     (
-        Program_Enrollment_Record.plan_grad_yr = '2021'
+        Program_Enrollment_Record.plan_grad_yr = '2022'
     AND
         Program_Enrollment_Record.plan_grad_sess = 'RB'
     )
