@@ -9,7 +9,6 @@ from django.urls import reverse_lazy
 from djauth.LDAPManager import LDAPManager
 from djimix.decorators.auth import portal_auth_required
 from djthia.core.decorators import eligibility
-#from djthia.core.utils import get_orgs
 from djthia.core.utils import get_student
 from djthia.gearup.forms import AnnotationForm
 from djthia.gearup.forms import CapGownForm
