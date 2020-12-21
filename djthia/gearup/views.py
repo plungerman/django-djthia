@@ -296,7 +296,6 @@ def questionnaire(request):
     else:
         # fetch student data
         student = get_student(user.id)
-        #orgs = get_orgs(user.id)
         if request.method == 'POST':
             form = QuestionnaireForm(
                 request.POST, use_required_attribute=REQ_ATTR,
@@ -326,7 +325,6 @@ def questionnaire(request):
             {
                 'form': form,
                 'pho_form': pho_form,
-                #'orgs': orgs,
                 'student': student,
             },
         )
