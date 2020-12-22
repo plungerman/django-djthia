@@ -57,7 +57,7 @@ DONATION_CHOICES = (
     (
         'Yes',
         """
-        Yes, I would like to make a gift in support of the Class of 2020
+        Yes, I would like to make a gift in support of the Class
         Endowed Scholarship.
         """,
     ),
@@ -279,7 +279,7 @@ class Questionnaire(models.Model):
         """,
     )
     donation = models.CharField(
-        "Class of 2020 Gift",
+        "Class Gift",
         max_length=4,
         choices=DONATION_CHOICES,
         help_text="""
@@ -289,7 +289,7 @@ class Questionnaire(models.Model):
     )
     color = models.CharField(
         verbose_name="""
-            Cast your vote for the Ribbon Color to represent 2020
+            Cast your vote for the Ribbon Color to represent your class
             on the Key of Knowledge
         """,
         max_length=32,
