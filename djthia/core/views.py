@@ -23,7 +23,7 @@ from djthia.core.decorators import eligibility
 @eligibility
 def home(request):
     """Application home."""
-    return render(request, 'home.html', {})
+    return render(request, 'home.html', {'year': datetime.now().year})
 
 
 @csrf_exempt
