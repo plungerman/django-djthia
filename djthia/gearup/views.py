@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from djauth.LDAPManager import LDAPManager
-from djimix.decorators.auth import portal_auth_required
+from djauth.managers import LDAPManager
+from djauth.decorators import portal_auth_required
 from djthia.core.decorators import eligibility
 from djthia.core.utils import get_student
 from djthia.gearup.forms import AnnotationForm
@@ -240,21 +240,29 @@ def notes(request):
                 note.created_by = user
                 note.updated_by = user
                 note.save()
-                cid = form_data['recipients']
+                username = form_data['recipients']
                 try:
-                    recipient = User.objects.get(pk=cid)
+                    recipient = User.objects.get(username=username)
                 except Exception:
-                    lman = LDAPManager()
-                    luser = lman.search(cid)
-                    recipient = lman.dj_create(luser)
-                note.recipients.add(recipient)
-
-                messages.add_message(
-                    request,
-                    messages.SUCCESS,
-                    "Note saved. Submit another?",
-                    extra_tags='alert-success',
-                )
+                    eldap = LDAPManager()
+                    result_data = eldap.search(username, field='cn')
+                    groups = eldap.get_groups(result_data)
+                    recipient = eldap.dj_create(result_data, groups=groups)
+                if recipient:
+                    note.recipients.add(recipient)
+                    messages.add_message(
+                        request,
+                        messages.SUCCESS,
+                        "Note saved. Submit another?",
+                        extra_tags='alert-success',
+                    )
+                else:
+                    messages.add_message(
+                        request,
+                        messages.ERROR,
+                        "Note failed. Invalid recipient.",
+                        extra_tags='alert-error',
+                    )
                 return HttpResponseRedirect(reverse_lazy('notes'))
         else:
             form = AnnotationForm(use_required_attribute=REQ_ATTR)

@@ -4,7 +4,7 @@
 from django.conf import settings
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from djimix.decorators.auth import portal_auth_required
+from djauth.decorators import portal_auth_required
 from djthia.gearup.models import Questionnaire
 
 

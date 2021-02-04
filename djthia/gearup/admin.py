@@ -42,6 +42,7 @@ class AnnotationAdmin(admin.ModelAdmin):
         'last_name',
         'first_name',
         'username',
+        'to_list',
         'created_at',
     )
     ordering = (

@@ -16,7 +16,7 @@ def get_facstaff():
     for peep in peeps:
         facstaff.append(
             (
-                peep['cid'], '{0}, {1}'.format(
+                peep['username'], '{0}, {1}'.format(
                     peep['lastname'], peep['firstname'],
                 ),
             ),

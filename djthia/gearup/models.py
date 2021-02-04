@@ -447,6 +447,13 @@ class Annotation(models.Model):
         """Return the user's last name."""
         return self.created_by.last_name
 
+    def to_list(self):
+        """Return the recipients."""
+        to_list = []
+        for to in self.recipients.all():
+            to_list.append(to)
+        return to_list
+
     def username(self):
         """Return the user's username."""
         return self.created_by.username
