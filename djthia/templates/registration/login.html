@@ -7,11 +7,14 @@
         <div class="col-md-6">
             {% if user.is_anonymous %}
                 {% if form.errors or errors %}
-                    <p class="bg-danger" style="color:white;">
-                        <a class="close" data-dismiss="alert" href="#">×</a>
-                        Please enter a correct username and password.
-                        Both fields are case-sensitive.
-                    </p>
+                  <p class="bg-warning p-2">
+                    Please enter a correct username and password.
+                    Both fields are case-sensitive.
+                    <br><br>
+                    If you cannot sign in for some reason, please send an
+                    email to
+                    <a href="mailto:passwords@help.carthage.edu">passwords@help.carthage.edu</a>.
+                  </p>
                 {% endif %}
                 {# get_lw_content as maintenance blurbs 2803 #}
                 {#maintenance.body|safe#}
