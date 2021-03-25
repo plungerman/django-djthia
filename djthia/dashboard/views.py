@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
+from datetime import date
 from django.conf import settings
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -29,7 +30,10 @@ def home(request):
         request,
         'dashboard/home.html',
         {
-            'quests': Questionnaire.objects.all(),
+            'quests': Questionnaire.objects.filter(
+                created_at__year=date.today().year,
+            )
+
         },
     )
 

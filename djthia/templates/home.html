@@ -195,18 +195,6 @@
             <i class="fa fa-fw fa fa-camera-retro" aria-hidden="true"></i>
             <span class="nav-link-text">Photo Submission</span></a>
         </li>
-        <li class="list-group-item p-2" data-toggle="tooltip" data-placement="right" title="Cap and Gown">
-          <span class="float-right">
-          {% if user.questionnaire.cap_gown %}
-            <i class="fa fa-check green" title=""></i>
-          {% else %}
-            <i class="fa fa-times red" title="Cap and Gown" style="margin-right:3px;"></i>
-          {% endif %}
-          </span>
-          <a href="{% url 'capgown' %}" title="Cap and Gown">
-            <i class="fa fa-fw fa fa-graduation-cap" aria-hidden="true"></i>
-            <span class="nav-link-text">Cap and Gown</span></a>
-        </li>
         <li class="list-group-item p-2" title="Submit Thank You Notes">
           <span class="float-right">
           {% if user.questionnaire.notes.all %}
