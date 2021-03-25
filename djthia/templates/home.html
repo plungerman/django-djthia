@@ -183,7 +183,7 @@
           {% endif %}
         </li>
         {% endif %}
-        <li class="list-group-item p-2" data-toggle="tooltip" data-placement="right" title="Photo Submission">
+        <li class="list-group-item p-2" title="Photo Submission">
           <span class="float-right">
           {% if user.questionnaire.photos %}
             <i class="fa fa-check green" title=""></i>
@@ -194,6 +194,11 @@
           <a href="{% url 'photos' %}" title="Photo Submission">
             <i class="fa fa-fw fa fa-camera-retro" aria-hidden="true"></i>
             <span class="nav-link-text">Photo Submission</span></a>
+        </li>
+        <li class="list-group-item p-2">
+          <a href="{% url 'capgown' %}" title="Cap and Gown">
+            <i class="fa fa-fw fa fa-graduation-cap" aria-hidden="true"></i>
+            <span class="nav-link-text">Cap and Gown</span></a>
         </li>
         <li class="list-group-item p-2" title="Submit Thank You Notes">
           <span class="float-right">
