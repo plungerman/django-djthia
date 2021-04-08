@@ -146,7 +146,7 @@ WHERE (
         Program_Enrollment_Record.plan_grad_yr = '2021'
     AND
         Program_Enrollment_Record.plan_grad_sess IN (
-            'RB ', 'RC ', 'RE ', 'GB', 'GC ', 'GE ', 'AK ', 'AM ', 'AG ', 'AS ', 'AT'
+            'RB ', 'RC ', 'RD', 'RE ', 'GB', 'GC ', 'GE ', 'AK ', 'AM ', 'AG ', 'AS ', 'AT'
         )
     )
     OR
