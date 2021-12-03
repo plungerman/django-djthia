@@ -17,9 +17,9 @@ from djimix.settings.local import ONCONFIG
 
 
 # Debug
-DEBUG = True
-INFORMIX_DEBUG = 'debug'
-REQUIRED_ATTRIBUTE = True
+DEBUG = False
+INFORMIX_DEBUG = ''
+REQUIRED_ATTRIBUTE = False
 ADMINS = ()
 MANAGERS = ADMINS
 SECRET_KEY = None
@@ -36,7 +36,7 @@ FILE_CHARSET = 'utf-8'
 SERVER_URL = ''
 API_URL = '{0}/{1}'.format(SERVER_URL, 'api')
 LIVEWHALE_API_URL = 'https://{0}'.format(SERVER_URL)
-ROOT_URL = '/apps/djthia/'
+ROOT_URL = '/djthia/'
 ROOT_URLCONF = 'djthia.core.urls'
 WSGI_APPLICATION = 'djthia.wsgi.application'
 BASE_DIR = os.path.dirname(
