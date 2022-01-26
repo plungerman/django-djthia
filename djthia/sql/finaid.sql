@@ -15,4 +15,4 @@ wHERE
 AND
     stat='E'
 AND
-    tick='FY20'
+    tick='FY21'
