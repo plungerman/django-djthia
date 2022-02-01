@@ -96,18 +96,6 @@ $(function() {
           {% endif %}
         </li>
         {% endif %}
-        <li class="list-group-item p-2" data-toggle="tooltip" data-placement="right" title="Photo Submission">
-          <span class="float-right">
-          {% if user.questionnaire.photos %}
-            <i class="fa fa-check green" title=""></i>
-          {% else %}
-            <i class="fa fa-times red" title="Photo Submission" style="margin-right:3px;"></i>
-          {% endif %}
-          </span>
-          <a href="{% url 'photos' %}" title="Photo Submission">
-            <i class="fa fa-fw fa fa-camera-retro" aria-hidden="true"></i>
-            <span class="nav-link-text">Photo Submission</span></a>
-        </li>
         <li class="list-group-item p-2" data-toggle="tooltip" data-placement="right" title="Cap and Gown">
           <span class="float-right">
           {% if user.questionnaire.cap_gown %}

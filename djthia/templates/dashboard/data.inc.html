@@ -52,10 +52,6 @@
         <th>Cap Gown Ship</th>
         <th>Cap Gown Addr</th>
         <th>Exit Counseling</th>
-        <th>Photo 1</th>
-        <th>Photo 1 Updated</th>
-        <th>Photo 2</th>
-        <th>Photo 2 Updated</th>
         <th>Created At</th>
       </tr>
     </thead>
@@ -130,32 +126,6 @@
           </span>
           {% else %}&nbsp;{% endif %}
         </td>
-        {% if q.photos.0.phile.name %}
-        <td class="text-center">
-          <a href="https://{{server_url}}{{media_url}}{{q.photos.0.phile.name}}" title="{{q.photos.0.updated_at}}"
-            target="_blank">
-            <i class="fa fa-picture-o" aria-hidden="true"></i></a>
-          <span class="d-none">
-          https://{{server_url}}{{media_url}}{{q.photos.0.phile.name}}</a>
-          </span>
-        </td>
-        <td>{{q.photos.0.updated_at|date:'Y-m-d H:i:s'}}</td>
-        {% else %}
-        <td></td><td></td>
-        {% endif %}
-        {% if q.photos.1.phile.name %}
-        <td class="text-center">
-          <a href="https://{{server_url}}{{media_url}}{{q.photos.1.phile.name}}" title="{{q.photos.1.updated_at}}"
-            target="_blank">
-            <i class="fa fa-picture-o" aria-hidden="true"></i></a>
-          <span class="d-none">
-          https://{{server_url}}{{media_url}}{{q.photos.1.phile.name}}</a>
-          </span>
-        </td>
-        <td>{{q.photos.1.updated_at|date:'Y-m-d H:i:s'}}</td>
-        {% else %}
-        <td></td><td></td>
-        {% endif %}
         <td>{{q.created_at|date:'Y-m-d H:i:s'}}</td>
       </tr>
     {% endfor %}
@@ -212,10 +182,6 @@
         <th>Cap Gown Ship</th>
         <th>Cap Gown Addr</th>
         <th>Exit Counseling</th>
-        <th>Photo 1</th>
-        <th>Photo 1 Updated</th>
-        <th>Photo 2</th>
-        <th>Photo 2 Updated</th>
         <th>Created At</th>
       </tr>
     </tfoot>
