@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import datetime
 import os
 
 from django.conf import settings
@@ -29,6 +30,9 @@ def get_finaid(cid):
     phile = os.path.join(settings.BASE_DIR, 'sql/finaid.sql')
     with open(phile) as incantation:
         sql = '{0} AND id={1}'.format(incantation.read(), cid)
+    curr_year = datetime.date.today().year
+    last_year = str(curr_year - 1)[-2:]
+    sql = sql.replace("{{year}}", last_year)
     connection = get_connection()
     with connection:
         row = xsql(sql, connection, key=settings.INFORMIX_DEBUG).fetchone()
@@ -58,12 +62,19 @@ def get_student(cid):
     """Determine if the student is eligible to participate."""
     key = 'gearup_student_{0}'.format(cid)
     student = cache.get(key)
+    curr_year = datetime.date.today().year
+    last_year = str(curr_year - 1)
+    next_year = str(curr_year + 1)
+
     if not student:
         phile = os.path.join(settings.BASE_DIR, 'sql/gearup.sql')
         with open(phile) as incantation:
             sql = '{0} AND Program_Enrollment_Record.id={1}'.format(
                 incantation.read(), cid,
             )
+        sql = sql.replace("{{last_year}}", last_year)
+        sql = sql.replace("{{curr_year}}", str(curr_year))
+        sql = sql.replace("{{next_year}}", next_year)
         with get_connection() as connection:
             cursor = connection.cursor().execute(sql)
             columns = [column[0] for column in cursor.description]

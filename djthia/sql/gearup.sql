@@ -137,13 +137,13 @@ ON
     Program_Enrollment_Record.conc2=T10.conc
 WHERE (
     (
-        Program_Enrollment_Record.plan_grad_yr = '2020'
+        Program_Enrollment_Record.plan_grad_yr = '{{last_year}}'
     AND
         Program_Enrollment_Record.plan_grad_sess IN ('RA ', 'GA ', 'AA ', 'AB')
     )
     OR
     (
-        Program_Enrollment_Record.plan_grad_yr = '2021'
+        Program_Enrollment_Record.plan_grad_yr = '{{curr_year}}'
     AND
         Program_Enrollment_Record.plan_grad_sess IN (
             'RB ', 'RC ', 'RD', 'RE ', 'GB', 'GC ', 'GE ', 'AK ', 'AM ', 'AG ', 'AS ', 'AT'
@@ -151,7 +151,7 @@ WHERE (
     )
     OR
     (
-        Program_Enrollment_Record.plan_grad_yr = '2022'
+        Program_Enrollment_Record.plan_grad_yr = '{{next_year}}'
     AND
         Program_Enrollment_Record.plan_grad_sess = 'RB'
     )
