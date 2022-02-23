@@ -160,5 +160,5 @@ AND
     Program_Enrollment_Record.prog IN ('UNDG', 'GRAD')
 AND
     Program_Enrollment_Record.cl NOT IN (
-        'AT', 'KU', 'ND', 'NM', 'PA', 'PB', 'PC', 'PG', 'PR', 'UP', 'YO'
+        'AT', 'KU', 'NM', 'PA', 'PB', 'PC', 'PG', 'PR', 'UP', 'YO'
     )
