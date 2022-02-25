@@ -139,7 +139,7 @@ WHERE (
     (
         Program_Enrollment_Record.plan_grad_yr = '{{last_year}}'
     AND
-        Program_Enrollment_Record.plan_grad_sess IN ('RA ', 'GA ', 'AA ', 'AB')
+        Program_Enrollment_Record.plan_grad_sess IN ('RA ', 'GA ', 'AA ', 'AB', 'GE')
     )
     OR
     (
