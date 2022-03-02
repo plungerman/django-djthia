@@ -17,8 +17,6 @@
   rel="stylesheet" type="text/css">
 <link href="https://app.carthage.edu/static/djsani/css/dashboard.css"
   rel="stylesheet" type="text/css">
-<link href="https://app.carthage.edu/static/djsani/css/main.css"
-  rel="stylesheet" type="text/css">
 <link href="//app.carthage.edu/themes/shared/css/forms.css"
   rel="stylesheet" type="text/css">
 <link href="{{static_url}}css/main.css" rel="stylesheet" type="text/css">
@@ -49,7 +47,7 @@
 <script type="text/javascript" charset="utf-8">
   var $clearCacheUrl = "{% url 'clear_cache' 'blurbs' %}";
   $(function() {
-    //$("body").toggleClass("sidenav-toggled");
+    $("body").toggleClass("sidenav-toggled");
   });
 </script>
 {% endblock %}

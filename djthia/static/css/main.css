@@ -253,6 +253,11 @@ h6 {font-weight:600;}
 .tooltip-warning .tooltip.bs-tooltip-top .arrow:before {
    border-left-color: #856404;
 }
+nav a {color: #cbbde2;}
+nav a:hover {color:#fff;}
+nav .input-group-btn {font-size:1.3em;}
+.navbar-toggler-icon {color:yellow;}
+.navbar-nav .dropdown, .dropup { padding: 3px; }
 
 @media only screen and (max-width: 25.5em) {
   #print{display:none;}
