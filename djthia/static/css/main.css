@@ -6,6 +6,8 @@
   font-size: 1.2em;
 }
 .form-group h3, .form-group .help {margin-bottom:0;}
+.green, .green .glyphicon-ok {color:#008000;}
+.yellow, .yellow .glyphicon-ok {color:yellowgreen;}
 #id_status_postgrad li {
     display: block;
 }
