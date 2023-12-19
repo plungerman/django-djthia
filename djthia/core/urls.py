@@ -51,8 +51,6 @@ urlpatterns = [
     # django admin and loginas
     path('rocinante/', include('loginas.urls')),
     path('rocinante/', admin.site.urls),
-    # admin honeypot
-    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     # clear cache via ajax post
     path(
         'cache/<str:ctype>/clear/', views.clear_cache, name='clear_cache',
