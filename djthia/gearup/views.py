@@ -121,38 +121,56 @@ def counseling(request):
     except Exception:
         questionnaire = None
     if questionnaire:
+        finaid = user.questionnaire.finaid
         if request.method == 'POST':
-            form = CounselingForm(
-                request.POST, request.FILES, use_required_attribute=REQ_ATTR,
-            )
-            if form.is_valid():
-                doc = form.save(commit=False)
-                doc.questionnaire = user.questionnaire
-                doc.created_by = user
-                doc.updated_by = user
-                doc.save()
-                doc.tags.add('Finaid')
+            finaid = request.POST.get('finaid')
+            if finaid == 'Yes':
+                form = CounselingForm(
+                    request.POST, request.FILES, use_required_attribute=REQ_ATTR,
+                )
+                if form.is_valid():
+                    user.questionnaire.finaid = 'Yes'
+                    user.questionnaire.save()
+                    doc = form.save(commit=False)
+                    doc.questionnaire = user.questionnaire
+                    doc.created_by = user
+                    doc.updated_by = user
+                    doc.save()
+                    doc.tags.add('Finaid')
+                    messages.add_message(
+                        request,
+                        messages.SUCCESS,
+                        "Document saved",
+                        extra_tags='alert-success',
+                    )
+                    frum = user.email
+                    if doc.questionnaire.email:
+                        frum = doc.questionnaire.email
+                    subject = "[Exit Counseling Form] {0} {1}".format(
+                        user.first_name, user.last_name,
+                    )
+                    send_mail(
+                        request,
+                        [settings.EXIT_COUNSELING_EMAIL],
+                        subject,
+                        frum,
+                        'gearup/counseling_email.html',
+                        doc,
+                    )
+                    return HttpResponseRedirect(reverse_lazy('home'))
+                else:
+                    finaid = 'Yes'
+            elif finaid == 'No':
+                user.questionnaire.finaid = 'No'
+                return HttpResponseRedirect(reverse_lazy('home'))
+            else:
+                form = CounselingForm(use_required_attribute=REQ_ATTR)
                 messages.add_message(
                     request,
-                    messages.SUCCESS,
-                    "Document saved",
-                    extra_tags='alert-success',
+                    messages.WARNING,
+                    "You must choose 'Yes' or 'No'",
+                    extra_tags='alert-warning',
                 )
-                frum = user.email
-                if doc.questionnaire.email:
-                    frum = doc.questionnaire.email
-                subject = "[Exit Counseling Form] {0} {1}".format(
-                    user.first_name, user.last_name,
-                )
-                send_mail(
-                    request,
-                    [settings.EXIT_COUNSELING_EMAIL],
-                    subject,
-                    frum,
-                    'gearup/counseling_email.html',
-                    doc,
-                )
-                return HttpResponseRedirect(reverse_lazy('home'))
         else:
             form = CounselingForm(use_required_attribute=REQ_ATTR)
     else:
@@ -164,7 +182,7 @@ def counseling(request):
         )
         return HttpResponseRedirect(reverse_lazy('home'))
     return render(
-        request, 'gearup/counseling.html', {'form': form},
+        request, 'gearup/counseling.html', {'form': form, 'finaid': finaid},
     )
 
 

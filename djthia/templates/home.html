@@ -162,16 +162,25 @@
             <span class="float-right">
             <i class="fa fa-check green" title="Exit Counseling"></i>
             </span>
-            <a href="https://{{server_url}}{{media_url}}/{{ user.questionnaire.exit_counseling}}" target="_blank" title="Exit Counseling">
+            <a href="https://{{server_url}}{{media_url}}{{ user.questionnaire.exit_counseling}}" target="_blank" title="Exit Counseling">
             <i class="fa fa-fw fa fa-university" aria-hidden="true"></i>
             <span class="nav-link-text">Exit Counseling</span></a>
           {% else %}
+            {% if user.questionnaire.finaid == 'No' %}
+            <span class="float-right">
+            <i class="fa fa-check green" title="Exit Counseling"></i>
+            </span>
+            <a href="{% url 'counseling' %}" title="Exit Counseling">
+            <i class="fa fa-fw fa fa-university" aria-hidden="true"></i>
+            <span class="nav-link-text">Exit Counseling</span></a>
+            {% else %}
             <span class="float-right">
             <i class="fa fa-times red" title="Exit Counseling" style="margin-right:3px;"></i>
             </span>
             <a href="{% url 'counseling' %}" title="Exit Counseling">
             <i class="fa fa-fw fa fa-university" aria-hidden="true"></i>
             <span class="nav-link-text">Exit Counseling</span></a>
+            {% endif %}
           {% endif %}
         </li>
         <li class="list-group-item p-2">

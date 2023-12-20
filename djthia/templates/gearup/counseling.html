@@ -10,7 +10,11 @@
 {{block.super}}
 <script type="text/javascript">
 $(function() {
+  {% if finaid == 'Yes' or finaid == 'Yes' %}
+  $("#exit-counseling").slideDown(200);
+  {% else %}
   $("#exit-counseling").slideUp(200);
+  {% endif %}
   $("input[name=finaid]:radio").change(function () {
      if ($(this).attr("value") == "Yes") {
        $("#exit-counseling").slideDown(200);
@@ -32,9 +36,9 @@ $(function() {
     <div class="exit-counseling">
       <p>Are you required to complete the exit counseling form?</p>
       <label for="finaid_1">Yes</label>
-      <input type="radio" name="finaid" id="finaid_1" value="Yes">
+      <input type="radio" name="finaid" id="finaid_1" value="Yes"{% if finaid == 'Yes' %} checked{% endif %}>
       <label for="finaid_2">No</label>
-      <input type="radio" name="finaid" id="finaid_2" value="No">
+      <input type="radio" name="finaid" id="finaid_2" value="No"{% if finaid == 'No' %} checked{% endif %}>
     </div>
     {% ifusergroup cia_group %}
     <p>
