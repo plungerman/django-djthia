@@ -109,7 +109,7 @@ TEMPLATES = [
             'context_processors': [
                 'djtools.context_processors.sitevars',
                 'djthia.context_processors.sitevars',
-                'djthia.context_processors.finaid',
+                #'djthia.context_processors.finaid',
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.media',

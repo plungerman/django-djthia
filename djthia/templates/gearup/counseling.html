@@ -1,4 +1,4 @@
-{% extends "dashboard/home.html" %}
+{% extends "home.html" %}
 {% load ifusergroup %}
 {% load livewhale_api %}
 {% block title %}
@@ -6,26 +6,51 @@
   Graduation Gear Up &mdash;
   Carthage College
 {% endblock %}
+{% block extra_javascript %}
+{{block.super}}
+<script type="text/javascript">
+$(function() {
+  $("#exit-counseling").slideUp(200);
+  $("input[name=finaid]:radio").change(function () {
+     if ($(this).attr("value") == "Yes") {
+       $("#exit-counseling").slideDown(200);
+     } else if ($(this).attr("value") == "No") {
+       $("#exit-counseling").slideUp(200);
+     } else {
+       $("#exit-counseling").slideUp(200);
+     }
+  });
+});
+</script>
+{% endblock %}
 {% block content %}
 <div class="forms-container col-lg-8 col-md-8 col-sm-12 col-xs-12">
   <h3 id="page_title">Exit Counseling</h3>
-  {% get_lw_content as counseling blurbs 3165 %}
-  <div id="lw_success_3165">{{counseling.body|safe}}</div>
-  {% ifusergroup cia_group %}
-  <p>
-    <a href="https://www.carthage.edu/livewhale/?blurbs_edit&tid=19&id=3165"
-      target="_blank">
-      <i class="fa fa-pencil green" aria-hidden="true"
-      title="Manage the content above in LiveWhale"></i></a>
-    <a href="#" data-cid="3165" data-target="lw_success_3165"
-      class="clear-cache">
-      <i class="fa fa-refresh green" aria-hidden="true"
-      title="Clear the cache for this content"></i></a>
-  </p>
-  {% endifusergroup %}
   {% include "includes/errors_text.html" %}
   <form method="post" action="." class="form" enctype="multipart/form-data" id="profile">
     {% csrf_token %}
+    <div class="exit-counseling">
+      <p>Are you required to complete the exit counseling form?</p>
+      <label for="finaid_1">Yes</label>
+      <input type="radio" name="finaid" id="finaid_1" value="Yes">
+      <label for="finaid_2">No</label>
+      <input type="radio" name="finaid" id="finaid_2" value="No">
+    </div>
+    {% ifusergroup cia_group %}
+    <p>
+      <a href="https://www.carthage.edu/livewhale/?blurbs_edit&tid=19&id=3165"
+        target="_blank">
+        <i class="fa fa-pencil green" aria-hidden="true"
+        title="Manage the content above in LiveWhale"></i></a>
+      <a href="#" data-cid="3165" data-target="lw_success_3165"
+        class="clear-cache">
+        <i class="fa fa-refresh green" aria-hidden="true"
+        title="Clear the cache for this content"></i></a>
+    </p>
+    {% endifusergroup %}
+    {% get_lw_content as counseling blurbs 3165 %}
+    <div id="exit-counseling" class="mb-6">
+    {{counseling.body|safe}}
     <fieldset class="blockLabels">
       <ol>
         {% for field in form.visible_fields %}
@@ -33,9 +58,10 @@
         {% endfor %}
       </ol>
     </fieldset>
+    </div>
     {% include "form_submit.inc.html" %}
   </form>
-  <p>&nbsp;</p>
+  <br>
 </div>
 {% endblock %}
 {% block modal %}

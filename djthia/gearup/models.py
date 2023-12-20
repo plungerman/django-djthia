@@ -131,6 +131,17 @@ class Questionnaire(models.Model):
         <a href="mailto:registrar@carthage.edu">the registrar.</a>.
         """),
     )
+    finaid = models.CharField(
+        "Have you ordered finacial aid loands?",
+        max_length=4,
+        choices=BINARY_CHOICES,
+        help_text=mark_safe("""
+            You must complete the form the Exit Counseling form if you have received
+            fiancial aid loans during your time at Carthage College.
+        """),
+        null=True,
+        blank=True,
+    )
     address_mailing = models.TextField(
         "Current Mailing Address",
     )
@@ -383,12 +394,6 @@ class Questionnaire(models.Model):
                     fotos.append(phile)
                     break
         return fotos
-
-    def finaid(self):
-        """Determine if student must complete the exit counseling form."""
-        # this one is not cached and causes severe load on the server.
-        # we should find out how often the data is updated and cache accordingly.
-        return get_finaid(self.created_by.id)
 
     def student(self):
         """Provide student data."""

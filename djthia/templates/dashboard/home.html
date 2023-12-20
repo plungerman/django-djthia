@@ -77,7 +77,6 @@ $(function() {
           <i class="fa fa-fw fa fa-wpforms" aria-hidden="true"></i>
           <span class="nav-link-text">Questionnaire</span></a>
         </li>
-        {% if finaid %}
         <li class="list-group-item p-2" title="Exit Counseling">
           {% if user.questionnaire.exit_counseling %}
             <span class="float-right">
@@ -95,7 +94,6 @@ $(function() {
             <span class="nav-link-text">Exit Counseling</span></a>
           {% endif %}
         </li>
-        {% endif %}
         <li class="list-group-item p-2" data-toggle="tooltip" data-placement="right" title="Cap and Gown">
           <span class="float-right">
           {% if user.questionnaire.cap_gown %}
