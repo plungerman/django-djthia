@@ -36,6 +36,7 @@ FILE_CHARSET = 'utf-8'
 SERVER_URL = ''
 API_URL = '{0}/{1}'.format(SERVER_URL, 'api')
 LIVEWHALE_API_URL = 'https://{0}'.format(SERVER_URL)
+DIRECTORY_API_URL = 'https://{0}/{1}'.format(SERVER_URL, 'directory/api/')
 ROOT_URL = '/djthia/'
 ROOT_URLCONF = 'djthia.core.urls'
 WSGI_APPLICATION = 'djthia.wsgi.application'
@@ -177,6 +178,7 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True
 # app specific settings
+REST_FRAMEWORK_TOKEN = ''
 # logging
 LOG_FILEPATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/',
@@ -188,7 +190,7 @@ ERROR_LOG_FILENAME = '{0}{1}'.format(LOG_FILEPATH, 'error.log')
 CUSTOM_LOG_FILENAME = '{0}{1}'.format(LOG_FILEPATH, 'custom.log')
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': True,
+    'disable_existing_loggers': False,
     'formatters': {
         'standard': {
             'format': '[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s',
@@ -213,10 +215,8 @@ LOGGING = {
     'handlers': {
         'logfile': {
             'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
+            'class': 'logging.FileHandler',
             'filename': LOG_FILENAME,
-            'maxBytes': 50000,
-            'backupCount': 2,
             'formatter': 'standard',
         },
         'console': {
@@ -234,7 +234,6 @@ LOGGING = {
     'loggers': {
         'custom_logfile': {
             'level': 'ERROR',
-            'filters': ['require_debug_true'],
             'class': 'logging.FileHandler',
             'filename': CUSTOM_LOG_FILENAME,
             'formatter': 'custom',
@@ -244,28 +243,21 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'backupCount': 10,
             'maxBytes': 50000,
-            'filters': ['require_debug_false'],
             'filename': INFO_LOG_FILENAME,
             'formatter': 'simple',
         },
         'debug_logfile': {
             'level': 'DEBUG',
-            'filters': ['require_debug_true'],
+            'handlers': ['logfile'],
             'class': 'logging.FileHandler',
             'filename': DEBUG_LOG_FILENAME,
             'formatter': 'verbose',
         },
         'error_logfile': {
             'level': 'ERROR',
-            'filters': ['require_debug_true'],
             'class': 'logging.FileHandler',
             'filename': ERROR_LOG_FILENAME,
             'formatter': 'verbose',
-        },
-        'djauth': {
-            'handlers': ['logfile'],
-            'propagate': True,
-            'level': 'DEBUG',
         },
         'django': {
             'handlers': ['console'],

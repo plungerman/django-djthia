@@ -1,4 +1,5 @@
 {% extends "home.html" %}
+{% load get_api_profile %}
 {% block title %}
   Graduation Gear Up &mdash;
   Carthage College
@@ -6,6 +7,7 @@
 {% block content %}
 <div class="forms-container col-lg-10 col-md-10 col-sm-12 col-xs-12">
   <h3>Graduation Gear Up</h3>
+  {% get_api_profile as profile student student.id %}
   {% include "includes/required_text.html" %}
   {% include "includes/errors_text.html" %}
   <form method="post" action="." autocomplete="false" class="form"
@@ -23,14 +25,10 @@
           {% if field.name == "major_minor" %}
           <li class="form-group ctrlHolder" style="font-size:.9em;">
             <strong style="color:green;">Majors:</strong>
-            {% if student.major1 %}{{student.major1}},{% endif %}
-            {% if student.major2 %}{{student.major2}},{% endif %}
-            {% if student.major3 %}{{student.major3}}{% endif %}
+            {{profile.majors}}
             <br>
             <strong style="color:green;">Minors:</strong>
-            {% if student.minor1 %}{{student.minor1}},{% endif %}
-            {% if student.minor2 %}{{student.minor2}},{% endif %}
-            {% if student.minor3 %}{{student.minor3}}{% endif %}
+            {{profile.minors}}
           </li>
           {% endif %}
           {% include "form_field.inc.html" %}

@@ -4,7 +4,6 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from djthia.core.utils import get_student
 from djtools.utils.users import in_group
 
 
@@ -15,7 +14,7 @@ def eligibility(view_func):
         cia = in_group(request.user, settings.CIA_GROUP)
         if settings.ACADEMIC_YEAR_LIMBO and not cia:
             return render(request, 'limbo.html')
-        elif request.user.id and get_student(request.user.id):
+        elif request.user.id:
             return view_func(request, *args, **kwargs)
         elif settings.DEBUG:
             return view_func(request, *args, **kwargs)
