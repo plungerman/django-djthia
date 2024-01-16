@@ -127,12 +127,14 @@ class Questionnaire(models.Model):
         max_length=4,
         choices=BINARY_CHOICES,
         help_text=mark_safe("""
+        If you have already received your diploma, your majors and minors
+        will not be listed, so just choose "Yes".<br>
         If your majors and/or minors are incorrect, please contact
         <a href="mailto:registrar@carthage.edu">the registrar.</a>.
         """),
     )
     finaid = models.CharField(
-        "Have you ordered finacial aid loands?",
+        "Have you ordered finacial aid loans?",
         max_length=4,
         choices=BINARY_CHOICES,
         help_text=mark_safe("""
@@ -293,10 +295,18 @@ class Questionnaire(models.Model):
         "Class Gift",
         max_length=4,
         choices=DONATION_CHOICES,
-        help_text="""
-            The recommended gift is $5, and every $5 gift is an entry into
-            a drawing to receive a pair of Apple Airpods!
-        """,
+        help_text=mark_safe("""
+            <p>Choosing to support the Class Giving Campaign is an important tradition that provides graduating students the opportunity to make a difference at Carthage. Each year, graduating Firebirds give back to support the areas on campus that inspire and mean the most to them. No matter the size, your gift will have an immediate impact and give those following you the best chance of success!</p>
+            <h5>SUGGESTED AREAS TO SUPPORT:</h5>
+            <ul>
+            <li>The Alumni Association Scholarship is used to privide financial support to students continuing their family’s Carthage Legacy.</li>
+            <li>Contributions to the Carthage Fund are used to support the areas of greatest need across campus.</li>
+            <li>Student Scholarships are used exclusively to provide tuition support for current students.</li>
+            <li>The Bridge Fund provides emergency scholarship assistance when a student’s financial curcumstanses change during the course of the year.</li>
+            <li>Choose “Other” to give to an academic department, athletic program, student life, or other area at Carthage.</li>
+            </ul>
+            <p><a href="https://www.carthage.edu/giving/areas-of-support/class-gifts/support-the-class-gift/" target="_blank">Click here</a> for more information.</p>
+        """),
     )
     color = models.CharField(
         verbose_name="""

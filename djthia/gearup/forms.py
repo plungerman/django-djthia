@@ -145,6 +145,8 @@ class QuestionnaireForm(forms.ModelForm):
         choices=BINARY_CHOICES,
         required=True,
         help_text=mark_safe("""
+        If you have already received your diploma, your majors and minors
+        will not be listed, so just choose "Yes".<br>
         If your majors and/or minors are incorrect, please contact
         <a href="mailto:registrar@carthage.edu">the registrar</a>.
         """),
