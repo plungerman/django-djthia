@@ -127,8 +127,8 @@ class Questionnaire(models.Model):
         max_length=4,
         choices=BINARY_CHOICES,
         help_text=mark_safe("""
-        If you have already received your diploma, your majors and minors
-        will not be listed, so just choose "Yes".<br>
+        If you have already received your diploma or you graduate after j-term,
+        your majors and minors will not be listed, so just choose "Yes".<br>
         If your majors and/or minors are incorrect, please contact
         <a href="mailto:registrar@carthage.edu">the registrar.</a>.
         """),
