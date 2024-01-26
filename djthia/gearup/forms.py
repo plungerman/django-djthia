@@ -147,6 +147,8 @@ class QuestionnaireForm(forms.ModelForm):
         help_text=mark_safe("""
         If you have already received your diploma or you graduate after J-Term,
         your majors and minors will not be listed, so just choose "Yes".<br>
+        You can confirm your majors and minors in
+        <a href="https://my.carthage.edu/">workday</a>.
         If your majors and/or minors are incorrect, please contact
         <a href="mailto:registrar@carthage.edu">the registrar.</a>.
         """),
