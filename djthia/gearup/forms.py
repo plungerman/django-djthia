@@ -3,7 +3,7 @@
 from django import forms
 from django.core.validators import FileExtensionValidator
 from django.utils.safestring import mark_safe
-from djthia.core.utils import get_facstaff
+from djtools.utils.workday import get_peeps
 from djthia.gearup.models import CAP_GOWN_SHIPPING
 from djthia.gearup.models import STATUS_CHOICES
 from djthia.gearup.models import Annotation
@@ -75,9 +75,10 @@ class CapGownForm(forms.ModelForm):
 class AnnotationForm(forms.ModelForm):
     """Thank you notes form."""
 
+    facstaff = get_peeps(who=False, choices=True)
     recipients = forms.CharField(
         label="Recipient",
-        widget=forms.Select(choices=get_facstaff()),
+        widget=forms.Select(choices=facstaff),
         required=True,
     )
 

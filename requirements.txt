@@ -1,7 +1,6 @@
 django==4.2.9
 django-localflavor
 django-loginas
-django-informixdb
 django-formtools
 django-taggit
 mysqlclient

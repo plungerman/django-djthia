@@ -2,14 +2,13 @@
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from djauth.managers import LDAPManager
-from djauth.decorators import portal_auth_required
 from djthia.core.decorators import eligibility
-from djthia.core.utils import get_student
 from djthia.gearup.forms import AnnotationForm
 from djthia.gearup.forms import CapGownForm
 from djthia.gearup.forms import CounselingForm
@@ -22,20 +21,14 @@ from djtools.utils.mail import send_mail
 REQ_ATTR = settings.REQUIRED_ATTRIBUTE
 
 
-@portal_auth_required(
-    session_var='DJTHIA_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 @eligibility
 def donation(request):
     """Donation form."""
     return render(request, 'gearup/donation.html', {})
 
 
-@portal_auth_required(
-    session_var='DJTHIA_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 @eligibility
 def photos(request):
     """Commencement fotos."""
@@ -108,10 +101,7 @@ def photos(request):
     )
 
 
-@portal_auth_required(
-    session_var='DJTHIA_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 @eligibility
 def counseling(request):
     """Exit counseling document upload form."""
@@ -186,10 +176,7 @@ def counseling(request):
     )
 
 
-@portal_auth_required(
-    session_var='DJTHIA_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 @eligibility
 def capgown(request):
     """Cap and gown form."""
@@ -236,10 +223,7 @@ def capgown(request):
     )
 
 
-@portal_auth_required(
-    session_var='DJTHIA_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 @eligibility
 def notes(request):
     """Notes form."""
@@ -298,10 +282,7 @@ def notes(request):
     )
 
 
-@portal_auth_required(
-    session_var='DJTHIA_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 @eligibility
 def questionnaire(request):
     """Questionnaire form."""
@@ -310,8 +291,6 @@ def questionnaire(request):
         quest = user.questionnaire
     except Exception:
         quest = None
-    # fetch student data
-    student = get_student(user.id)
     if request.method == 'POST':
         form = QuestionnaireForm(
             request.POST, use_required_attribute=REQ_ATTR, instance=quest,
@@ -341,6 +320,5 @@ def questionnaire(request):
         {
             'form': form,
             'pho_form': pho_form,
-            'student': student,
         },
     )

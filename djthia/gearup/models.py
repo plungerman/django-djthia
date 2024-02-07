@@ -4,8 +4,6 @@ from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils.safestring import mark_safe
-from djthia.core.utils import get_finaid
-from djthia.core.utils import get_student
 from djtools.fields import BINARY_CHOICES
 from djtools.fields.helpers import upload_to_path
 from taggit.managers import TaggableManager
@@ -404,10 +402,6 @@ class Questionnaire(models.Model):
                     fotos.append(phile)
                     break
         return fotos
-
-    def student(self):
-        """Provide student data."""
-        return get_student(self.created_by.id)
 
     def get_absolute_url(self):
         """Absoluate URL for UI level."""
