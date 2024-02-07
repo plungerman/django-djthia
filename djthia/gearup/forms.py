@@ -75,7 +75,7 @@ class CapGownForm(forms.ModelForm):
 class AnnotationForm(forms.ModelForm):
     """Thank you notes form."""
 
-    facstaff = get_peeps(who=False, choices=True)
+    facstaff = get_peeps(who=None, choices=True)
     recipients = forms.CharField(
         label="Recipient",
         widget=forms.Select(choices=facstaff),

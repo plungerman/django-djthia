@@ -24,18 +24,19 @@ SERVER_URL = ''
 API_URL = '{0}/{1}'.format(SERVER_URL, 'api')
 LIVEWHALE_API_URL = 'https://{0}'.format(SERVER_URL)
 DIRECTORY_API_URL = 'https://{0}/{1}'.format(SERVER_URL, 'directory/api/')
-ROOT_URL = '/djthia/'
-ROOT_URLCONF = 'djthia.core.urls'
-WSGI_APPLICATION = 'djthia.wsgi.application'
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.abspath(__file__)),
 )
+PROJECT_APP = os.path.basename(BASE_DIR)
+ROOT_URL = '/{0}/'.format(PROJECT_APP)
+STATIC_URL = '/static/{0}/'.format(PROJECT_APP)
+MEDIA_URL = '/media/{0}/'.format(PROJECT_APP)
+ROOT_URLCONF = 'djthia.core.urls'
+WSGI_APPLICATION = 'djthia.wsgi.application'
 ROOT_DIR = BASE_DIR
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 MEDIA_ROOT = '{0}/assets/'.format(ROOT_DIR)
 STATIC_ROOT = '{0}/static/'.format(ROOT_DIR)
-STATIC_URL = '/static/djthia/'
-MEDIA_URL = '/media/djthia/'
 UPLOADS_DIR = '{0}files/'.format(MEDIA_ROOT)
 UPLOADS_URL = '{0}files/'.format(MEDIA_URL)
 FILE_UPLOAD_PERMISSIONS = 0o644
@@ -44,11 +45,12 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
 )
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 DATABASES = {
     'default': {
         'HOST': '127.0.0.1',
         'PORT': '3306',
-        'NAME': 'django_djthia',
+        'NAME': 'django_{0}'.format(PROJECT_APP),
         'ENGINE': 'django.db.backends.mysql',
         'USER': '',
         'PASSWORD': '',
@@ -97,7 +99,6 @@ TEMPLATES = [
             'context_processors': [
                 'djtools.context_processors.sitevars',
                 'djthia.context_processors.sitevars',
-                #'djthia.context_processors.finaid',
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.media',
@@ -114,7 +115,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
         'LOCATION': '127.0.0.1:11211',
         'TIMEOUT': 60 * 60 * 24,
-        'KEY_PREFIX': 'djthia_',
+        'KEY_PREFIX': '{0}_'.format(PROJECT_APP),
     },
 }
 # LDAP Constants
@@ -146,7 +147,7 @@ LOGIN_REDIRECT_URL = ROOT_URL
 USE_X_FORWARDED_HOST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_COOKIE_DOMAIN = ''
-SESSION_COOKIE_NAME = 'django_djthia_cookie'
+SESSION_COOKIE_NAME = 'django_{0}_cookie'.format(PROJECT_APP)
 SESSION_COOKIE_AGE = 86400
 # SMTP settings
 EMAIL_HOST = ''

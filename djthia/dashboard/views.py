@@ -5,25 +5,17 @@ from datetime import date
 from django.conf import settings
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from djauth.decorators import portal_auth_required
 from djthia.gearup.models import Questionnaire
+from djtools.decorators.auth import group_required
 
 
-@portal_auth_required(
-    group=settings.CIA_GROUP,
-    session_var='DJTHIA_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@group_required(settings.CIA_GROUP)
 def detail(request, oid):
     """Gear up detailed view."""
     return render(request, 'dashboard/detail.html', {})
 
 
-@portal_auth_required(
-    group=settings.CIA_GROUP,
-    session_var='DJTHIA_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@group_required(settings.CIA_GROUP)
 def home(request):
     """Dashboard home."""
     return render(
@@ -38,11 +30,7 @@ def home(request):
     )
 
 
-@portal_auth_required(
-    group=settings.CIA_GROUP,
-    session_var='DJTHIA_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@group_required(settings.CIA_GROUP)
 def search(request):
     """Generic search."""
     return render(request, 'gearup/search.html', {})
