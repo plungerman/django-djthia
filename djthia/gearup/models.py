@@ -132,12 +132,12 @@ class Questionnaire(models.Model):
         """),
     )
     finaid = models.CharField(
-        "Have you ordered finacial aid loans?",
+        "During your time in school, have you accepted any federal student loans?",
         max_length=4,
         choices=BINARY_CHOICES,
         help_text=mark_safe("""
-            You must complete the form the Exit Counseling form if you have received
-            fiancial aid loans during your time at Carthage College.
+            You must complete the Exit Counseling form if you have received
+            financial aid loans during your time at Carthage College.
         """),
         null=True,
         blank=True,
