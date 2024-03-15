@@ -162,6 +162,7 @@ def counseling(request):
                     finaid = 'Yes'
             elif finaid == 'No':
                 user.questionnaire.finaid = 'No'
+                user.questionnaire.save()
                 return HttpResponseRedirect(reverse_lazy('home'))
             else:
                 form = CounselingForm(use_required_attribute=REQ_ATTR)
@@ -334,7 +335,10 @@ def questionnaire(request):
             return HttpResponseRedirect(reverse_lazy('gearup_success'))
     else:
         form = QuestionnaireForm(use_required_attribute=REQ_ATTR, instance=quest)
-        pho_form = PhoneticForm(use_required_attribute=REQ_ATTR)
+        pho_form = PhoneticForm(
+            use_required_attribute=REQ_ATTR,
+            instance=quest.phonetics().instance,
+        )
     return render(
         request,
         'gearup/questionnaire.html',
