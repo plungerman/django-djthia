@@ -389,8 +389,10 @@ class Questionnaire(models.Model):
         for phile in self.files.all():
             for tag in phile.tags.all():
                 if tag.name == 'Phonetics':
-                    status = phile.phile.name
+                    status = phile.phile
                     break
+            if status:
+                break
         return status
 
     def photos(self):
