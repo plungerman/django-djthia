@@ -2,19 +2,6 @@
 
 import os
 
-# sqlserver connection string
-from djimix.settings.local import DBSERVERNAME
-from djimix.settings.local import INFORMIX_ODBC
-from djimix.settings.local import INFORMIX_ODBC_TRAIN
-from djimix.settings.local import INFORMIXDIR
-from djimix.settings.local import INFORMIXSERVER
-from djimix.settings.local import INFORMIXSQLHOSTS
-from djimix.settings.local import LD_LIBRARY_PATH
-from djimix.settings.local import LD_RUN_PATH
-from djimix.settings.local import MSSQL_EARL
-from djimix.settings.local import ODBCINI
-from djimix.settings.local import ONCONFIG
-
 
 # Debug
 DEBUG = False
@@ -37,18 +24,19 @@ SERVER_URL = ''
 API_URL = '{0}/{1}'.format(SERVER_URL, 'api')
 LIVEWHALE_API_URL = 'https://{0}'.format(SERVER_URL)
 DIRECTORY_API_URL = 'https://{0}/{1}'.format(SERVER_URL, 'directory/api/')
-ROOT_URL = '/djthia/'
-ROOT_URLCONF = 'djthia.core.urls'
-WSGI_APPLICATION = 'djthia.wsgi.application'
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.abspath(__file__)),
 )
+PROJECT_APP = os.path.basename(BASE_DIR)
+ROOT_URL = '/{0}/'.format(PROJECT_APP)
+STATIC_URL = '/static/{0}/'.format(PROJECT_APP)
+MEDIA_URL = '/media/{0}/'.format(PROJECT_APP)
+ROOT_URLCONF = 'djthia.core.urls'
+WSGI_APPLICATION = 'djthia.wsgi.application'
 ROOT_DIR = BASE_DIR
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 MEDIA_ROOT = '{0}/assets/'.format(ROOT_DIR)
 STATIC_ROOT = '{0}/static/'.format(ROOT_DIR)
-STATIC_URL = '/static/djthia/'
-MEDIA_URL = '/media/djthia/'
 UPLOADS_DIR = '{0}files/'.format(MEDIA_ROOT)
 UPLOADS_URL = '{0}files/'.format(MEDIA_URL)
 FILE_UPLOAD_PERMISSIONS = 0o644
@@ -62,7 +50,7 @@ DATABASES = {
     'default': {
         'HOST': '127.0.0.1',
         'PORT': '3306',
-        'NAME': 'django_djthia',
+        'NAME': 'django_{0}'.format(PROJECT_APP),
         'ENGINE': 'django.db.backends.mysql',
         'USER': '',
         'PASSWORD': '',
@@ -111,7 +99,6 @@ TEMPLATES = [
             'context_processors': [
                 'djtools.context_processors.sitevars',
                 'djthia.context_processors.sitevars',
-                #'djthia.context_processors.finaid',
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.media',
@@ -128,7 +115,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
         'LOCATION': '127.0.0.1:11211',
         'TIMEOUT': 60 * 60 * 24,
-        'KEY_PREFIX': 'djthia_',
+        'KEY_PREFIX': '{0}_'.format(PROJECT_APP),
     },
 }
 # LDAP Constants
@@ -160,7 +147,7 @@ LOGIN_REDIRECT_URL = ROOT_URL
 USE_X_FORWARDED_HOST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_COOKIE_DOMAIN = ''
-SESSION_COOKIE_NAME = 'django_djthia_cookie'
+SESSION_COOKIE_NAME = 'django_{0}_cookie'.format(PROJECT_APP)
 SESSION_COOKIE_AGE = 86400
 # SMTP settings
 EMAIL_HOST = ''
@@ -282,3 +269,25 @@ CIA_GROUP = 'InstitutionalAdvancement'
 GEARUP_EMAIL = ''
 EXIT_COUNSELING_EMAIL = ''
 ACADEMIC_YEAR_LIMBO = False
+
+##################
+# LOCAL SETTINGS #
+##################
+
+# Allow any settings to be defined in local.py which should be
+# ignored in your version control system allowing for settings to be
+# defined per machine.
+
+# Instead of doing "from .local import *", we use exec so that
+# local has full access to everything defined in this module.
+# Also force into sys.modules so it's visible to Django's autoreload.
+
+phile = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'local.py')
+if os.path.exists(phile):
+    import imp
+    import sys
+    module_name = '{0}.settings.local'.format(PROJECT_APP)
+    module = imp.new_module(module_name)
+    module.__file__ = phile
+    sys.modules[module_name] = module
+    exec(open(phile, 'rb').read())
