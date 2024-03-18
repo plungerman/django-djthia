@@ -334,10 +334,14 @@ def questionnaire(request):
             doc.tags.add('Phonetics')
             return HttpResponseRedirect(reverse_lazy('gearup_success'))
     else:
+        try:
+            phonetics_file = quest.phonetics().instance
+        except Exception:
+            phonetics_file = None
         form = QuestionnaireForm(use_required_attribute=REQ_ATTR, instance=quest)
         pho_form = PhoneticForm(
             use_required_attribute=REQ_ATTR,
-            instance=quest.phonetics().instance,
+            instance=phonetics_file,
         )
     return render(
         request,
