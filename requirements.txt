@@ -7,6 +7,5 @@ mysqlclient
 cryptography
 pymemcache
 pyodbc
-python-memcached
 python-ldap
 requests
