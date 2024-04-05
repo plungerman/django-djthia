@@ -5,20 +5,17 @@ import requests
 
 from datetime import datetime
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
-from djauth.decorators import portal_auth_required
 from djthia.core.decorators import eligibility
 
 
-@portal_auth_required(
-    session_var='DJTHIA_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 @eligibility
 def home(request):
     """Application home."""
@@ -26,10 +23,7 @@ def home(request):
 
 
 @csrf_exempt
-@portal_auth_required(
-    session_var='DJTHIA_AUTH',
-    redirect_url=reverse_lazy('access_denied'),
-)
+@login_required
 def clear_cache(request, ctype='blurbs'):
     """Clear the cache for API content."""
     cid = request.POST.get('cid')

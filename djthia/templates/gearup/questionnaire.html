@@ -7,7 +7,7 @@
 {% block content %}
 <div class="forms-container col-lg-10 col-md-10 col-sm-12 col-xs-12">
   <h3>Graduation Gear Up</h3>
-  {% get_api_profile as profile student student.id %}
+  {% get_api_profile as profile student user.id %}
   {% include "includes/required_text.html" %}
   {% include "includes/errors_text.html" %}
   <form method="post" action="." autocomplete="false" class="form"
