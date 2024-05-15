@@ -2,6 +2,7 @@ django==4.2.11
 django-localflavor
 django-loginas
 django-formtools
+django-gmailapi-json-backend
 django-taggit
 mysqlclient
 cryptography
