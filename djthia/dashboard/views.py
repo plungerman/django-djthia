@@ -50,7 +50,16 @@ def print_notes(request):
                 note.created_by.first_name, note.created_by.last_name,
             )
             print(to, frum, subject)
-            send_mail(None, to, subject, frum, 'gearup/notes_email.html', note)
+            send_mail(
+                None,
+                to,
+                subject,
+                frum,
+                'gearup/notes_email.html',
+                note,
+                reply_to=[frum,],
+                bcc=bcc,
+            )
             note.status = False
             note.save()
     '''
