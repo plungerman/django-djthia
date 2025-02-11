@@ -22,20 +22,25 @@ ALLOWED_EXTENSIONS = (
 FILE_VALIDATORS = [
     FileExtensionValidator(allowed_extensions=ALLOWED_EXTENSIONS),
 ]
+# Which of the following BEST describes your PRIMARY status AFTER graduation? (required)
 STATUS_CHOICES = (
     (
-        "Have a job or accepted an offer (paid internship, part-time, full-time, own business, etc.)",
-        "Have a job or accepted an offer (paid internship, part-time, full-time, own business, etc.)",
+        'Employed full-time (on average 30 hours or more per week)',
+        "Employed full-time (on average 30 hours or more per week)",
     ),
     (
-        'Have a job, but am continuing to look for other options',
-        "Have a job, but am continuing to look for other options",
+        'Employed part-time (on average less than 30 hours per week)',
+        "Employed part-time (on average less than 30 hours per week)",
     ),
     (
-        "Participating in a volunteer, service program, or unpaid internship (e.g. Peace Corps, City Year, Americorps, etc.)",
-        "Participating in a volunteer, service program, or unpaid internship (e.g. Peace Corps, City Year, Americorps, etc.)",
+        'Have a job, but I am continuing to look for other options',
+        "Have a job, but I am continuing to look for other options",
     ),
-    ('Serving in the military', "Serving in the military"),
+    (
+        'Participating in a volunteer or service program (e.g. Peace Corps, City Year, Americorps, etc.)',
+        "Participating in a volunteer or service program (e.g. Peace Corps, City Year, Americorps, etc.)",
+    ),
+    ('Serving in the military', "Serving in the military",),
     (
         'Enrolled in a program of continuing education',
         "Enrolled in a program of continuing education",
@@ -44,13 +49,45 @@ STATUS_CHOICES = (
         'Planning to continue education, but not yet enrolled',
         "Planning to continue education, but not yet enrolled",
     ),
-    ('Unemployed and seeking employment', "Unemployed and seeking employment"),
+    ('Seeking employment', "Seeking employment",),
     (
-        "Pursuing other options (travel, family, not seeking, etc.)",
-        "Pursuing other options (travel, family, not seeking, etc.)",
+        'Pursuing other options (travel, family, not seeking employment or continuing education, etc.)',
+        "Pursuing other options (travel, family, not seeking employment or continuing education, etc.)",
     ),
     ('Uncertain what my plans are', "Uncertain what my plans are"),
 )
+# If your PRIMARY status is employed full-time OR employed part-time please select the category
+# that BEST describes your employment:
+EMPLOYMENT_DESCRIPTION_CHOICES = (
+    ('Employed as an entrepreneur', "Employed as an entrepreneur",),
+    (
+        'Employed in a temporary/contract work assignment',
+        "Employed in a temporary/contract work assignment",
+    ),
+    ('Employed freelance', "Employed freelance",),
+    (
+        'Employed in a postgraduate internship or fellowship',
+        "Employed in a postgraduate internship or fellowship",)
+    ,
+    ('Employed in all other work categories', "Employed in all other work categories",),
+)
+# Please rate the extent to which your primary current position relates to your career goals/interests:
+EMPLOYEMENT_RELEVANCE_CHOICES = (
+    (
+        'Completely, this is exactly what I want to be doing',
+        "Completely, this is exactly what I want to be doing",
+    ),
+    (
+        'Moderately, this is a good stepping stone in my ideal career/job',
+        "Moderately, this is a good stepping stone in my ideal career/job",
+    ),
+    (
+        'Slightly, I am learning skills and/or making connections that will help me on my career path',
+        "Slightly, I am learning skills and/or making connections that will help me on my career path",
+    ),
+    ('Not at all', "Not at all",),
+)
+
 DONATION_CHOICES = (
     (
         'Yes',
@@ -189,10 +226,117 @@ class Questionnaire(models.Model):
         null=True,
     )
     status_postgrad = models.CharField(
-        "Which of the following BEST describes your PRIMARY current status?",
+        "Which of the following BEST describes your PRIMARY status AFTER graduation?",
         max_length=128,
         choices=STATUS_CHOICES,
     )
+    # new fields
+    employment_description = models.CharField(
+        "If your PRIMARY status is employed full-time OR employed part-time please select the category that BEST describes your employment?",
+        max_length=128,
+        choices=EMPLOYMENT_DESCRIPTION_CHOICES,
+        blank=True,
+        null=True,
+    )
+    employment_relevance = models.CharField(
+        "Please rate the extent to which your primary current position relates to your career goals/interests",
+        max_length=128,
+        choices=EMPLOYEMENT_RELEVANCE_CHOICES,
+        blank=True,
+        null=True,
+    )
+    # If employed, please provide the following information concerning your employment:
+    employment_org = models.CharField(
+        "Employing organization",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    employment_location = models.CharField(
+        "Position location: city, state, and country",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    employment_title = models.CharField(
+        "Job title",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    employment_salary = models.CharField(
+        "If employed full-time, annual base salary amount in U.S. dollars",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    employment_bonus = models.CharField(
+        "Guaranteed first-year bonus amount in U.S. dollars, if you are receiving one",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    # If your PRIMARY status is participating in a volunteer or service program,
+    # please provide the following information about your assignment
+    volunteer_org = models.CharField(
+        "Volunteer organization",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    volunteer_location = models.CharField(
+        "Assignment location: city, state, and country",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    volunteer_title = models.CharField(
+        "Role or title",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    # If your PRIMARY status is serving with the U.S. military,
+    # please provide the following information about your assignment
+    military_branch = models.CharField(
+        "Service branch",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    military_rank = models.CharField(
+        "Rank",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    # If your PRIMARY status is enrolled in a program of continuing education,
+    # please provide the following information concerning your education
+    coned_name = models.CharField(
+        "Name of institution",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    coned_location = models.CharField(
+        "Location of the institution: city, state, and country",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    coned_program = models.CharField(
+        "Program of study",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    coned_degree = models.CharField(
+        "Degree you are pursuing",
+        max_length=128,
+        null=True,
+        blank=True,
+    )
+    # end new fields
     graduate_school_name = models.CharField(
         "Graduate School Institution Name",
         max_length=128,
