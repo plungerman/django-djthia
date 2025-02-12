@@ -24,6 +24,9 @@ SERVER_URL = ''
 API_URL = '{0}/{1}'.format(SERVER_URL, 'api')
 LIVEWHALE_API_URL = 'https://{0}'.format(SERVER_URL)
 DIRECTORY_API_URL = 'https://{0}/{1}'.format(SERVER_URL, 'directory/api/')
+# REST API AUTHENTICATION TOKEN
+REST_FRAMEWORK_TOKEN = ''
+# paths, URIs, files
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.abspath(__file__)),
 )
@@ -45,6 +48,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
 )
+# database
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 DATABASES = {
     'default': {

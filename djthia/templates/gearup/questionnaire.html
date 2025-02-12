@@ -5,13 +5,12 @@
   Carthage College
 {% endblock %}
 {% block content %}
-<div class="forms-container col-lg-10 col-md-10 col-sm-12 col-xs-12">
+<div class="forms-container col-lg-8 col-md-8 col-sm-12 col-xs-12">
   <h3>Graduation Gear Up</h3>
   {% get_api_profile as profile student user.id %}
   {% include "includes/required_text.html" %}
   {% include "includes/errors_text.html" %}
-  <form method="post" action="." autocomplete="false" class="form"
-    enctype="multipart/form-data" id="profile">
+  <form method="post" action="." autocomplete="false" class="form" enctype="multipart/form-data" id="profile">
     {% csrf_token %}
     {% for field in form.hidden_fields %}
       {% include "form_field.inc.html" %}
@@ -22,10 +21,10 @@
           {% if field.name == "major_minor" %}
           <li class="form-group ctrlHolder" style="font-size:.9em;">
             <strong style="color:green;">Majors:</strong>
-            {{profile.majors}}
+            {{majors}}
             <br>
             <strong style="color:green;">Minors:</strong>
-            {{profile.minors}}
+            {{minors}}
           </li>
           {% endif %}
           {% include "form_field.inc.html" %}
@@ -35,6 +34,37 @@
             {% endfor %}
           {% endif %}
           {% if field.name == "status_postgrad" %}
+          <li class="form-group ctrlHolder" id="employment">
+          <ol style="padding:0 0 0 4px;">
+          <li class="form-group ctrlHolder" style="border-bottom: 1px #000 solid;padding-bottom:4px;">&nbsp;</li>
+          {% endif %}
+          {% if field.name == "employment_relevance" %}
+          <li class="form-group ctrlHolder" style="border-bottom: 1px #000 solid;padding-bottom:4px;"><b>If employed, please provide the following information concerning your employment.</b></li>
+          {% endif %}
+          {% if field.name == "employment_bonus" %}
+          </ol>
+          </li>
+          <li class="form-group ctrlHolder" id="volunteer">
+          <ol style="padding:0 0 0 4px;">
+          <li class="form-group ctrlHolder" style="border-bottom: 1px #000 solid;padding-bottom:4px;"><b>If your PRIMARY status is participating in a volunteer or service program, please provide the following information about your assignment </b></li>
+          {% endif %}
+          {% if field.name == "volunteer_title" %}
+          </ol>
+          </li>
+          <li class="form-group ctrlHolder" id="military">
+          <ol style="padding:0 0 0 4px;">
+          <li class="form-group ctrlHolder" style="border-bottom: 1px #000 solid;padding-bottom:4px;"><b>If your PRIMARY status is serving with the U.S. military, please provide the following information about your assignment</b></li>
+          {% endif %}
+          {% if field.name == "military_rank" %}
+          </ol>
+          </li>
+          <li class="form-group ctrlHolder" id="coned">
+          <ol style="padding:0 0 0 4px;">
+          <li class="form-group ctrlHolder" style="border-bottom: 1px #000 solid;padding-bottom:4px;"><b>If your PRIMARY status is enrolled in a program of continuing education, please provide the following information concerning your education</b></li>
+          {% endif %}
+          {% if field.name == "coned_degree" %}
+          </ol></li>
+          </ol>
           </fieldset>
           <fieldset class="blockLabels">
             <legend>
@@ -43,6 +73,7 @@
             <ol style="padding:0 0 0 4px;">
           {% endif %}
           {% if field.name == "employer_job_title" %}
+          </ol>
           </fieldset>
           <fieldset class="blockLabels">
             <ol style="padding:0 0 0 4px;">

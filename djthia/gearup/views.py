@@ -16,9 +16,12 @@ from djthia.gearup.forms import PhoneticForm
 from djthia.gearup.forms import PhotoForm
 from djthia.gearup.forms import QuestionnaireForm
 from djtools.utils.mail import send_mail
+from djtools.utils.workday import get_peep
 
 
 REQ_ATTR = settings.REQUIRED_ATTRIBUTE
+MAJORS = ['Primary_Major', 'Second_Major', 'Third_Major']
+MINORS = ['Minor_One', 'Minor_Two', 'Minor_Three']
 
 
 @login_required
@@ -290,6 +293,21 @@ def notes(request):
 def questionnaire(request):
     """Questionnaire form."""
     user = request.user
+    profile = get_peep(user.id, profile='student')
+    if profile:
+        profile = profile[0]
+    else:
+        profile = get_peep('1579560', profile='student')[0]
+    # majors and minors
+    majors = []
+    minors = []
+    for major in MAJORS:
+        if profile.get(major):
+            majors.append(profile.get(major))
+    for minor in MINORS:
+        if profile.get(minor):
+            minors.append(profile.get(minor))
+
     try:
         quest = user.questionnaire
     except Exception:
@@ -330,5 +348,7 @@ def questionnaire(request):
         {
             'form': form,
             'pho_form': pho_form,
+            'majors': ', '.join(majors),
+            'minors': ', '.join(minors),
         },
     )

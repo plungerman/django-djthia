@@ -155,10 +155,13 @@ class QuestionnaireForm(forms.ModelForm):
         """),
     )
 
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super().__init__(*args, **kwargs)
+
     class Meta:
         """Information about the form class."""
 
         model = Questionnaire
-        exclude = (
-            ' clubs_orgs', 'cap_gown', 'cap_gown_shipping', 'address_cap_gown',
-        )
+        #exclude = ('clubs_orgs','cap_gown', 'cap_gown_shipping', 'address_cap_gown',)
+        exclude = ('cap_gown', 'cap_gown_shipping', 'address_cap_gown',)
