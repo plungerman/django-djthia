@@ -4,10 +4,64 @@
   Graduation Gear Up &mdash;
   Carthage College
 {% endblock %}
+{% block javascript %}
+{{block.super}}
+<script type="text/javascript">
+
+  //var dict = {
+   const status_dict = {
+    id_status_postgrad_0: 'Employed',
+    id_status_postgrad_1: 'Employed',
+    id_status_postgrad_2: 'job',
+    id_status_postgrad_3: 'volunteer',
+    id_status_postgrad_4: 'military',
+    id_status_postgrad_5: 'education'
+  };
+
+  previous_val = '';
+  status_postgrad = '{{form.status_postgrad.value}}';
+  for (const [key, valor] of Object.entries(status_dict)) {
+    domid = '#'+ valor;
+    console.log(domid);
+    //if (valor in status_postgrad) {
+    if (status_postgrad.includes(valor)) {
+      console.log('here');
+      $(domid).show();
+    } else {
+      if (valor != previous_val) {
+        $(domid).hide();
+      }
+    }
+    previous_val = valor;
+  }
+
+  $('input[name="status_postgrad"]').click(function() {
+    $dis = $(this);
+    $radio = $dis.attr('id');
+    previous_val = '';
+    for (const [key, valor] of Object.entries(status_dict)) {
+      domid = '#'+ valor;
+      if ($radio == key) {
+        $(domid).show();
+      } else {
+        if (valor != previous_val) {
+          $(domid).hide();
+        }
+      }
+      previous_val = valor;
+    }
+  });
+
+  $('form#profile').on('submit', function (e) {
+    $('#id_submit').prop('disabled', true);
+    return true;
+  });
+</script>
+{% endblock %}
 {% block content %}
 <div class="forms-container col-lg-8 col-md-8 col-sm-12 col-xs-12">
   <h3>Graduation Gear Up</h3>
-  {% get_api_profile as profile student user.id %}
+  {% get_api_profile as profile student cid %}
   {% include "includes/required_text.html" %}
   {% include "includes/errors_text.html" %}
   <form method="post" action="." autocomplete="false" class="form" enctype="multipart/form-data" id="profile">
@@ -21,10 +75,10 @@
           {% if field.name == "major_minor" %}
           <li class="form-group ctrlHolder" style="font-size:.9em;">
             <strong style="color:green;">Majors:</strong>
-            {{majors}}
+            {{profile.majors}}
             <br>
             <strong style="color:green;">Minors:</strong>
-            {{minors}}
+            {{profile.minors}}
           </li>
           {% endif %}
           {% include "form_field.inc.html" %}
@@ -34,11 +88,15 @@
             {% endfor %}
           {% endif %}
           {% if field.name == "status_postgrad" %}
-          <li class="form-group ctrlHolder" id="employment">
+          <li class="form-group ctrlHolder" id="Employed">
           <ol style="padding:0 0 0 4px;">
           <li class="form-group ctrlHolder" style="border-bottom: 1px #000 solid;padding-bottom:4px;">&nbsp;</li>
           {% endif %}
           {% if field.name == "employment_relevance" %}
+          </ol>
+          </li>
+          <li class="form-group ctrlHolder" id="job">
+          <ol style="padding:0 0 0 4px;">
           <li class="form-group ctrlHolder" style="border-bottom: 1px #000 solid;padding-bottom:4px;"><b>If employed, please provide the following information concerning your employment.</b></li>
           {% endif %}
           {% if field.name == "employment_bonus" %}
@@ -58,7 +116,7 @@
           {% if field.name == "military_rank" %}
           </ol>
           </li>
-          <li class="form-group ctrlHolder" id="coned">
+          <li class="form-group ctrlHolder" id="education">
           <ol style="padding:0 0 0 4px;">
           <li class="form-group ctrlHolder" style="border-bottom: 1px #000 solid;padding-bottom:4px;"><b>If your PRIMARY status is enrolled in a program of continuing education, please provide the following information concerning your education</b></li>
           {% endif %}
