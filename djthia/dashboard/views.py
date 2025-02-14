@@ -19,15 +19,12 @@ def detail(request, oid):
 @group_required(settings.CIA_GROUP)
 def home(request):
     """Dashboard home."""
+    if settings.DEBUG:
+        quests = Questionnaire.objects.all()
+    else:
+        quests = Questionnaire.objects.filter(created_at__year=date.today().year)
     return render(
-        request,
-        'dashboard/home.html',
-        {
-            'quests': Questionnaire.objects.filter(
-                created_at__year=date.today().year,
-            )
-
-        },
+        request, 'dashboard/home.html', { 'quests': quests,},
     )
 
 
