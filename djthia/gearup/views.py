@@ -147,7 +147,6 @@ def counseling(request):
                         'gearup/counseling_email.html',
                         doc,
                         reply_to=[frum,],
-                        bcc=bcc,
                     )
                     return HttpResponseRedirect(reverse_lazy('home'))
                 else:
