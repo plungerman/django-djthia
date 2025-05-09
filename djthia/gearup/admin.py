@@ -18,6 +18,7 @@ class QuestionnaireAdmin(admin.ModelAdmin):
         'first_name',
         'email',
         'username',
+        'major_minor',
         'created_at',
     )
     ordering = (
