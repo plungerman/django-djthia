@@ -144,8 +144,8 @@ LDAP_ID_ATTR = ''
 LDAP_AUTH_USER_PK = False
 # auth backends
 AUTHENTICATION_BACKENDS = (
-    'djauth.backends.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'djauth.backends.LDAPBackend',
 )
 LOGIN_URL = '{0}accounts/login/'.format(ROOT_URL)
 LOGOUT_URL = '{0}accounts/logout/'.format(ROOT_URL)
